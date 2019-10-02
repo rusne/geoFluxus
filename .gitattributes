@@ -1,2 +1,2 @@
 secretfile filter=git-crypt diff=git-crypt
-Sensitive/* filter=git-crypt diff=git-crypt
+*_SS* filter=git-crypt diff=git-crypt
