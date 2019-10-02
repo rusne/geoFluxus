@@ -1,2 +1,1 @@
-test_SS.csv filter=git-crypt diff=git-crypt
-*_SS* filter=git-crypt diff=git-crypt
+Sensitive/test_SS.csv filter=git-crypt diff=git-crypt
