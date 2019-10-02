@@ -1,2 +1,2 @@
-secretfile filter=git-crypt diff=git-crypt
+test_SS.csv filter=git-crypt diff=git-crypt
 *_SS* filter=git-crypt diff=git-crypt
