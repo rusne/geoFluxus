@@ -1,1 +1,1 @@
-Sensitive/test_SS.csv filter=git-crypt diff=git-crypt
+test_SS filter=git-crypt diff=git-crypt
