@@ -4,11 +4,11 @@
 
 import pandas as pd
 
-filepath = 'SandboxCity/'
-filename = "Peel-pioneer-dummy.xlsx"
-separator = '\t'
-extension = 'tsv'
-# extension = 'xlsx'
+filepath = 'Public_data/Auxiliary/'
+filename = "Eural_codes_keyflow_partition.xlsx"
+# separator = '\t'
+# extension = 'tsv'
+extension = 'xlsx'
 
 xlsx = pd.ExcelFile(filepath + filename)
 for sheet in xlsx.sheet_names:
