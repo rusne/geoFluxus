@@ -8,16 +8,16 @@ Created on Wed Aug 22 09:17:31 2018
 
 """
 
-
-import os  # use to create new folders and change in between different folders
 import pandas as pd
 import numpy as np
-import time  # to measure elapsed time for loading the data and executing the code
 
 import warnings  # ignore unnecessary warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
 pd.options.mode.chained_assignment = None
 
+
+def clean_white_space(string):
+    return ' '.join(string.split())
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
@@ -101,68 +101,18 @@ print "the total number of flow chains is", total_flow_chains
 # clean empty fields to avoid errors in merging
 LMA_agg.replace(np.NaN, '', inplace=True)
 
-LMA_agg.loc[LMA_agg['Herkomst_Postcode']=='', 'Herkomst_Postcode']=LMA_agg['Ontdoener_Postcode']
-LMA_agg.loc[LMA_agg['Herkomst_Huisnr']=='', 'Herkomst_Huisnr']=LMA_agg['Ontdoener_Huisnr']
-LMA_agg.loc[LMA_agg['Herkomst_Straat']=='', 'Herkomst_Straat']=LMA_agg['Ontdoener_Straat']
-LMA_agg.loc[LMA_agg['Herkomst_Plaats']=='', 'Herkomst_Plaats']=LMA_agg['Ontdoener_Plaats']
+LMA_agg.loc[LMA_agg['Herkomst_Postcode'] == '', 'Herkomst_Postcode'] = LMA_agg['Ontdoener_Postcode']
+LMA_agg.loc[LMA_agg['Herkomst_Huisnr'] == '', 'Herkomst_Huisnr'] = LMA_agg['Ontdoener_Huisnr']
+LMA_agg.loc[LMA_agg['Herkomst_Straat'] == '', 'Herkomst_Straat'] = LMA_agg['Ontdoener_Straat']
+LMA_agg.loc[LMA_agg['Herkomst_Plaats'] == '', 'Herkomst_Plaats'] = LMA_agg['Ontdoener_Plaats']
 
-
-    # for analysis purposes, 3 dataframes are created -
-    #Total_AMA_GDSE_herkomst    - location = ontdoener/herkomst hybrid
-    #Total_AMA_GDSE_ontdoener   - location = ontdoener only
-    #Total_AMA_GDSE_afzender    - location = afzender only
-
-    #######
-    # STEP 2 d
-    #######
-
-if False:
-
-    #LOCATION = HERKOMST, ONTDOENER HYBRID
-    Total_AMA_GDSE_herkomst=total_AMA_agg.copy()
-    Total_AMA_GDSE_herkomst.rename(columns={'Herkomst_Postcode':'Postcode'},inplace=True)
-    Total_AMA_GDSE_herkomst.rename(columns={'Herkomst_Huisnr':'Huisnr'},inplace=True)
-
-
-    #LOCATION = ONTDOENER
-    Total_AMA_GDSE_ontdoener=total_AMA_agg.copy()
-    Total_AMA_GDSE_ontdoener.rename(columns={'Ontdoener_Postcode':'Postcode'},inplace=True)
-    Total_AMA_GDSE_ontdoener.rename(columns={'Ontdoener_Huisnr':'Huisnr'},inplace=True)
-
-    #LOCATION = AFZENDER
-    Total_AMA_GDSE_afzender=total_AMA_agg.copy()
-    Total_AMA_GDSE_afzender.rename(columns={'Afzender_Postcode':'Postcode'},inplace=True)
-    Total_AMA_GDSE_afzender.rename(columns={'Afzender_Huisnummer':'Huisnr'},inplace=True)
-    Total_AMA_GDSE_afzender.rename(columns={'Afzender':'Ontdoener'},inplace=True)
-
-    #This dataframe only takes the Verwerker information and leaves out the origins for a separate analysis if necessary
-    # Total_AMA_GDSE_verwerker=total_AMA_agg[['Verwerker','Verwerker_Postcode','Verwerker_Plaats','Verwerker_Huisnummer','Verwerker_HuisnummerToevoeging',
-    #                                         'VerwerkingsmethodeCode','VerwerkingsOmschrijving','Route','EuralCode','BenamingAfval','Gewicht_KG','VerwerkingsmethodeCode','VerwerkingsOmschrijving']]
-    # Total_AMA_GDSE_verwerker.rename(columns={'Verwerker_Postcode':'Postcode'},inplace=True)
-    # Total_AMA_GDSE_verwerker.rename(columns={'Verwerker_Huisnummer':'Huisnr'},inplace=True)
-
-
-    #From the Interface file, default is set on 'Herkomst', it can also be Ontdoener or Afzender
-    if Ontdoener_location=='Herkomst':
-        Total_AMA_GDSE_routeinz_incl=Total_AMA_GDSE_herkomst.copy()
-    elif Ontdoener_location=='Ontdoener':
-        Total_AMA_GDSE_routeinz_incl=Total_AMA_GDSE_ontdoener.copy()
-    elif Ontdoener_location=='Afzender':
-        Total_AMA_GDSE_routeinz_incl=Total_AMA_GDSE_afzender.copy()
-
-    Produced_in_AMA = Total_AMA_GDSE_routeinz_incl.copy()
-
-    #######
-    # STEP 3
-    #######
-    # STEP 3 a
-    #######
 
 # clean the BenamingAfval field for both streams
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].astype('unicode')
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.lower()
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.strip()
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.replace(u'\xa0', u' ')
+LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean_white_space)
 
 
 # _____________________________________________________________________________
@@ -186,9 +136,6 @@ for role in ['Ontdoener', 'Inzamelaar', 'Ontvanger', 'Verwerker']:
     plaats = '{0}_Plaats'.format(role)
     straat = '{0}_Straat'.format(role)
     huisnr = '{0}_Huisnr'.format(role)
-
-    def clean_white_space(string):
-        return ' '.join(string.split())
 
     # data cleaning
     comprehensive[postcode] = comprehensive[postcode].astype('unicode')

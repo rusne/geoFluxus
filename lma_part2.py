@@ -1,105 +1,79 @@
-import os #use to create new folders and change in between different folders
+# -*- coding: utf-8 -*-
+"""
+Built uppon
+https://github.com/rusne/LMA-analysis/blob/master/lma_part2.py
+Created on Wed Aug 22 09:17:31 2018
 
-import pandas as pd #python data analysis library
+@author: geoFluxus Team
 
-import numpy as np #python scientific computing library
+"""
 
-import warnings #ignore unnecessary warnings
-warnings.simplefilter(action = "ignore", category = FutureWarning)
+import os
+import pandas as pd
+import numpy as np
+
+import warnings  # ignore unnecessary warnings
+warnings.simplefilter(action="ignore", category=FutureWarning)
 pd.options.mode.chained_assignment = None
 
-# _________________________________________________
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-# 1 )  C H O O S I N G   P R O J E C T   A N D   S C O P E
-# ________________________________________________________________________________________________________________________________
-# ________________________________________________________________________________________________________________________________
+# P R E P A R A T I O N
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-#choose PROJECT: REPAiR or CINDERELA
+# choose scope: Food Waste, Construction&Demolition Waste OR Consumption Goods
+
 while True:
-    project = raw_input('Choose project: REP or CIN\n')
-    if project == 'REP':
-        projectname = 'REPAiR'
-        break
-    elif project == 'CIN':
-        projectname = 'CINDERELA'
+    scope = raw_input('Choose scope: CDW / FW / CG\n')
+    if scope == 'CDW' or scope == 'FW' or scope == 'CG':
         break
     else:
         print 'Wrong choice.'
 
-#choose scope: Food Waste or Construction & Demolition Waste
-while True:
-    scope = raw_input('Choose scope: CDW or FW\n')
-    if scope == 'CDW' or scope == 'FW':
-        break
-    else:
-        print 'Wrong choice.'
+priv_folder = "Private_data/"
+pub_folder = "Public_data/"
 
-# ________________________________________________________________________________________________________________________________
-# ________________________________________________________________________________________________________________________________
+INPUT = "Input_{0}_part2/".format(scope)
+EXPORT = "Exports_{0}_part2/".format(scope)
 
-# 2 )  R E A D I N G   F I L E S
-# ________________________________________________________________________________________________________________________________
-# ________________________________________________________________________________________________________________________________
+PART1 = "Exports_{0}_part1/".format(scope)
 
+# Reading in the LMA Actor list with their roles
 
-DataFolder = "{0}/LMA data".format(projectname)
-os.chdir(DataFolder) # change to Part 1 folder
+LMA_actors = pd.read_excel(priv_folder + PART1 + 'Export_LMA_actors.xlsx'.format(scope))
 
-ExportFolder = "Exports_{0}_part2/".format(scope)
-if not os.path.exists(ExportFolder): # create folder if it does not exist
-    os.makedirs(ExportFolder)
+# if any of the actors orginally did not have postcodes,
+# read in the manually searched postcodes
+if 'Export_LMA_actors_without_postcode.xlsx' in os.listdir(priv_folder + PART1):
+    LMA_actors_w_postcode = pd.read_excel(priv_folder + INPUT + 'Input_actors_without_postcode.xlsx'.format(scope))
 
-Part1Folder = "Exports_{0}_part1/".format(scope)
-
-InputFolder = "Input_{0}_part2/".format(scope)
-
-
-# _________________________________________________________
-# 1.a) Reading in the LMA Actor list with their roles
-# _________________________________________________________
-
-
-LMA_actors = pd.read_excel(Part1Folder + 'Export_LMA_actors.xlsx'.format(scope))
-
-# if any of the actors orginally did not have postcodes, read in the manually searched postcodes
-if 'Export_LMA_actors_without_postcode.xlsx' in os.listdir(Part1Folder):
-    LMA_actors_w_postcode = pd.read_excel(InputFolder + 'Input_actors_without_postcode.xlsx'.format(scope))
-
-    # check if actor file is older than the postcode file - if not, give a warning as indexes might not match
-    t1 = os.path.getctime(Part1Folder + 'Export_LMA_actors.xlsx')
-    t2 = os.path.getctime(InputFolder + 'Input_actors_without_postcode.xlsx')
+    # check if actor file is older than the postcode file
+    # if not, give a warning as indexes might not match
+    t1 = os.path.getctime(priv_folder + PART1 + 'Export_LMA_actors.xlsx')
+    t2 = os.path.getctime(priv_folder + INPUT + 'Input_actors_without_postcode.xlsx')
 
     if t1 > t2:
-        print 'WARNING! Your part1 exports are newer than other input files, make sure they are all up to date'
+        print 'WARNING! Your part1 exports are newer than other input files,'
+        print 'make sure they are all up to date'
 
     LMA_actors.update(LMA_actors_w_postcode, overwrite=False)
     no_postcode = LMA_actors[LMA_actors['Postcode'] == np.NaN]
     if len(no_postcode.index) > 0:
-        print 'WARNING! Not all LMA actors have a postcode, this will result in unexpected matching behaviour'
+        print 'WARNING! Not all LMA actors have a postcode,',
+        print 'this will result in unexpected matching behaviour'
 
-# LMA_actors.replace(np.NaN, '',inplace=True) #data cleaning
 
 # create a unique key for LMA actors: Name + Postcode
 LMA_actors['LMA_key'] = LMA_actors['Name'] + ' ' + LMA_actors['Postcode']
 
-# _________________________________________________________
-# 1.b) Reading in the ORBIS batch search results
-# _________________________________________________________
 
-ORBIS_by_name = pd.read_excel(InputFolder + '/ORBIS_by_name.xlsx'.format(scope))
-
-# _________________________________________________________
-# 1.c) Reading in all the ORBIS actors chosen by NACE codes for address matching
-# _________________________________________________________
-
-ORBIS_all = pd.read_excel(InputFolder + 'ORBIS_all.xlsx'.format(scope))
-
-
-# ________________________________________________________________________________________________________________________________
-# ________________________________________________________________________________________________________________________________
-# 2 )  F U N C T I O N S
-# ________________________________________________________________________________________________________________________________
-# ________________________________________________________________________________________________________________________________
+# ______________________________________________________________________________
+# ______________________________________________________________________________
+# F U N C T I O N S
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
 
 def give_bvdid(ind, scope, start_bvd):
@@ -128,12 +102,12 @@ def give_nace(role):
     return nace_by_role[role]
 
 
-# ________________________________________________________________________________________________________________________________
-# ________________________________________________________________________________________________________________________________
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-# 3 )  C O N N E C T I N G   A C T O R S
-# ________________________________________________________________________________________________________________________________
-# ________________________________________________________________________________________________________________________________
+# C O N N E C T I N G   A C T O R S
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
 # BY NAME
 lma_key_role_postcode = LMA_actors[['LMA_key', 'Name', 'who']]
