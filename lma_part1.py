@@ -10,14 +10,15 @@ Created on Wed Aug 22 09:17:31 2018
 
 import pandas as pd
 import numpy as np
+import clean
 
 import warnings  # ignore unnecessary warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
 pd.options.mode.chained_assignment = None
 
 
-def clean_white_space(string):
-    return ' '.join(string.split())
+# def clean_white_space(string):
+#     return ' '.join(string.split())
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
@@ -109,10 +110,12 @@ LMA_agg.loc[LMA_agg['Herkomst_Plaats'] == '', 'Herkomst_Plaats'] = LMA_agg['Ontd
 
 # clean the BenamingAfval field for both streams
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].astype('unicode')
-LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.lower()
-LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.strip()
-LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.replace(u'\xa0', u' ')
-LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean_white_space)
+# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.lower()
+# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.strip()
+# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.replace(u'\xa0', u' ')
+# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean_white_space)
+
+LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean.clean_description)
 
 
 # _____________________________________________________________________________
@@ -127,39 +130,42 @@ comprehensive = LMA_agg.copy()
 # this list is meant for matching actors with LISA database,
 # therefore ontdoener location is used as ontdoener address instead of Herkomst
 
-actor_data_cols = ['Name', 'Postcode', 'Plaats', 'Straat', 'Huisnr', 'Jaar', 'Who']
+actor_data_cols = ['Name', 'Postcode', 'Plaats', 'Straat', 'Huisnr',
+                   'Jaar', 'Key', 'Who']
 
 actorsets = []
-for role in ['Ontdoener', 'Inzamelaar', 'Ontvanger', 'Verwerker']:
+for role in ['Ontdoener', 'Herkomst', 'Afzender', 'Inzamelaar', 'Bemiddelaar',
+             'Handelaar', 'Ontvanger', 'Verwerker']:
 
     postcode = '{0}_Postcode'.format(role)
     plaats = '{0}_Plaats'.format(role)
     straat = '{0}_Straat'.format(role)
     huisnr = '{0}_Huisnr'.format(role)
+    key = '{0}_Key'.format(role)
 
     # data cleaning
     comprehensive[postcode] = comprehensive[postcode].astype('unicode')
-    comprehensive[postcode] = comprehensive[postcode].str.replace(' ','')
-    comprehensive[postcode] = comprehensive[postcode].str.upper()
+    comprehensive[postcode] = comprehensive[postcode].apply(clean.clean_postcode)
 
-    comprehensive[role] = comprehensive[role].astype('unicode')
-    comprehensive[role] = comprehensive[role].str.upper()
-    comprehensive[role] = comprehensive[role].str.replace('BV', '')
-    comprehensive[role] = comprehensive[role].str.replace('B.V.', '')
-    comprehensive[role] = comprehensive[role].str.replace('B.V.', '')
-    comprehensive[role] = comprehensive[role].apply(clean_white_space)
+    if role != 'Herkomst':
+        comprehensive[role] = comprehensive[role].astype('unicode')
+        comprehensive[role] = comprehensive[role].apply(clean.clean_company_name)
 
     comprehensive[plaats] = comprehensive[plaats].astype('unicode')
-    comprehensive[plaats] = comprehensive[plaats].str.strip()
-    comprehensive[plaats] = comprehensive[plaats].str.upper()
-    comprehensive[plaats] = comprehensive[plaats].apply(clean_white_space)
+    comprehensive[plaats] = comprehensive[plaats].apply(clean.clean_address)
 
     comprehensive[straat] = comprehensive[straat].astype('unicode')
-    comprehensive[straat] = comprehensive[straat].str.strip()
-    comprehensive[straat] = comprehensive[straat].str.upper()
-    comprehensive[straat] = comprehensive[straat].apply(clean_white_space)
+    comprehensive[straat] = comprehensive[straat].apply(clean.clean_address)
 
-    actorset = comprehensive[[role, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR']]
+    comprehensive[huisnr] = comprehensive[huisnr].astype('unicode')
+    comprehensive[huisnr] = comprehensive[huisnr].apply(clean.clean_huisnr)
+
+    if role == 'Herkomst':
+        comprehensive[key] = comprehensive['Ontdoener'] + ' ' + comprehensive[postcode]
+        actorset = comprehensive[['Ontdoener', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
+    else:
+        comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
+        actorset = comprehensive[[role, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
     actorset['Who'] = role
     actorset.columns = actor_data_cols
 
@@ -168,26 +174,33 @@ for role in ['Ontdoener', 'Inzamelaar', 'Ontvanger', 'Verwerker']:
 
 actors = pd.concat(actorsets)
 
-actors.drop_duplicates(subset=['Name', 'Postcode', 'Who'], inplace=True)
 actors = actors[actors['Name'] != '']
+actors.drop_duplicates(subset=['Key', 'Who', 'Jaar'], inplace=True)
+
+actors['Adres'] = actors['Straat'] + ' ' + actors['Huisnr']
 
 
 # find out how many actors have multiple roles within the chain
-actor_roles = actors[['Name', 'Postcode', 'Who']]
-actor_roles['LMA_key'] = actor_roles['Name'] + ' ' + actor_roles['Postcode']
-grouped_roles = actor_roles.groupby('LMA_key')
+actor_roles = actors[['Key', 'Who']]
+# actor_roles['LMA_key'] = actor_roles['Name'] + ' ' + actor_roles['Postcode']
+grouped_roles = actor_roles.groupby('Key')
 grouped_roles = grouped_roles.agg(lambda x: ', '.join(x)).reset_index()
 
-roles = grouped_roles.groupby('Who')['LMA_key'].count()
+roles = grouped_roles.groupby('Who')['Key'].count()
 roles.reset_index(name='count')
-roles.rename(columns={'LMA_key': 'count'}, inplace=True)
+roles.rename(columns={'Key': 'count'}, inplace=True)
 roles.to_excel(pub_folder + EXPORT + 'actor_roles_summary.xlsx')
 
+# export all actors for matching with NACE code,
+# except for herkomst as this depends on the ontdoener
 
-actors.to_excel(priv_folder + EXPORT + 'Export_LMA_actors.xlsx')
+export_actors = actors[actors['Who'] != 'Herkomst']
+export_actors.to_excel(priv_folder + EXPORT + 'Export_LMA_actors.xlsx')
 
+print len(export_actors.index), 'actors have been exported for NACE matching'
+
+# find out if there are any actors without postcode
 actors_without_postcode = actors[actors['Postcode'] == '']
-
 
 if len(actors_without_postcode.index) > 0:
     actors_without_postcode.to_excel(priv_folder + EXPORT + 'Export_LMA_actors_without_postcode.xlsx')
@@ -195,6 +208,13 @@ if len(actors_without_postcode.index) > 0:
 else:
     print 'All actors have a postcode'
 
+# export locations separately
+locations = actors[['Key', 'Postcode', 'Plaats', 'Adres']].copy()
+locations.drop_duplicates(inplace=True)
+
+locations.to_excel(priv_folder + EXPORT + 'Export_LMA_locations.xlsx', index=False)
+
+print len(locations.index), 'locations have been exported'
 
 # _____________________________________________________________________________
 # _____________________________________________________________________________
@@ -215,5 +235,14 @@ compositions.to_excel(pub_folder + EXPORT + 'Export_LMA_compositions.xlsx')
 # _____________________________________________________________________________
 # _____________________________________________________________________________
 
+comprehensive_columns = ['Afvalstroomnummer', 'VerwerkingsmethodeCode',
+                         'VerwerkingsOmschrijving', 'RouteInzameling',
+                         'Inzamelaarsregeling', 'ToegestaanbijInzamelaarsregeling',
+                         'EuralCode', 'BenamingAfval', 'MeldPeriodeJAAR',
+                         'Ontdoener_Key', 'Herkomst_Key', 'Afzender_Key',
+                         'Inzamelaar_Key', 'Bemiddelaar_Key', 'Handelaar_Key',
+                         'Ontvanger_Key', 'Verwerker_Key', 'EuralNaam', 'Haz',
+                         'Gewicht_KG', 'Aantal_vrachten']
 
+comprehensive = comprehensive[comprehensive_columns]
 comprehensive.to_excel(priv_folder + EXPORT + 'Export_LMA_Analysis_part1.xlsx')
