@@ -17,7 +17,8 @@ import time
 priv_folder = "Private_data/"
 pub_folder = "Public_data/"
 
-orig_LMA_dataset = "Private_data/LMA_data/Raw_data/Hfsdt 03_17_20.xlsx"
+orig_LMA_dataset_1 = "Private_data/LMA_data/Raw_data/Hfsdt 03_17_20.xlsx"
+orig_LMA_dataset_2 = "Private_data/LMA_data/Raw_data/Hfsdt 02_04.xlsx"
 # orig_LMA_dataset = "Private_data/LMA_data/Raw_data/Test_data.xlsx"
 
 
@@ -55,19 +56,35 @@ LMA_columns = ['Afvalstroomnummer', 'VerwerkingsmethodeCode',
 print "Loading LMA dataset......."
 start_time = time.time()
 
-# Reading in the LMA data
-LMA_1 = pd.read_excel(orig_LMA_dataset, sheet_name='1.OM Ontvangers in MRA', dtype=object)
-LMA_1 = LMA_1[LMA_columns]
+# Reading in the LMA data for ewc 03 17 20
+LMA_1_1 = pd.read_excel(orig_LMA_dataset_1, sheet_name='1.OM Ontvangers in MRA', dtype=object)
+LMA_1_1 = LMA_1_1[LMA_columns]
 
-print '1.OM Ontvangers in MRA have been loaded, ',
-print 'dataset length:', len(LMA_1.index), 'lines,',
+print '1.OM Ontvangers in MRA for 03 17 20 have been loaded, ',
+print 'dataset length:', len(LMA_1_1.index), 'lines,',
 m, s = divmod(time.time() - start_time, 60)
 print 'time elapsed:', m, 'min', s, 's'
 
-LMA_2 = pd.read_excel(orig_LMA_dataset, sheet_name='2. OM Ontdoeners in MRA', dtype=object)
-LMA_2 = LMA_2[LMA_columns]
-print '2. OM Ontdoeners in MRA in MRA have been loaded, ',
-print 'dataset length:', len(LMA_2.index), 'lines,',
+LMA_1_2 = pd.read_excel(orig_LMA_dataset_1, sheet_name='2. OM Ontdoeners in MRA', dtype=object)
+LMA_1_2 = LMA_1_2[LMA_columns]
+print '2. OM Ontdoeners in MRA for 03 17 20 have been loaded, ',
+print 'dataset length:', len(LMA_1_2.index), 'lines,',
+m, s = divmod(time.time() - start_time, 60)
+print 'time elapsed:', m, 'min', s, 's'
+
+# Reading in the LMA data for ewc 02 04
+LMA_2_1 = pd.read_excel(orig_LMA_dataset_2, sheet_name='1.OM Ontvangers in MRA', dtype=object)
+LMA_2_1 = LMA_2_1[LMA_columns]
+
+print '1.OM Ontvangers in MRA for 02 04 have been loaded, ',
+print 'dataset length:', len(LMA_2_1.index), 'lines,',
+m, s = divmod(time.time() - start_time, 60)
+print 'time elapsed:', m, 'min', s, 's'
+
+LMA_2_2 = pd.read_excel(orig_LMA_dataset_2, sheet_name='2. OM Ontdoeners in MRA', dtype=object)
+LMA_2_2 = LMA_2_2[LMA_columns]
+print '2. OM Ontdoeners in MRA for 02 04 have been loaded, ',
+print 'dataset length:', len(LMA_2_2.index), 'lines,',
 m, s = divmod(time.time() - start_time, 60)
 print 'time elapsed:', m, 'min', s, 's'
 
@@ -76,7 +93,7 @@ print 'time elapsed:', m, 'min', s, 's'
 # print '3. Afgiftemelding have been loaded'
 
 # Concatenating 3 sheets into one dataset
-LMA = pd.concat([LMA_1, LMA_2]) # , LMA_3]) # skipping Afgiftemelding for now
+LMA = pd.concat([LMA_1_1, LMA_1_2, LMA_2_1, LMA_2_2]) # , LMA_3]) # skipping Afgiftemelding for now
 combined = len(LMA.index)
 
 # Removing duplicates
@@ -100,6 +117,7 @@ LMA.rename(columns={"Afzender_Huisnummer": "Afzender_Huisnr",
 # _______________________________________________________________________________
 
 LMA['EuralCode'] = LMA['EuralCode'].astype(str)
+LMA['EuralCode'] = LMA['EuralCode'].str.zfill(6)
 
 for scope in ('CDW', 'FW', 'CG'):
     print "filtering ", scope, 'keyflow.......'
@@ -112,6 +130,7 @@ for scope in ('CDW', 'FW', 'CG'):
     Eural['EuralCode'] = Eural['EuralCode'].astype(str)
     Eural['EuralCode'] = Eural['EuralCode'].str.replace(' ', '')
     Eural['EuralCode'] = Eural['EuralCode'].str.replace('*', '')
+    Eural['EuralCode'] = Eural['EuralCode'].str.zfill(6)
 
     LMA_filt = pd.merge(LMA, Eural, on='EuralCode')
 
@@ -124,12 +143,12 @@ for scope in ('CDW', 'FW', 'CG'):
 #       Splitting dataset in separate files per year
 # ______________________________________________________________________________
 
-    for year in [2013, 2014, 2015, 2016, 2017, 2018]:
-        LMA_filt_year = LMA_filt[LMA_filt['MeldPeriodeJAAR'] == year]
-        print scope, 'dataset for', year, 'consists of ',
-        print len(LMA_filt_year), 'lines'
-
-        LMA_filt_year.to_excel(priv_folder + EXPORT + 'LMA_{0}_{1}.xlsx'.format(scope, year))
+    # for year in [2013, 2014, 2015, 2016, 2017, 2018]:
+    #     LMA_filt_year = LMA_filt[LMA_filt['MeldPeriodeJAAR'] == year]
+    #     print scope, 'dataset for', year, 'consists of ',
+    #     print len(LMA_filt_year), 'lines'
+    #
+    #     LMA_filt_year.to_excel(priv_folder + EXPORT + 'LMA_{0}_{1}.xlsx'.format(scope, year))
 
 m, s = divmod(time.time() - start_time, 60)
 print 'total time elapsed:', m, 'min', s, 's'

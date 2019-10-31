@@ -42,8 +42,13 @@ pub_folder = "Public_data/"
 INPUT = "Input_{0}_part1/".format(scope)
 EXPORT = "Exports_{0}_part1/".format(scope)
 
+# order of roles is important in reverse !!!
+roles = ['Ontdoener', 'Herkomst', 'Afzender', 'Inzamelaar', 'Bemiddelaar',
+         'Handelaar', 'Ontvanger', 'Verwerker']
+
 LMA_dataset = priv_folder + "LMA_data/{0}_data/LMA_{0}_all.xlsx".format(scope)
 
+print 'Loading LMA data.......'
 LMA = pd.read_excel(LMA_dataset)
 
 LMA.rename(columns={"Afzender_Huisnummer": "Afzender_Huisnr",
@@ -130,24 +135,26 @@ comprehensive = LMA_agg.copy()
 # this list is meant for matching actors with LISA database,
 # therefore ontdoener location is used as ontdoener address instead of Herkomst
 
-actor_data_cols = ['Name', 'Postcode', 'Plaats', 'Straat', 'Huisnr',
+actor_data_cols = ['Name', 'Orig_name', 'Postcode', 'Plaats', 'Straat', 'Huisnr',
                    'Jaar', 'Key', 'Who']
 
 actorsets = []
-for role in ['Ontdoener', 'Herkomst', 'Afzender', 'Inzamelaar', 'Bemiddelaar',
-             'Handelaar', 'Ontvanger', 'Verwerker']:
+for role in roles:
 
     postcode = '{0}_Postcode'.format(role)
     plaats = '{0}_Plaats'.format(role)
     straat = '{0}_Straat'.format(role)
     huisnr = '{0}_Huisnr'.format(role)
     key = '{0}_Key'.format(role)
+    orig_name = '{0}_Origname'.format(role)
 
     # data cleaning
     comprehensive[postcode] = comprehensive[postcode].astype('unicode')
     comprehensive[postcode] = comprehensive[postcode].apply(clean.clean_postcode)
 
     if role != 'Herkomst':
+        # preserve the original name
+        comprehensive[orig_name] = comprehensive[role].copy()
         comprehensive[role] = comprehensive[role].astype('unicode')
         comprehensive[role] = comprehensive[role].apply(clean.clean_company_name)
 
@@ -162,10 +169,10 @@ for role in ['Ontdoener', 'Herkomst', 'Afzender', 'Inzamelaar', 'Bemiddelaar',
 
     if role == 'Herkomst':
         comprehensive[key] = comprehensive['Ontdoener'] + ' ' + comprehensive[postcode]
-        actorset = comprehensive[['Ontdoener', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
+        actorset = comprehensive[['Ontdoener', 'Ontdoener_Origname', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
     else:
         comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
-        actorset = comprehensive[[role, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
+        actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
     actorset['Who'] = role
     actorset.columns = actor_data_cols
 
@@ -186,18 +193,38 @@ actor_roles = actors[['Key', 'Who']]
 grouped_roles = actor_roles.groupby('Key')
 grouped_roles = grouped_roles.agg(lambda x: ', '.join(x)).reset_index()
 
-roles = grouped_roles.groupby('Who')['Key'].count()
-roles.reset_index(name='count')
-roles.rename(columns={'Key': 'count'}, inplace=True)
-roles.to_excel(pub_folder + EXPORT + 'actor_roles_summary.xlsx')
+roles_summary = grouped_roles.groupby('Who')['Key'].count()
+roles_summary.reset_index(name='count')
+roles_summary.rename(columns={'Key': 'count'}, inplace=True)
+roles_summary.to_excel(pub_folder + EXPORT + 'actor_roles_summary.xlsx')
 
-# export all actors for matching with NACE code,
-# except for herkomst as this depends on the ontdoener
+# _____________________________________________________________________________
+# _____________________________________________________________________________
+# E X P O R T I N G     A L L    A C T O R S   B Y   R O L E
+# _____________________________________________________________________________
+# _____________________________________________________________________________
 
-export_actors = actors[actors['Who'] != 'Herkomst']
-export_actors.to_excel(priv_folder + EXPORT + 'Export_LMA_actors.xlsx')
+# export all actors for matching with NACE code
+export_actors = actors.copy()
 
-print len(export_actors.index), 'actors have been exported for NACE matching'
+# NACE assignment has a reverse role hierarchy
+# e.g. if an actor is a verwerker,
+# then it gets assigned to the NACE code as a verwerker and not as others
+
+roles.reverse()
+for role in roles:
+    # except for herkomst as this depends on the ontdoener
+    if role == 'Herkomst':
+        continue
+
+    exp = export_actors[export_actors['Who'] == role]
+    exp.to_excel(priv_folder + EXPORT + 'Export_LMA_{0}.xlsx'.format(role))
+
+    print exp['Key'].nunique(), '{0}s have been exported for NACE matching'.format(role)
+
+    export_actors = export_actors[(export_actors['Key'].isin(exp['Key']) == False)]
+
+
 
 # find out if there are any actors without postcode
 actors_without_postcode = actors[actors['Postcode'] == '']
