@@ -43,8 +43,8 @@ INPUT = "Input_{0}_part1/".format(scope)
 EXPORT = "Exports_{0}_part1/".format(scope)
 
 # order of roles is important in reverse !!!
-roles = ['Ontdoener', 'Herkomst', 'Afzender', 'Inzamelaar', 'Bemiddelaar',
-         'Handelaar', 'Ontvanger', 'Verwerker']
+roles = ['Afzender', 'Inzamelaar', 'Bemiddelaar', 'Handelaar',
+         'Ontvanger', 'Ontdoener', 'Herkomst', 'Verwerker']
 
 LMA_dataset = priv_folder + "LMA_data/{0}_data/LMA_{0}_all.xlsx".format(scope)
 
@@ -122,6 +122,8 @@ LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].astype('unicode')
 
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean.clean_description)
 
+# create a tag for the processing method
+LMA_agg['Proc'] = LMA_agg['VerwerkingsmethodeCode'].str.slice(stop=1)
 
 # _____________________________________________________________________________
 # _____________________________________________________________________________
@@ -170,6 +172,9 @@ for role in roles:
     if role == 'Herkomst':
         comprehensive[key] = comprehensive['Ontdoener'] + ' ' + comprehensive[postcode]
         actorset = comprehensive[['Ontdoener', 'Ontdoener_Origname', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
+    elif role == 'Verwerker':
+        comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode] + ' ' + comprehensive['Proc']
+        actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
     else:
         comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
         actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
@@ -206,6 +211,8 @@ roles_summary.to_excel(pub_folder + EXPORT + 'actor_roles_summary.xlsx')
 
 # export all actors for matching with NACE code
 export_actors = actors.copy()
+export_actors.to_excel(priv_folder + EXPORT + 'Export_LMA_all_actors.xlsx')
+print export_actors['Key'].nunique(), 'unique actors in total'
 
 # NACE assignment has a reverse role hierarchy
 # e.g. if an actor is a verwerker,

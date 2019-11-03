@@ -28,6 +28,8 @@ pd.options.mode.chained_assignment = None
 years = [2014, 2015, 2016, 2017, 2018]
 buffer_dist = 250
 
+roles = ['Afzender', 'Inzamelaar', 'Bemiddelaar', 'Handelaar', 'Ontvanger']
+
 # choose scope: Food Waste, Construction & Demolition Waste, Consumption Goods
 
 while True:
@@ -46,11 +48,14 @@ EXPORT = "Exports_{0}_part2/".format(scope)
 PART1 = "Exports_{0}_part1/".format(scope)
 
 # ______________________________________________________________________________
-# Reading the LMA Actor list with their roles
 # ______________________________________________________________________________
 
-print 'Loading LMA actors.......'
-LMA_actors = pd.read_excel(priv_folder + PART1 + 'Export_LMA_ontdoener.xlsx'.format(scope))
+# G I V I N G   N A C E   T O   O N T D O E N E R
+# ______________________________________________________________________________
+# ______________________________________________________________________________
+
+print 'Loading LMA ontdoeners.......'
+LMA_ontodoeners = pd.read_excel(priv_folder + PART1 + 'Export_LMA_ontdoener.xlsx'.format(scope))
 
 print 'Loading LMA locations.......'
 LMA_locations = pd.read_csv(priv_folder + INPUT + '{0}_locations.csv'.format(scope))
@@ -74,12 +79,12 @@ LISA_boundary = gpd.read_file(pub_folder + 'LISA_boundary.shp')
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
-# C O N N E C T I N G   A C T O R S
+# C O N N E C T I N G   O N T D O E N E R S   W I T H   L I S A
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
 # first ontdoeners need to be matched with their locations
-ontdoeners = pd.merge(LMA_actors, LMA_locations, on='Key', how='left')
+ontdoeners = pd.merge(LMA_ontodoeners, LMA_locations, on='Key', how='left')
 print ontdoeners['Key'].nunique(), 'ontdoeners in total'
 
 # then all actors that fall out of the LISA boundary need to be filtered out
@@ -106,7 +111,7 @@ total_inbound = LMA_inbound['Key'].nunique()
 # ______________________________________________________________________________
 
 LMA_inbound1 = LMA_inbound[['Key', 'Orig_name', 'Adres']].copy()
-LMA_inbound1.drop_duplicates(inplace=True)
+LMA_inbound1.drop_duplicates(subset=['Key'], inplace=True)
 
 by_name_and_address = pd.merge(LMA_inbound1, LISA_actors, left_on='Key', right_on='key')
 
@@ -116,6 +121,7 @@ control_output['match'] = 1
 
 # OUTPUT BY NAME AND ADDRESS
 output_by_name_address = by_name_and_address[['Key', 'activenq']].copy()
+output_by_name_address['how'] = 'by name and address'
 
 print len(output_by_name_address.index), 'actors have been matched by name & postcode',
 print round(len(output_by_name_address.index) / float(total_inbound) * 100, 2), '%'
@@ -149,6 +155,7 @@ control_output = control_output.append(control_output_2)
 
 # OUTPUT BY NAME
 output_by_name = closest[['Key', 'activenq']].copy()
+output_by_name['how'] = 'by name'
 
 print len(output_by_name.index), 'actors have been matched by name',
 print round(len(output_by_name.index) / float(total_inbound) * 100, 2), '%'
@@ -203,6 +210,7 @@ by_address.drop_duplicates(inplace=True)
 
 # OUTPUT BY ADDRESS
 output_by_address = by_address[['Key', 'activenq']]
+output_by_address['how'] = 'by address'
 
 print len(output_by_address.index), 'actors have been matched only by address',
 print round(len(output_by_address.index) / float(total_inbound) * 100, 2), '%'
@@ -247,37 +255,44 @@ distances = pd.merge(distances, LMA_inbound4[['Orig_name', 'Adres', 'WKT']], lef
 distances['dist'] = distances.apply(lambda x: x['wkt'].distance(x['WKT']), axis=1)
 
 
-distances['freq'] = distances.groupby(['Key', 'AG'])['AG'].transform('count')
-distances['max_freq'] = distances.groupby(['Key'])['freq'].transform('max')
-matched_AG = distances[distances['freq'] == distances['max_freq']]
+# distances['freq'] = distances.groupby(['Key', 'AG'])['AG'].transform('count')
+# distances['max_freq'] = distances.groupby(['Key'])['freq'].transform('max')
+# matched_AG = distances[distances['freq'] == distances['max_freq']]
+#
+# # select those that match with only one most frequent activity group
+# matched_1 = matched_AG[matched_AG.groupby('Key')['AG'].transform('nunique') == 1]
+# print matched_1['Key'].nunique(), 'actors have been matched by the most frequent surrounding activity'
+#
+# # matching control output
+# control_output_4 = matched_1[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
+# control_output_4['match'] = 4
+# control_output = control_output.append(control_output_4)
+#
+# # select those that match with multiple most frequent activity groups
+# matched_2 = matched_AG[matched_AG.groupby('Key')['AG'].transform('nunique') > 1]
+# # and then select geographically closest one from the list
+# matched_2.reset_index(inplace=True)
+# matched_2 = matched_2.loc[matched_2.groupby(['Key'])['dist'].idxmin()]
+# print len(matched_2.index), 'actors have been matched by the closest actor (<{0}m)'.format(buffer_dist)
 
-# select those that match with only one most frequent activity group
-matched_1 = matched_AG[matched_AG.groupby('Key')['AG'].transform('nunique') == 1]
-print matched_1['Key'].nunique(), 'actors have been matched by the most frequent surrounding activity'
+distances.reset_index(inplace=True)
+matched_TEMP = distances.loc[distances.groupby(['Key'])['dist'].idxmin()]
+print len(matched_TEMP.index), 'actors have been matched by the closest actor (<{0}m)'.format(buffer_dist)
 
-# matching control output
-control_output_4 = matched_1[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
-control_output_4['match'] = 4
-control_output = control_output.append(control_output_4)
+# # matching control output
+# control_output_5 = matched_2[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
+# control_output_5['match'] = 5
+# control_output = control_output.append(control_output_5)
 
-# select those that match with multiple most frequent activity groups
-matched_2 = matched_AG[matched_AG.groupby('Key')['AG'].transform('nunique') > 1]
-# and then select geographically closest one from the list
-matched_2.reset_index(inplace=True)
-matched_2 = matched_2.loc[matched_2.groupby(['Key'])['dist'].idxmin()]
-print len(matched_2.index), 'actors have been matched by the closest actor (<{0}m)'.format(buffer_dist)
+# matched_by_proximity = pd.concat([matched_1, matched_2])
+# matched_by_proximity = matched_by_proximity[['Key', 'AG']]
+# matched_by_proximity.drop_duplicates(inplace=True)
 
-# matching control output
-control_output_5 = matched_2[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
-control_output_5['match'] = 5
-control_output = control_output.append(control_output_5)
-
-matched_by_proximity = pd.concat([matched_1, matched_2])
-matched_by_proximity = matched_by_proximity[['Key', 'AG']]
-matched_by_proximity.drop_duplicates(inplace=True)
+matched_by_proximity = matched_TEMP[['Key', 'activenq']].drop_duplicates()
 
 # OUTPUT BY PROXIMITY
 output_by_proximity = matched_by_proximity.copy()
+output_by_proximity['how'] = 'by proximity'
 
 print len(output_by_proximity.index), 'actors have been matched by proximity',
 print round(len(output_by_proximity.index) / float(total_inbound) * 100, 2), '%'
@@ -285,84 +300,87 @@ print round(len(output_by_proximity.index) / float(total_inbound) * 100, 2), '%'
 # take out those actors that had not been matched
 remaining = remaining[(remaining['Key'].isin(output_by_proximity['Key']) == False)]
 
-print remaining['Key'].nunique(), 'remaining'
+print remaining['Key'].nunique(), 'remaining unmatched'
 
 control_output.to_excel('control_output.xlsx')
 
 # ______________________________________________________________________________
 # 5. UNMATCHED
 #    not matched with anything, gets a dummy NACE code
+#    points outside the LISA boundary also get a dummy code
 # ______________________________________________________________________________
 
-remaining.to_excel('remaining.xlsx')
+remaining['activenq'] = '0000'
+out_boundary['activenq'] = '0000'
 
+output_unmatched = pd.concat([remaining[['Key', 'activenq']], out_boundary[['Key', 'activenq']]])
+output_unmatched.drop_duplicates(subset=['Key'], inplace=True)
+output_unmatched['how'] = 'unmatched'
 
-if False:
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
-    # N E W    A C T O R   T A B L E
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-    new_actors = unconfirmed_output.copy()
-    # the unknown fields are filled with empty cells
-    new_actors['code'] = ''
-    new_actors['year'] = 2016
-    new_actors['description english'] = ''
-    new_actors['description original'] = new_actors['Role']
-    new_actors['BvDii'] = ''
-    new_actors['Website'] = ''
-    new_actors['employees'] = ''
-    new_actors['turnover'] = ''
-    new_actors = new_actors[['BvDid', 'Name', 'code', 'year', 'description english', 'description original',
-                             'BvDii', 'Website', 'employees', 'turnover', 'NACE']]
+# G I V I N G   N A C E   T O  V E R W E R K E R
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-    new_actors.to_excel(ExportFolder + 'Export_LMA_actors.xlsx')
+print 'Loading LMA verwerkers.......'
+verwerkers = pd.read_excel(priv_folder + PART1 + 'Export_LMA_verwerker.xlsx')
 
+verwerkers = verwerkers[['Key']].drop_duplicates()
+print len(verwerkers), 'verwekers have been found'
 
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
-    #  A C T O R    L O C A T I O N S    T A B L E
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
+verwerkers['activenq'] = verwerkers['Key'].apply(lambda x: '3820' + x.split()[-1])
 
-    locations = all_actors.copy()
-    locations = locations[['BvDid', 'Postcode', 'Address', 'City']]
-    locations.drop_duplicates(subset=['BvDid'], inplace=True)
+output_verwerker = verwerkers[['Key', 'activenq']]
+output_verwerker['how'] = 'verwerker'
 
-    locations.to_excel(ExportFolder +'Export_LMA_actors_locations.xlsx', index=False)
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
+#  C O N C A T E N A T E   O U T P U T S
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
-    #  A C T I V I T Y  &  A C T I V I T Y   G R O U P   T A B L E S
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
+all_nace = pd.concat([output_by_name_address, output_by_name, output_by_address,
+                     output_by_proximity, output_unmatched, output_verwerker])
 
-    activities = all_actors[['NACE']]
-    activities.drop_duplicates(inplace=True)
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-    nace_table = pd.read_excel('NACE_table.xlsx'.format(projectname))
-    nace_table.rename(columns={'Code':'NACE'}, inplace=True)
-    nace_table_merged = pd.merge(activities, nace_table, how='left', on='NACE')
+# G I V I N G   N A C E   T O   A L L   O T H E R   R O L E S
+# ______________________________________________________________________________
+# ______________________________________________________________________________
 
-    activity_table = nace_table_merged[['NACE', 'Name', 'AG code']]
-    activity_table.columns = ['NACE', 'Name', 'AG']
-    activity_table.to_excel(ExportFolder + 'Export_LMA_activities.xlsx')
+role_map = {'Afzender': '3810',
+            'Inzamelaar': '3810',
+            'Bemiddelaar': '3810',
+            'Handelaar': '3810',
+            'Ontvanger': '3810'}
 
-    activity_group_table = nace_table_merged[['AG code', 'Activity Group']]
-    activity_group_table.drop_duplicates(inplace=True)
-    activity_group_table.columns = ['Code', 'Name']
-    activity_group_table.to_excel(ExportFolder + 'Export_LMA_activity_groups.xlsx')
+for role in roles:
 
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
-    #  U N K N O W N   N A C E   C O D E S
-    # _____________________________________________________________________________
-    # _____________________________________________________________________________
+    print 'Loading LMA {0}s.......'.format(role)
+    LMA_role = pd.read_excel(priv_folder + PART1 + 'Export_LMA_{0}.xlsx'.format(role))
 
-    unknown_nace_table = all_actors[all_actors['NACE'].str[0] == 'W']
-    unknown_nace_table = unknown_nace_table[['BvDid', 'LMA_key', 'Name', 'Postcode',
-                                             'Address', 'City', 'Role', 'NACE']]
-    print 'unknown nace:', len(unknown_nace_table.index)
-    unknown_nace_table.to_excel(ExportFolder + 'Unknown_NACE.xlsx')
+    keys = LMA_role[['Key']].drop_duplicates()
+    print len(keys), '{0}s have been found'.format(role)
+
+    keys['activenq'] = role_map[role]
+
+    output_role = keys.copy()
+    output_role['how'] = role
+    all_nace = all_nace.append(output_role)
+
+print len(all_nace)
+print all_nace['Key'].nunique()
+
+# ______________________________________________________________________________
+# ______________________________________________________________________________
+
+# E X P O R T   A L L   A C T O R
+# with their assigned NACE codes
+# ______________________________________________________________________________
+# ______________________________________________________________________________
+
+all_nace.to_excel(priv_folder + EXPORT + 'All_actors.xlsx')
