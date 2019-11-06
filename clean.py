@@ -1,6 +1,8 @@
 # a set of functions to clean company names, addresses and other text fields
 # in LMA and LISA datasets
 
+import numpy as np
+
 
 def clean_company_name(name):
 
@@ -57,6 +59,8 @@ def clean_description(desc):
     desc = desc.lower()
     desc = desc.replace(u'\xa0', u' ')
     desc = ' '.join(desc.split())
+    if desc == 'nan':
+        return np.NaN
     return desc
 
 

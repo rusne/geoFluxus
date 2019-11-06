@@ -107,23 +107,18 @@ print "the total number of flow chains is", total_flow_chains
 # clean empty fields to avoid errors in merging
 LMA_agg.replace(np.NaN, '', inplace=True)
 
+# LMA_agg[LMA_agg.columns[:18]].to_excel('herkomst.xlsx')
+
 LMA_agg.loc[LMA_agg['Herkomst_Postcode'] == '', 'Herkomst_Postcode'] = LMA_agg['Ontdoener_Postcode']
 LMA_agg.loc[LMA_agg['Herkomst_Huisnr'] == '', 'Herkomst_Huisnr'] = LMA_agg['Ontdoener_Huisnr']
 LMA_agg.loc[LMA_agg['Herkomst_Straat'] == '', 'Herkomst_Straat'] = LMA_agg['Ontdoener_Straat']
 LMA_agg.loc[LMA_agg['Herkomst_Plaats'] == '', 'Herkomst_Plaats'] = LMA_agg['Ontdoener_Plaats']
 
 
-# clean the BenamingAfval field for both streams
+
+# clean the BenamingAfval field
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].astype('unicode')
-# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.lower()
-# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.strip()
-# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].str.replace(u'\xa0', u' ')
-# LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean_white_space)
-
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean.clean_description)
-
-# create a tag for the processing method
-LMA_agg['Proc'] = LMA_agg['VerwerkingsmethodeCode'].str.slice(stop=1)
 
 # _____________________________________________________________________________
 # _____________________________________________________________________________
@@ -173,7 +168,7 @@ for role in roles:
         comprehensive[key] = comprehensive['Ontdoener'] + ' ' + comprehensive[postcode]
         actorset = comprehensive[['Ontdoener', 'Ontdoener_Origname', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
     elif role == 'Verwerker':
-        comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode] + ' ' + comprehensive['Proc']
+        comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode] + ' ' + comprehensive['VerwerkingsmethodeCode']
         actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
     else:
         comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
@@ -244,7 +239,7 @@ else:
 
 # export locations separately
 locations = actors[['Key', 'Postcode', 'Plaats', 'Adres']].copy()
-locations.drop_duplicates(inplace=True)
+locations.drop_duplicates(subset=['Key'], inplace=True)
 
 locations.to_excel(priv_folder + EXPORT + 'Export_LMA_locations.xlsx', index=False)
 

@@ -85,10 +85,15 @@ LISA_boundary = gpd.read_file(pub_folder + 'LISA_boundary.shp')
 
 # first ontdoeners need to be matched with their locations
 ontdoeners = pd.merge(LMA_ontodoeners, LMA_locations, on='Key', how='left')
+missing_locations = ontdoeners[ontdoeners['WKT'].isnull()]
+if len(missing_locations.index) > 0:
+    print 'WARNING! some locations do not have geometry, they will be skipped'
+    print missing_locations
+    ontdoeners.dropna(inplace=True)
+
 print ontdoeners['Key'].nunique(), 'ontdoeners in total'
 
 # then all actors that fall out of the LISA boundary need to be filtered out
-
 ontdoeners['WKT'] = ontdoeners['WKT'].apply(wkt.loads)
 LMAgdf = gpd.GeoDataFrame(ontdoeners, geometry='WKT', crs={'init': 'epsg:28992'})
 
@@ -120,7 +125,7 @@ control_output = by_name_and_address[['Key', 'Orig_name', 'Adres', 'orig_zaaknaa
 control_output['match'] = 1
 
 # OUTPUT BY NAME AND ADDRESS
-output_by_name_address = by_name_and_address[['Key', 'activenq']].copy()
+output_by_name_address = by_name_and_address[['Key', 'activenq', 'Orig_name']].copy()
 output_by_name_address['how'] = 'by name and address'
 
 print len(output_by_name_address.index), 'actors have been matched by name & postcode',
@@ -154,7 +159,7 @@ control_output_2['match'] = 2
 control_output = control_output.append(control_output_2)
 
 # OUTPUT BY NAME
-output_by_name = closest[['Key', 'activenq']].copy()
+output_by_name = closest[['Key', 'activenq', 'Orig_name']].copy()
 output_by_name['how'] = 'by name'
 
 print len(output_by_name.index), 'actors have been matched by name',
@@ -205,11 +210,11 @@ control_output_3 = by_address[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'ad
 control_output_3['match'] = 3
 control_output = control_output.append(control_output_3)
 
-by_address = by_address[['Key', 'activenq']]
+by_address = by_address[['Key', 'activenq', 'Orig_name']]
 by_address.drop_duplicates(inplace=True)
 
 # OUTPUT BY ADDRESS
-output_by_address = by_address[['Key', 'activenq']]
+output_by_address = by_address[['Key', 'activenq', 'Orig_name']]
 output_by_address['how'] = 'by address'
 
 print len(output_by_address.index), 'actors have been matched only by address',
@@ -288,7 +293,7 @@ print len(matched_TEMP.index), 'actors have been matched by the closest actor (<
 # matched_by_proximity = matched_by_proximity[['Key', 'AG']]
 # matched_by_proximity.drop_duplicates(inplace=True)
 
-matched_by_proximity = matched_TEMP[['Key', 'activenq']].drop_duplicates()
+matched_by_proximity = matched_TEMP[['Key', 'activenq', 'Orig_name']].drop_duplicates()
 
 # OUTPUT BY PROXIMITY
 output_by_proximity = matched_by_proximity.copy()
@@ -313,7 +318,7 @@ control_output.to_excel('control_output.xlsx')
 remaining['activenq'] = '0000'
 out_boundary['activenq'] = '0000'
 
-output_unmatched = pd.concat([remaining[['Key', 'activenq']], out_boundary[['Key', 'activenq']]])
+output_unmatched = pd.concat([remaining[['Key', 'activenq', 'Orig_name']], out_boundary[['Key', 'activenq', 'Orig_name']]])
 output_unmatched.drop_duplicates(subset=['Key'], inplace=True)
 output_unmatched['how'] = 'unmatched'
 
@@ -327,12 +332,12 @@ output_unmatched['how'] = 'unmatched'
 print 'Loading LMA verwerkers.......'
 verwerkers = pd.read_excel(priv_folder + PART1 + 'Export_LMA_verwerker.xlsx')
 
-verwerkers = verwerkers[['Key']].drop_duplicates()
+verwerkers = verwerkers.drop_duplicates(subset=['Key'])
 print len(verwerkers), 'verwekers have been found'
 
-verwerkers['activenq'] = verwerkers['Key'].apply(lambda x: '3820' + x.split()[-1])
+verwerkers['activenq'] = verwerkers['Key'].apply(lambda x: x.split()[-1])
 
-output_verwerker = verwerkers[['Key', 'activenq']]
+output_verwerker = verwerkers[['Key', 'activenq', 'Orig_name']]
 output_verwerker['how'] = 'verwerker'
 
 # ______________________________________________________________________________
@@ -383,4 +388,4 @@ print all_nace['Key'].nunique()
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
-all_nace.to_excel(priv_folder + EXPORT + 'All_actors.xlsx')
+all_nace.to_excel(priv_folder + EXPORT + 'Export_All_actors.xlsx')
