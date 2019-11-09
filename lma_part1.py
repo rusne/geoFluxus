@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 import clean
 import variables as var
+import math
 
 import warnings  # ignore unnecessary warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -242,6 +243,18 @@ else:
 # export locations separately
 locations = actors[['Key', 'Postcode', 'Plaats', 'Adres']].copy()
 locations.drop_duplicates(subset=['Key'], inplace=True)
+
+# check if all actors can be geolocated at once
+if len(locations.index) > 25000:
+    parts = int(math.floor(len(locations.index) / 25000))
+    for i in range(parts):
+        start = i * 25000
+        end = (i + 1) * 25000
+        if end > len(locations.index):
+            end = len(locations.index)
+        print start, end
+        part = locations[start:end]
+        part.to_excel(priv_folder + EXPORT + 'Export_LMA_locations_{0}.xlsx'.format(end), index=False)
 
 locations.to_excel(priv_folder + EXPORT + 'Export_LMA_locations.xlsx', index=False)
 

@@ -1,0 +1,104 @@
+﻿ewc_code;ewc_name;hazardous
+170101;beton;FALSE
+170102;stenen;FALSE
+170103;tegels en keramische producten;FALSE
+170106;mengsels van beton, stenen, tegels of keramische producten, of afzonderlijke fracties daarvan, die TRUEe stoffen bevatten;TRUE
+170107;niet onder 17 01 06 vallende mengsels van beton, stenen, tegels of keramische producten;FALSE
+170201;hout;FALSE
+170202;glas;FALSE
+170203;kunststof;FALSE
+170204;glas, kunststof en hout die TRUEe stoffen bevatten of daarmee verontreinigd zijn;TRUE
+170301;bitumineuze mengsels die koolteer bevatten;TRUE
+170302;niet onder 17 03 01 vallende bitumineuze mengsels;FALSE
+170303;koolteer en met teer behandelde producten;TRUE
+170401;koper, brons en messing;FALSE
+170402;aluminium;FALSE
+170403;lood;FALSE
+170404;zink;FALSE
+170405;ijzer en staal;FALSE
+170406;tin;FALSE
+170407;gemengde metalen;FALSE
+170409;metaalafval dat met TRUEe stoffen is verontreinigd;TRUE
+170410;kabels die olie, koolteer of andere TRUEe stoffen bevatten;TRUE
+170411;niet onder 17 04 10 vallende kabels;FALSE
+170503;grond en stenen die TRUEe stoffen bevatten;TRUE
+170504;niet onder 17 05 03 vallende grond en stenen;FALSE
+170505;baggerspecie die TRUEe stoffen bevat;TRUE
+170506;niet onder 17 05 05 vallende baggerspecie;FALSE
+170508;niet onder 17 05 07 vallende spoorwegballast;FALSE
+170601;asbesthoudend isolatiemateriaal;TRUE
+170603;overig isolatiemateriaal dat uit TRUEe stoffen bestaat of dergelijke stoffen bevat;TRUE
+170604;niet onder 17 06 01 en 17 06 03 vallend isolatiemateriaal;FALSE
+170605;asbesthoudend bouwmateriaal;TRUE
+170801;gipshoudend bouwmateriaal dat met TRUEe stoffen is verontreinigd;TRUE
+170802;niet onder 17 08 01 vallend gipshoudend bouwmateriaal;FALSE
+170901;bouw- en sloopafval dat kwik bevat;TRUE
+170902;bouw- en sloopafval dat PCB's bevat (bv. PCB-houdende kit, vloerbedekkingen waarin PCB-houdende hars is verwerkt, isolerende beglazing met PCB-houdende afdichting, PCB-houdende condensatoren);TRUE
+170903;overig bouw- en sloopafval (inclusief gemengd afval) dat TRUEe stoffen bevat;TRUE
+170904;niet onder 17 09 01, 17 09 02 en 17 09 03 vallend gemengd bouw- en sloopafval;FALSE
+200202;grond en stenen;FALSE
+200137;hout dat TRUEe stoffen bevat;TRUE
+200138;niet onder 20 01 37 vallend hout;FALSE
+020101;slib van wassen en schoonmaken;FALSE
+020102;afval van dierlijke weefsels;FALSE
+020103;afval van plantaardige weefsels;FALSE
+020104;kunststofafval (exclusief verpakkingen);FALSE
+020106;dierlijke feces, urine en mest (inclusief gebruikt stro), afvalwater, gescheiden ingezameld en elders verwerkt;FALSE
+020107;afval van de bosbouw;FALSE
+020108;agrochemisch afval dat TRUEe stoffen bevat;TRUE
+020109;niet onder 02 01 08 vallend agrochemisch afval;FALSE
+020110;metaalafval;FALSE
+020199;niet elders genoemd afval;FALSE
+020201;slib van wassen en schoonmaken;FALSE
+020202;afval van dierlijke weefsels;FALSE
+020203;voor consumptie of verwerking ongeschikt materiaal;FALSE
+020204;slib van afvalwaterbehandeling ter plaatse;FALSE
+020299;niet elders genoemd afval;FALSE
+020301;slib van wassen, schoonmaken, pellen, centrifugeren en scheiden;FALSE
+020304;voor consumptie of verwerking ongeschikt materiaal;FALSE
+020305;slib van afvalwaterbehandeling ter plaatse;FALSE
+020399;niet elders genoemd afval;FALSE
+020499;niet elders genoemd afval;FALSE
+020501;voor consumptie of verwerking ongeschikt materiaal;FALSE
+020502;slib van afvalwaterbehandeling ter plaatse;FALSE
+020599;niet elders genoemd afval;FALSE
+020601;voor consumptie of verwerking ongeschikt materiaal;FALSE
+020603;slib van afvalwaterbehandeling ter plaatse;FALSE
+020699;niet elders genoemd afval;FALSE
+020702;afval van de destillatie van alcoholische dranken;FALSE
+020704;voor consumptie of verwerking ongeschikt materiaal;FALSE
+020705;slib van afvalwaterbehandeling ter plaatse;FALSE
+020799;niet elders genoemd afval;FALSE
+030105;niet onder 03 01 04 vallend zaagsel, schaafsel, spaanders, hout, spaanplaat en fineer;FALSE
+030301;schors- en houtafval;FALSE
+030307;mechanisch afgescheiden rejects afkomstig van de verpulping van papier- en kartonafval;FALSE
+030308;afval van het scheiden van voor recycling bestemd papier en karton;FALSE
+030310;onbruikbare vezels en door mechanische afscheiding verkregen vezel-, vulstof- en coatingslib;FALSE
+030311;niet onder 03 03 10 vallend slib van afvalwaterbehandeling ter plaatse;FALSE
+030399;niet elders genoemd afval;FALSE
+200125;spijsolie en -vetten;FALSE
+040102;loogafval;FALSE
+040106;chroomhoudend slib, met name van afvalwaterbehandeling ter plaatse;FALSE
+040109;afval van bewerking en afwerking;FALSE
+040209;afval van composietmaterialen (geïmpregneerde textiel, elastomeren, plastomeren);FALSE
+040214;afval van afwerking dat organische oplosmiddelen bevat;TRUE
+040216;kleurstoffen en pigmenten die TRUEe stoffen bevatten;TRUE
+040219;slib van afvalwaterbehandeling ter plaatse dat TRUEe stoffen bevat;TRUE
+040220;niet onder 04 02 19 vallend slib van afvalwaterbehandeling ter plaatse;FALSE
+040222;afval van verwerkte textielvezels;FALSE
+200101;papier en karton;FALSE
+200102;glas;FALSE
+200108;biologisch afbreekbaar keuken- en kantineafval;FALSE
+200110;kleding;FALSE
+200111;textiel;FALSE
+200123;afgedankte apparatuur die chloorfluorkoolwaterstoffen bevat;TRUE
+200133;onder 16 06 01, 16 06 02 of 16 06 03 vermelde batterijen en accus alsmede ongesorteerde mengsels van batterijen en accus die dergelijke batterijen en accus bevatten;TRUE
+200134;niet onder 20 01 33 vallende batterijen en accus;FALSE
+200135;niet onder 20 01 21 en 20 01 23 vallende afgedankte elektrische en elektronische apparatuur die TRUEe onderdelen (6) bevat;TRUE
+200136;niet onder 20 01 21, 20 01 23 en 20 01 35 vallende afgedankte elektrische en elektronische apparatuur;FALSE
+200139;kunststoffen;FALSE
+200140;metalen;FALSE
+200201;biologisch afbreekbaar afval;FALSE
+200301;gemengd stedelijk afval;FALSE
+200302;marktafval;FALSE
+200307;grofvuil;FALSE

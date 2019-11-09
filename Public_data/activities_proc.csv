@@ -1,0 +1,29 @@
+﻿nace;name;ag;activitygroup_id
+A01;A01 Bewaren;vA;22
+A02;A02 Overslag / opbulken;vA;22
+B01;B01 Inzetten als veevoer;vB;23
+B02;B02 Inzetten als meststof;vB;23
+B03;B03 Inzetten als bouwstof;vB;23
+B04;B04 Inzetten als brandstof;vB;23
+B05;B05 Overig inzetten als grondstof;vB;23
+C01;C01 Breken;vC;24
+C02;C02 Shredderen / knippen;vC;24
+C03;C03 Sorteren / scheiden;vC;24
+C04;C04 Immobiliseren voor hergebruik;vC;24
+D01;D01 Chemisch / fysisch scheiden;vD;25
+D02;D02 ONO is ontgiften, neutraliseren en ontwateren;vD;25
+D04;D04 Metaal terugwinnen (chemisch);vD;25
+D05;D05 Extractief reinigen (grond);vD;25
+D06;D06 Oxidatie onder hoge druk;vD;25
+E01;E01 Vergisten;vE;26
+E02;E02 Composteren, anaeroob;vE;26
+E03;E03 Composteren, aeroob;vE;26
+E04;E04 Biologisch reinigen (water);vE;26
+E05;E05 Biologisch reinigen (grond);vE;26
+F01;F01 Verbranden in roosterovens;vF;27
+F02;F02 Verbranden in draaitrommelovens;vF;27
+F03;F03 Pyrolyse;vF;27
+F05;F05 Uitgloeien (grond);vF;27
+F06;F06 Verbranden met terugwinnen materiaal (chloor, zwavel, ...;vF;27
+F07;F07 Verbranden met terugwinnen energie (bijstoken);vF;27
+G01;G01 Direct storten;vG;28
