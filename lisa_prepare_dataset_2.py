@@ -7,7 +7,6 @@ Created on Thu Oct 17 2019
 """
 
 import pandas as pd
-import numpy as np
 
 # reads separate LISA files (located & unlocated)
 # combines them into a single one

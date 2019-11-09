@@ -10,8 +10,8 @@ Created on Wed Aug 22 09:17:31 2018
 
 import pandas as pd
 import geopandas as gpd
-import numpy as np
 from shapely import wkt
+import variables as var
 
 import warnings  # ignore unnecessary warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -23,12 +23,6 @@ pd.options.mode.chained_assignment = None
 # P R E P A R A T I O N
 # ______________________________________________________________________________
 # ______________________________________________________________________________
-
-# define years of analysis
-years = [2014, 2015, 2016, 2017, 2018]
-buffer_dist = 250
-
-roles = ['Afzender', 'Inzamelaar', 'Bemiddelaar', 'Handelaar', 'Ontvanger']
 
 # choose scope: Food Waste, Construction & Demolition Waste, Consumption Goods
 
@@ -55,7 +49,7 @@ PART1 = "Exports_{0}_part1/".format(scope)
 # ______________________________________________________________________________
 
 print 'Loading LMA ontdoeners.......'
-LMA_ontodoeners = pd.read_excel(priv_folder + PART1 + 'Export_LMA_ontdoener.xlsx'.format(scope))
+LMA_ontdoeners = pd.read_excel(priv_folder + PART1 + 'Export_LMA_ontdoener.xlsx'.format(scope))
 
 print 'Loading LMA locations.......'
 LMA_locations = pd.read_csv(priv_folder + INPUT + '{0}_locations.csv'.format(scope))
@@ -84,12 +78,12 @@ LISA_boundary = gpd.read_file(pub_folder + 'LISA_boundary.shp')
 # ______________________________________________________________________________
 
 # first ontdoeners need to be matched with their locations
-ontdoeners = pd.merge(LMA_ontodoeners, LMA_locations, on='Key', how='left')
+ontdoeners = pd.merge(LMA_ontdoeners, LMA_locations, on='Key', how='left')
 missing_locations = ontdoeners[ontdoeners['WKT'].isnull()]
 if len(missing_locations.index) > 0:
     print 'WARNING! some locations do not have geometry, they will be skipped'
     print missing_locations
-    ontdoeners.dropna(inplace=True)
+    ontdoeners.dropna(subset=['WKT'], inplace=True)
 
 print ontdoeners['Key'].nunique(), 'ontdoeners in total'
 
@@ -190,9 +184,9 @@ ambiguous = by_address[by_address['count'] > 1]
 
 # give priority by year if possible, otherwise discard the matching
 temp = pd.DataFrame(columns=ambiguous.columns)
-for year in years:
+for year in var.map_years:
     col = 'in{0}'.format(year)
-    m = ambiguous[(ambiguous['Jaar'] == year) & (ambiguous[col] == 'JA')]
+    m = ambiguous[(ambiguous['Jaar'] == year) & (ambiguous[col].astype(str) == 'JA')]
     temp.append(m)
 
 ambiguous['count'] = ambiguous.groupby(['Key'])['activenq'].transform('count')
@@ -244,7 +238,7 @@ LISA_actors_geo = gpd.GeoDataFrame(LISA_actors[['key', 'orig_zaaknaam', 'adres',
 #
 LMA_inbound4 = remaining_geo[['Key', 'Orig_name', 'Adres', 'WKT']]
 LMA_inbound4.drop_duplicates(subset=['Key'], inplace=True)
-LMA_inbound4['buffer'] = LMA_inbound4['WKT'].buffer(buffer_dist)
+LMA_inbound4['buffer'] = LMA_inbound4['WKT'].buffer(var.buffer_dist)
 buffers = gpd.GeoDataFrame(LMA_inbound4[['Key', 'buffer']], geometry='buffer', crs={'init': 'epsg:28992'})
 #
 # LISA_actors_geo.to_file('LISA.shp')
@@ -282,7 +276,7 @@ distances['dist'] = distances.apply(lambda x: x['wkt'].distance(x['WKT']), axis=
 
 distances.reset_index(inplace=True)
 matched_TEMP = distances.loc[distances.groupby(['Key'])['dist'].idxmin()]
-print len(matched_TEMP.index), 'actors have been matched by the closest actor (<{0}m)'.format(buffer_dist)
+print len(matched_TEMP.index), 'actors have been matched by the closest actor (<{0}m)'.format(var.buffer_dist)
 
 # # matching control output
 # control_output_5 = matched_2[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
@@ -329,16 +323,16 @@ output_unmatched['how'] = 'unmatched'
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
-print 'Loading LMA verwerkers.......'
-verwerkers = pd.read_excel(priv_folder + PART1 + 'Export_LMA_verwerker.xlsx')
-
-verwerkers = verwerkers.drop_duplicates(subset=['Key'])
-print len(verwerkers), 'verwekers have been found'
-
-verwerkers['activenq'] = verwerkers['Key'].apply(lambda x: x.split()[-1])
-
-output_verwerker = verwerkers[['Key', 'activenq', 'Orig_name']]
-output_verwerker['how'] = 'verwerker'
+# print 'Loading LMA verwerkers.......'
+# verwerkers = pd.read_excel(priv_folder + PART1 + 'Export_LMA_verwerker.xlsx')
+#
+# verwerkers = verwerkers.drop_duplicates(subset=['Key'])
+# print len(verwerkers), 'verwekers have been found'
+#
+# verwerkers['activenq'] = verwerkers['Key'].apply(lambda x: x.split()[-1])
+#
+# output_verwerker = verwerkers[['Key', 'activenq', 'Orig_name']]
+# output_verwerker['how'] = 'verwerker'
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
@@ -348,7 +342,7 @@ output_verwerker['how'] = 'verwerker'
 # ______________________________________________________________________________
 
 all_nace = pd.concat([output_by_name_address, output_by_name, output_by_address,
-                     output_by_proximity, output_unmatched, output_verwerker])
+                     output_by_proximity, output_unmatched])  # , output_verwerker])
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
@@ -357,18 +351,24 @@ all_nace = pd.concat([output_by_name_address, output_by_name, output_by_address,
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
-role_map = {'Afzender': '3810',
+role_map = {'Ontdoener': '0000',
+            'Afzender': '3810',
             'Inzamelaar': '3810',
             'Bemiddelaar': '3810',
             'Handelaar': '3810',
-            'Ontvanger': '3810'}
+            'Ontvanger': '3820',
+            'Verwerker': '3820'}
 
-for role in roles:
+var.map_roles.remove('Ontdoener')
+var.map_roles.remove('Herkomst')
+
+for role in var.map_roles:
 
     print 'Loading LMA {0}s.......'.format(role)
     LMA_role = pd.read_excel(priv_folder + PART1 + 'Export_LMA_{0}.xlsx'.format(role))
 
-    keys = LMA_role[['Key']].drop_duplicates()
+    keys = LMA_role[['Key', 'Orig_name']].copy()
+    keys.drop_duplicates(subset=['Key'], inplace=True)
     print len(keys), '{0}s have been found'.format(role)
 
     keys['activenq'] = role_map[role]

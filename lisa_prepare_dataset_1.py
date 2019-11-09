@@ -11,6 +11,7 @@ import time
 from clean import clean_company_name
 from clean import clean_address
 from clean import clean_postcode
+import variables as var
 
 # TODO!!! update description
 # Reads all the original LISA files year by year, filters the relevant columns,
@@ -19,13 +20,15 @@ from clean import clean_postcode
 # prepares unlocated entries for the geoloaction
 
 priv_folder = "Private_data/"
+pub_folder = "Public_data/"
 
-years = [2014, 2015, 2016, 2017, 2018]
-# years = [2014, 2015]
+NACEtable = pd.read_excel(pub_folder + 'NACE_table.xlsx', sheet_name='NACE_nl')
 
 all_years = []
 active_in = dict()
-for year in years:
+for year in var.map_years:
+    if year not in var.LISA_years:
+        continue
     orig_LISA_dataset = priv_folder + "LISA_data/raw_data/mra{0}_wl.csv".format(year)
 
     # selection of the columns we want to include in our analysis
@@ -60,14 +63,21 @@ for year in years:
     LISA['activenq'] = LISA['activenq'].astype(int)
     LISA = LISA[LISA['activenq'].astype(int) != 0]
 
-
     LISA['activenq'] = LISA['activenq'].astype(str)
     LISA = LISA[LISA['activenq'].str.len() < 6]
     LISA = LISA[LISA['activenq'].str.len() > 2]
 
     # unify NACE codes
     LISA['activenq'] = LISA['activenq'].astype(str)
-    LISA['activenq'] = LISA['activenq'].apply(lambda x: x.zfill(4))
+    LISA['activenq'] = LISA['activenq'].str.zfill(4)
+
+    # match with the list of NACE activities, skip if not present
+    NACEtable['Digits'] = NACEtable['Digits'].astype(str)
+    NACEtable['Digits'] = NACEtable['Digits'].str.zfill(4)
+    LISA = pd.merge(LISA, NACEtable[['Digits']], left_on='activenq', right_on='Digits', validate='m:1')
+
+    # e = LISA[LISA['Digits'].isna()]
+    # print e['activenq'].drop_duplicates()
 
     print pre - len(LISA.index), 'lines have been filtered due to an invalid NACE'
 
@@ -120,7 +130,7 @@ for year in years:
     LISA_copy[year_col] = 'JA'
     active_in[year_col] = LISA_copy
 
-    all_years.append(LISA)
+    all_years.append(LISA.copy())
 
 # ______________________________________________________________________________
 #   Concatenating all the years into a single dataset
@@ -146,13 +156,16 @@ print pre - len(all_LISA.index), 'companies have been assigned to more than one 
 print len(all_LISA.index), 'unique company name and postcode combinations remain'
 
 
-for year in years:
+for year in var.all_years:
     year_col = 'in{0}'.format(year)
+    if year_col not in active_in.keys():
+        all_LISA[year_col] = None
+        continue
     all_LISA = pd.merge(all_LISA, active_in[year_col], how='left', on='key')
 
 all_LISA_col = ['zaaknaam', 'orig_zaaknaam', 'postcode', 'adres', 'plaats',
                 'activenq', 'key']
-year_activity = ['in{0}'.format(year) for year in years]
+year_activity = ['in{0}'.format(year) for year in var.all_years]
 
 all_LISA[all_LISA_col + year_activity].to_excel(priv_folder + 'LISA_data/all_LISA_part1.xlsx')
 

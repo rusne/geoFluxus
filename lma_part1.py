@@ -11,14 +11,11 @@ Created on Wed Aug 22 09:17:31 2018
 import pandas as pd
 import numpy as np
 import clean
+import variables as var
 
 import warnings  # ignore unnecessary warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
 pd.options.mode.chained_assignment = None
-
-
-# def clean_white_space(string):
-#     return ' '.join(string.split())
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
@@ -42,9 +39,6 @@ pub_folder = "Public_data/"
 INPUT = "Input_{0}_part1/".format(scope)
 EXPORT = "Exports_{0}_part1/".format(scope)
 
-# order of roles is important in reverse !!!
-roles = ['Afzender', 'Inzamelaar', 'Bemiddelaar', 'Handelaar',
-         'Ontvanger', 'Ontdoener', 'Herkomst', 'Verwerker']
 
 LMA_dataset = priv_folder + "LMA_data/{0}_data/LMA_{0}_all.xlsx".format(scope)
 
@@ -52,9 +46,9 @@ print 'Loading LMA data.......'
 LMA = pd.read_excel(LMA_dataset)
 
 LMA.rename(columns={"Afzender_Huisnummer": "Afzender_Huisnr",
-                   "Handelaar_Huisnummer": "Handelaar_Huisnr",
-                   "Ontvanger_Huisnummer": "Ontvanger_Huisnr",
-                   "Verwerker_Huisnummer": "Verwerker_Huisnr"}, inplace=True)
+                    "Handelaar_Huisnummer": "Handelaar_Huisnr",
+                    "Ontvanger_Huisnummer": "Ontvanger_Huisnr",
+                    "Verwerker_Huisnummer": "Verwerker_Huisnr"}, inplace=True)
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
@@ -79,7 +73,7 @@ del LMA_filt_year['Gewicht_KG']
 del LMA_filt_year['Aantal_vrachten']
 LMA_filt_year.drop_duplicates(inplace=True)
 
-#add the total waste per year back to each Afvalstroomnummer
+# add the total waste per year back to each Afvalstroomnummer
 LMA_agg = pd.merge(LMA_filt_year, ASN_massa, on=['Afvalstroomnummer', 'MeldPeriodeJAAR'], how='left')
 
 # check if afvalstroomnummer & year combination is unique per unique entry
@@ -115,7 +109,6 @@ LMA_agg.loc[LMA_agg['Herkomst_Straat'] == '', 'Herkomst_Straat'] = LMA_agg['Ontd
 LMA_agg.loc[LMA_agg['Herkomst_Plaats'] == '', 'Herkomst_Plaats'] = LMA_agg['Ontdoener_Plaats']
 
 
-
 # clean the BenamingAfval field
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].astype('unicode')
 LMA_agg['BenamingAfval'] = LMA_agg['BenamingAfval'].apply(clean.clean_description)
@@ -133,10 +126,10 @@ comprehensive = LMA_agg.copy()
 # therefore ontdoener location is used as ontdoener address instead of Herkomst
 
 actor_data_cols = ['Name', 'Orig_name', 'Postcode', 'Plaats', 'Straat', 'Huisnr',
-                   'Jaar', 'Key', 'Who']
+                   'Jaar', 'Key', 'Activity', 'Who']
 
 actorsets = []
-for role in roles:
+for role in var.map_roles:
 
     postcode = '{0}_Postcode'.format(role)
     plaats = '{0}_Plaats'.format(role)
@@ -166,13 +159,16 @@ for role in roles:
 
     if role == 'Herkomst':
         comprehensive[key] = comprehensive['Ontdoener'] + ' ' + comprehensive[postcode]
-        actorset = comprehensive[['Ontdoener', 'Ontdoener_Origname', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
+        comprehensive['Activity'] = ''
+        actorset = comprehensive[['Ontdoener', 'Ontdoener_Origname', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key, 'Activity']]
     elif role == 'Verwerker':
-        comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode] + ' ' + comprehensive['VerwerkingsmethodeCode']
-        actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
+        comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
+        comprehensive['Activity'] = comprehensive['VerwerkingsmethodeCode']
+        actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key, 'Activity']]
     else:
         comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
-        actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key]]
+        comprehensive['Activity'] = ''
+        actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key, 'Activity']]
     actorset['Who'] = role
     actorset.columns = actor_data_cols
 
@@ -182,7 +178,7 @@ for role in roles:
 actors = pd.concat(actorsets)
 
 actors = actors[actors['Name'] != '']
-actors.drop_duplicates(subset=['Key', 'Who', 'Jaar'], inplace=True)
+actors.drop_duplicates(subset=['Key', 'Who', 'Jaar', 'Activity'], inplace=True)
 
 actors['Adres'] = actors['Straat'] + ' ' + actors['Huisnr']
 
@@ -209,15 +205,21 @@ export_actors = actors.copy()
 export_actors.to_excel(priv_folder + EXPORT + 'Export_LMA_all_actors.xlsx')
 print export_actors['Key'].nunique(), 'unique actors in total'
 
-# NACE assignment has a reverse role hierarchy
+# NACE assignment has a hierarchy:
+# first verwerker, then ontvanger, then ontdoener, then the rest
 # e.g. if an actor is a verwerker,
 # then it gets assigned to the NACE code as a verwerker and not as others
 
-roles.reverse()
+hier_roles = list(var.map_roles)
+roles = []
+roles.append(hier_roles.pop(hier_roles.index('Verwerker')))
+roles.append(hier_roles.pop(hier_roles.index('Ontvanger')))
+roles.append(hier_roles.pop(hier_roles.index('Ontdoener')))
+# except for herkomst as this depends on the ontdoener
+hier_roles.remove('Herkomst')
+roles += hier_roles
+
 for role in roles:
-    # except for herkomst as this depends on the ontdoener
-    if role == 'Herkomst':
-        continue
 
     exp = export_actors[export_actors['Who'] == role]
     exp.to_excel(priv_folder + EXPORT + 'Export_LMA_{0}.xlsx'.format(role))
@@ -268,10 +270,9 @@ comprehensive_columns = ['Afvalstroomnummer', 'VerwerkingsmethodeCode',
                          'VerwerkingsOmschrijving', 'RouteInzameling',
                          'Inzamelaarsregeling', 'ToegestaanbijInzamelaarsregeling',
                          'EuralCode', 'BenamingAfval', 'MeldPeriodeJAAR',
-                         'Ontdoener_Key', 'Herkomst_Key', 'Afzender_Key',
-                         'Inzamelaar_Key', 'Bemiddelaar_Key', 'Handelaar_Key',
-                         'Ontvanger_Key', 'Verwerker_Key', 'EuralNaam', 'Haz',
-                         'Gewicht_KG', 'Aantal_vrachten']
+                         'EuralNaam', 'Haz', 'Gewicht_KG', 'Aantal_vrachten']
+
+comprehensive_columns += ['{0}_Key'.format(role) for role in var.map_roles]
 
 comprehensive = comprehensive[comprehensive_columns]
 comprehensive.to_excel(priv_folder + EXPORT + 'Export_LMA_Analysis_part1.xlsx')

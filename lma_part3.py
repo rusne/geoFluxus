@@ -9,7 +9,7 @@ Created on Wed Aug 22 09:17:31 2018
 """
 
 import pandas as pd
-import numpy as np
+import variables as var
 
 import warnings  # ignore unnecessary warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -21,12 +21,6 @@ pd.options.mode.chained_assignment = None
 # P R E P A R A T I O N
 # ______________________________________________________________________________
 # ______________________________________________________________________________
-
-# define years of analysis
-years = [2014, 2015, 2016, 2017, 2018]
-
-roles = ['Ontdoener', 'Herkomst', 'Afzender', 'Inzamelaar', 'Bemiddelaar',
-         'Handelaar', 'Ontvanger', 'Verwerker']
 
 # choose scope: Food Waste, Construction & Demolition Waste, Consumption Goods
 
@@ -74,7 +68,7 @@ flows = pd.read_excel(priv_folder + PART1 + 'Export_LMA_Analysis_part1.xlsx')
 
 actors = pd.read_excel(priv_folder + PART2 + 'Export_All_actors.xlsx')
 
-locations = pd.read_csv(priv_folder + INPUT_2 + '{0}_locations.csv'.format(scope))
+locations = pd.read_csv(priv_folder + INPUT_2 + '{0}_locations_WGS84.csv'.format(scope), encoding='utf-8')
 
 compositions = pd.read_excel(pub_folder + INPUT + 'Categorization.xlsx')
 
@@ -86,21 +80,31 @@ print 'Exporting Activities & Activity Groups.......'
 
 NACEtable = pd.read_excel(pub_folder + 'NACE_table.xlsx', sheet_name='NACE_nl')
 
+# all activities from matched actors,
+# processing activities will be loaded separetely
 actors['activenq'] = actors['activenq'].astype(str)
+actors['activenq'] = actors['activenq'].str.zfill(4)
 NACEtable['Digits'] = NACEtable['Digits'].astype(str)
+NACEtable['Digits'] = NACEtable['Digits'].str.zfill(4)
 act_activ = pd.merge(actors, NACEtable, how='left', left_on='activenq', right_on='Digits', validate='m:1')
 
-activity_groups = act_activ[['AG code', 'Activity Group']]
+# if len(e.index) > 0:
+#     print 'WARNING! not all activity codes have been found in the NACE table'
+#     print e['activenq'].drop_duplicates()
+
+activity_groups = act_activ[['AGcode', 'ActivityGroup_nl']]
 activity_groups.drop_duplicates(inplace=True)
 
 activity_groups.columns = activity_groups_col
 activity_groups.to_excel(priv_folder + EXPORT + '{0}_activity_groups.xlsx'.format(scope))
+activity_groups.to_csv(priv_folder + EXPORT + '{0}_activity_groups.csv'.format(scope), encoding='utf-8')
 
-activities = act_activ[['Code', 'Name_en', 'AG code']]
+activities = act_activ[['Code', 'Name_nl', 'AGcode']]
 activities.drop_duplicates(inplace=True)
 
 activities.columns = activities_col
 activities.to_excel(priv_folder + EXPORT + '{0}_activities.xlsx'.format(scope))
+activities.to_csv(priv_folder + EXPORT + '{0}_activities.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 # Actors & Locations
@@ -109,12 +113,34 @@ activities.to_excel(priv_folder + EXPORT + '{0}_activities.xlsx'.format(scope))
 
 print 'Merging flows with Actors and their Locations.......'
 
-for role in roles:
+for role in var.map_roles:
     print role
     role_key = role + '_Key'
+    role_id = role + '_id'
 
     # merge NACE code
-    if role != 'Herkomst':
+    if role == 'Ontvanger':
+        flows_updated = pd.merge(flows, act_activ[['Key', 'Orig_name']], how='left', left_on=role_key, right_on='Key', validate='m:1')
+        flows_updated.rename(columns={'Orig_name': '{0}_name'.format(role),
+                                      'Key': 'Ontvanger_loc_key'}, inplace=True)
+        # give NACE according to hazardous or non-hazardous treatment
+        flows_updated.loc[flows_updated['Haz'] == 'Non-hazardous', 'Ontvanger_nace'] = 'E-3821'
+        flows_updated.loc[flows_updated['Haz'] == 'Hazardous', 'Ontvanger_nace'] = 'E-3822'
+        # update actor key
+        flows_updated[role_key] = flows_updated[role_key] + " " + flows_updated['Ontvanger_nace']
+        flows = flows_updated.copy()
+
+    elif role == 'Verwerker':
+        flows_updated = pd.merge(flows, act_activ[['Key', 'Orig_name']], how='left', left_on=role_key, right_on='Key', validate='m:1')
+        flows_updated.rename(columns={'Orig_name': '{0}_name'.format(role),
+                                      'Key': 'Verwerker_loc_key'}, inplace=True)
+        # give NACE according to processing method
+        flows_updated['Verwerker_nace'] = flows_updated['VerwerkingsmethodeCode']
+        # update actor key
+        flows_updated[role_key] = flows_updated[role_key] + " " + flows_updated['Verwerker_nace']
+        flows = flows_updated.copy()
+
+    elif role != 'Herkomst':
         flows_updated = pd.merge(flows, act_activ[['Key', 'Code', 'Orig_name']], how='left', left_on=role_key, right_on='Key', validate='m:1')
         flows_updated.rename(columns={'Code': '{0}_nace'.format(role),
                                       'Orig_name': '{0}_name'.format(role)}, inplace=True)
@@ -122,49 +148,65 @@ for role in roles:
         flows = flows_updated.copy()
 
     # merge location
-    if role != 'Ontdoener':
+    if role == 'Verwerker' or role == 'Ontvanger':
+        flows_updated = pd.merge(flows, locations, how='left', left_on='{0}_loc_key'.format(role), right_on='Key', validate='m:1')
+        flows_updated.rename(columns={'WKT': '{0}_wkt'.format(role)}, inplace=True)
+        flows_updated.drop(columns=['Key'], inplace=True)
+        flows = flows_updated.copy()
+    elif role != 'Ontdoener':
         flows_updated = pd.merge(flows, locations, how='left', left_on=role_key, right_on='Key', validate='m:1')
         flows_updated.rename(columns={'WKT': '{0}_wkt'.format(role)}, inplace=True)
         flows_updated.drop(columns=['Key'], inplace=True)
         flows = flows_updated.copy()
 
+    # give id
+    if role != 'Ontdoener':
+        flows[role_id] = flows[role_key].apply(lambda x: '_'.join(x.split()))
+    else:
+        flows[role_id] = flows['Herkomst_Key'].apply(lambda x: '_'.join(x.split()))
 
     # reorder columns for better human readability of the output file
     cols = list(flows.columns)
     i = cols.index(role_key)
-    end = cols.index('Aantal_vrachten')
+    end = cols.index('Verwerker_Key')
     col_order = cols[:i + 1] + cols[end + 1:] + cols[i + 1:end + 1]
     flows = flows[col_order]
 
+flows.to_excel('overview.xlsx')
+
 print 'Exporting Actors and their Locations.......'
 
-# Actor identifier = name + postcode + nace (only for verwerkers)
+# Actor identifier = name + postcode + nace (only for ontvangers & verwerkers)
 #               stripped from extra symbols, "_" instead of spaces
 
 loc_list = []
 act_list = []
 
-roles.remove('Herkomst')
-for role in roles:
+var.map_roles.remove('Herkomst')
+for role in var.map_roles:
     name = '{0}_name'.format(role)
     nace = '{0}_nace'.format(role)
     key = '{0}_Key'.format(role)
-    actors_export = flows[[name, nace, key]].copy()
-    actors_export['id'] = actors_export[key].apply(lambda x: '_'.join(x.split()))
+    id = '{0}_id'.format(role)
+    actors_export = flows[[id, name, nace]].copy()
     # actors_export['id'] = actors_export['id'] + '_' + actors_export[nace]
-
-    actors_export = actors_export[['id', name, nace]]
     actors_export.columns = actors_col
 
     if role == 'Ontdoener':
         geom_col = 'Herkomst_wkt'
         loc_key = 'Herkomst_Key'
+    elif role == 'Ontvanger':
+        geom_col = 'Ontvanger_wkt'
+        loc_key = 'Ontvanger_loc_key'
+    elif role == 'Verwerker':
+        geom_col = 'Verwerker_wkt'
+        loc_key = 'Verwerker_loc_key'
     else:
         geom_col = '{0}_wkt'.format(role)
         loc_key = key
-    locs_export = flows[[geom_col, key, loc_key]]
-    locs_export.columns = ['geom', 'actor_key', 'loc_key']
-    locs_export['actor'] = locs_export['actor_key'].apply(lambda x: '_'.join(x.split()))
+    locs_export = flows[[geom_col, key, loc_key, id]]
+    locs_export.columns = ['geom', 'actor_key', 'loc_key', 'actor']
+    # locs_export['actor'] = locs_export['actor_key'].apply(lambda x: '_'.join(x.split()))
 
     act_list.append(actors_export)
     loc_list.append(locs_export)
@@ -173,6 +215,7 @@ for role in roles:
 actors_export = pd.concat(act_list)
 actors_export.drop_duplicates(inplace=True)
 actors_export.to_excel(priv_folder + EXPORT + '{0}_actors.xlsx'.format(scope))
+actors_export.to_csv(priv_folder + EXPORT + '{0}_actors.csv'.format(scope), encoding='utf-8')
 
 addresses = pd.read_excel(priv_folder + PART1 + 'Export_LMA_locations.xlsx')
 locations_export = pd.concat(loc_list)
@@ -182,6 +225,7 @@ locations_exp_add = pd.merge(locations_export, addresses, left_on='loc_key', rig
 locations_exp_add = locations_exp_add[['geom', 'Postcode', 'Adres', 'Plaats', 'actor']]
 locations_exp_add.columns = locations_col
 locations_exp_add.to_excel(priv_folder + EXPORT + '{0}_locations.xlsx'.format(scope))
+locations_exp_add.to_csv(priv_folder + EXPORT + '{0}_locations.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 # Flows & Flow chains
@@ -195,7 +239,7 @@ flows = pd.merge(flows, compositions, on=['EuralCode', 'BenamingAfval'], validat
 
 print 'Exporting flow chains.......'
 
-flow_chains = flows[['id', 'VerwerkingsOmschrijving',
+flow_chains = flows[['id', 'VerwerkingsmethodeCode',
                      'Gewicht_KG', 'Aantal_vrachten', 'MeldPeriodeJAAR',
                      'RouteInzameling', 'Inzamelaarsregeling', 'EuralCode',
                      'BenamingAfval', 'clean', 'mixed', 'direct_use']].copy()
@@ -208,7 +252,7 @@ flow_chains.loc[flow_chains['Inzamelaarsregeling'] == 'N', 'Inzamelaarsregeling'
 flow_chains['source'] = 'lma2019'
 
 flow_chains.rename(columns={'id': 'identifier',
-                            'VerwerkingsOmschrijving': 'process',
+                            'VerwerkingsmethodeCode': 'process',
                             'Aantal_vrachten': 'trips',
                             'MeldPeriodeJAAR': 'year',
                             'RouteInzameling': 'route',
@@ -216,9 +260,14 @@ flow_chains.rename(columns={'id': 'identifier',
                             'EuralCode': 'waste',
                             'BenamingAfval': 'orig_description'}, inplace=True)
 
+flow_chains['clean'] = flow_chains['clean'].astype('bool')
+flow_chains['mixed'] = flow_chains['mixed'].astype('bool')
+flow_chains['direct_use'] = flow_chains['direct_use'].astype('bool')
+
 flow_chains = flow_chains[flow_chains_col]
 
 flow_chains.to_excel(priv_folder + EXPORT + '{0}_flowchains.xlsx'.format(scope))
+flow_chains.to_csv(priv_folder + EXPORT + '{0}_flowchains.csv'.format(scope), encoding='utf-8')
 
 
 print 'Splitting chains into separate flows.......'
@@ -234,8 +283,8 @@ def chain(seq, roles):
     return ch
 
 
-role_keys = ['{0}_Key'.format(r) for r in roles]
-flows['chain'] = flows[role_keys].apply(lambda x: chain(x, roles), axis=1)
+role_keys = ['{0}_Key'.format(r) for r in var.map_roles]
+flows['chain'] = flows[role_keys].apply(lambda x: chain(x, var.map_roles), axis=1)
 
 fp = {'flowchain': [],
       'origin': [],
@@ -246,15 +295,16 @@ fp = {'flowchain': [],
 for index, row in flows.iterrows():
     for i in range(len(row['chain']) - 1):
         orig = row['chain'][i]
-        dest = row['chain'][i +1]
+        dest = row['chain'][i + 1]
         fp['flowchain'].append(row['id'])
-        fp['origin'].append(row['{0}_Key'.format(orig)])
-        fp['destination'].append(row['{0}_Key'.format(dest)])
+        fp['origin'].append(row['{0}_id'.format(orig)])
+        fp['destination'].append(row['{0}_id'.format(dest)])
         fp['origin_role'].append(orig)
         fp['destination_role'].append(dest)
 
 flowparts = pd.DataFrame.from_dict(fp)
 flowparts.to_excel(priv_folder + EXPORT + '{0}_flows.xlsx'.format(scope))
+flowparts.to_csv(priv_folder + EXPORT + '{0}_flows.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 # Materials, products and compositions
@@ -278,6 +328,7 @@ materials.dropna(inplace=True)
 materials.drop_duplicates(inplace=True)
 
 materials.to_excel(priv_folder + EXPORT + '{0}_materials.xlsx'.format(scope))
+materials.to_csv(priv_folder + EXPORT + '{0}_materials.csv'.format(scope), encoding='utf-8')
 
 comp_1 = flows[['composite', 'id']]
 comp_1.columns = material_col
@@ -289,6 +340,7 @@ composites.dropna(inplace=True)
 composites.drop_duplicates(inplace=True)
 
 composites.to_excel(priv_folder + EXPORT + '{0}_composites.xlsx'.format(scope))
+composites.to_csv(priv_folder + EXPORT + '{0}_composites.csv'.format(scope), encoding='utf-8')
 
 products = flows[['product', 'id']]
 products.columns = material_col
@@ -296,6 +348,7 @@ products.dropna(inplace=True)
 products.drop_duplicates(inplace=True)
 
 products.to_excel(priv_folder + EXPORT + '{0}_products.xlsx'.format(scope))
+products.to_csv(priv_folder + EXPORT + '{0}_products.csv'.format(scope), encoding='utf-8')
 
 
 descriptions = ['reason', 'origin', 'colour', 'state', 'size', 'consistency',
@@ -314,6 +367,7 @@ extra_descriptions.dropna(inplace=True)
 extra_descriptions.drop_duplicates(inplace=True)
 
 extra_descriptions.to_excel(priv_folder + EXPORT + '{0}_extra_descriptions.xlsx'.format(scope))
+extra_descriptions.to_csv(priv_folder + EXPORT + '{0}_extra_descriptions.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 #   Final analysis table
