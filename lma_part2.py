@@ -27,11 +27,11 @@ pd.options.mode.chained_assignment = None
 # choose scope: Food Waste, Construction & Demolition Waste, Consumption Goods
 
 while True:
-    scope = raw_input('Choose scope: CDW / FW / CG\n')
+    scope = input('Choose scope: CDW / FW / CG\n')
     if scope == 'CDW' or scope == 'FW' or scope == 'CG':
         break
     else:
-        print 'Wrong choice.'
+        print('Wrong choice.')
 
 priv_folder = "Private_data/"
 pub_folder = "Public_data/"
@@ -48,17 +48,17 @@ PART1 = "Exports_{0}_part1/".format(scope)
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
-print 'Loading LMA ontdoeners.......'
+print('Loading LMA ontdoeners.......')
 LMA_ontdoeners = pd.read_excel(priv_folder + PART1 + 'Export_LMA_ontdoener.xlsx'.format(scope))
 
-print 'Loading LMA locations.......'
+print('Loading LMA locations.......')
 LMA_locations = pd.read_csv(priv_folder + INPUT + '{0}_locations.csv'.format(scope))
 
 # ______________________________________________________________________________
 # reading all LISA actors
 # ______________________________________________________________________________
 
-print 'Loading LISA actors & locations.......'
+print('Loading LISA actors & locations.......')
 LISA_actors = pd.read_excel(priv_folder + 'LISA_data/all_LISA_part2.xlsx') # ,
                             # nrows=50000)
 
@@ -66,7 +66,7 @@ LISA_actors = pd.read_excel(priv_folder + 'LISA_data/all_LISA_part2.xlsx') # ,
 # reading Noord Holland area covered by LISA dataset
 # ______________________________________________________________________________
 
-print 'Loading LISA boundary.......'
+print('Loading LISA boundary.......')
 LISA_boundary = gpd.read_file(pub_folder + 'LISA_boundary.shp')
 
 
@@ -81,11 +81,11 @@ LISA_boundary = gpd.read_file(pub_folder + 'LISA_boundary.shp')
 ontdoeners = pd.merge(LMA_ontdoeners, LMA_locations, on='Key', how='left')
 missing_locations = ontdoeners[ontdoeners['WKT'].isnull()]
 if len(missing_locations.index) > 0:
-    print 'WARNING! some locations do not have geometry, they will be skipped'
-    print missing_locations
+    print('WARNING! some locations do not have geometry, they will be skipped')
+    print(missing_locations)
     ontdoeners.dropna(subset=['WKT'], inplace=True)
 
-print ontdoeners['Key'].nunique(), 'ontdoeners in total'
+print(ontdoeners['Key'].nunique(), 'ontdoeners in total')
 
 # then all actors that fall out of the LISA boundary need to be filtered out
 ontdoeners['WKT'] = ontdoeners['WKT'].apply(wkt.loads)
@@ -95,8 +95,8 @@ joined = gpd.sjoin(LMAgdf, LISA_boundary, how='left')
 in_boundary = joined[joined['bound'] == 'boundary']
 out_boundary = joined[joined['bound'] != 'boundary']
 
-print in_boundary['Key'].nunique(), 'ontdoeners are inside the LISA boundary'
-print out_boundary['Key'].nunique(), 'ontdoeners are outside the LISA boundary'
+print(in_boundary['Key'].nunique(), 'ontdoeners are inside the LISA boundary')
+print(out_boundary['Key'].nunique(), 'ontdoeners are outside the LISA boundary')
 
 # further matching only happens for the actors inside the boundary
 
@@ -122,13 +122,13 @@ control_output['match'] = 1
 output_by_name_address = by_name_and_address[['Key', 'activenq', 'Orig_name']].copy()
 output_by_name_address['how'] = 'by name and address'
 
-print len(output_by_name_address.index), 'actors have been matched by name & postcode',
-print round(len(output_by_name_address.index) / float(total_inbound) * 100, 2), '%'
+print(len(output_by_name_address.index), 'actors have been matched by name & postcode',)
+print(round(len(output_by_name_address.index) / float(total_inbound) * 100, 2), '%')
 
 # take out those actors that had not been matched
 remaining = LMA_inbound[(LMA_inbound['Key'].isin(output_by_name_address['Key']) == False)]
 
-print remaining['Key'].nunique(), 'remaining'
+print(remaining['Key'].nunique(), 'remaining')
 
 # ______________________________________________________________________________
 # 2. BY NAME ONLY
@@ -156,13 +156,13 @@ control_output = control_output.append(control_output_2)
 output_by_name = closest[['Key', 'activenq', 'Orig_name']].copy()
 output_by_name['how'] = 'by name'
 
-print len(output_by_name.index), 'actors have been matched by name',
-print round(len(output_by_name.index) / float(total_inbound) * 100, 2), '%'
+print(len(output_by_name.index), 'actors have been matched by name',)
+print(round(len(output_by_name.index) / float(total_inbound) * 100, 2), '%')
 
 # take out those actors that had not been matched
 remaining = remaining[(remaining['Key'].isin(output_by_name['Key']) == False)]
 
-print remaining['Key'].nunique(), 'remaining'
+print(remaining['Key'].nunique(), 'remaining')
 
 # ______________________________________________________________________________
 # 3. BY ADDRESS ONLY
@@ -178,7 +178,7 @@ by_address = pd.merge(LMA_inbound3, LISA_actors, left_on=['Adres', 'Postcode'], 
 by_address['count'] = by_address.groupby(['Key'])['activenq'].transform('count')
 matched_by_address = by_address[by_address['count'] == 1]
 
-print matched_by_address['Key'].nunique(), 'actors have been matched only by address',
+print(matched_by_address['Key'].nunique(), 'actors have been matched only by address',)
 
 ambiguous = by_address[by_address['count'] > 1]
 
@@ -192,10 +192,10 @@ for year in var.map_years:
 ambiguous['count'] = ambiguous.groupby(['Key'])['activenq'].transform('count')
 matched_ambiguous = ambiguous[ambiguous['count'] == 1]
 
-print matched_ambiguous['Key'].nunique(), 'additional actors have been matched by address and year'
+print(matched_ambiguous['Key'].nunique(), 'additional actors have been matched by address and year')
 
 discard = ambiguous[ambiguous['count'] > 1]
-print discard['Key'].nunique(), 'matches have been discarded due to multiple NACE codes'
+print(discard['Key'].nunique(), 'matches have been discarded due to multiple NACE codes')
 
 by_address = pd.concat([matched_by_address, matched_ambiguous])
 
@@ -211,13 +211,13 @@ by_address.drop_duplicates(inplace=True)
 output_by_address = by_address[['Key', 'activenq', 'Orig_name']]
 output_by_address['how'] = 'by address'
 
-print len(output_by_address.index), 'actors have been matched only by address',
-print round(len(output_by_address.index) / float(total_inbound) * 100, 2), '%'
+print(len(output_by_address.index), 'actors have been matched only by address',)
+print(round(len(output_by_address.index) / float(total_inbound) * 100, 2), '%')
 
 # take out those actors that had not been matched
 remaining = remaining[(remaining['Key'].isin(output_by_address['Key']) == False)]
 
-print remaining['Key'].nunique(), 'remaining'
+print(remaining['Key'].nunique(), 'remaining')
 #
 # remaining.to_excel('remaining.xlsx')
 
@@ -260,7 +260,7 @@ distances['dist'] = distances.apply(lambda x: x['wkt'].distance(x['WKT']), axis=
 #
 # # select those that match with only one most frequent activity group
 # matched_1 = matched_AG[matched_AG.groupby('Key')['AG'].transform('nunique') == 1]
-# print matched_1['Key'].nunique(), 'actors have been matched by the most frequent surrounding activity'
+# print(matched_1['Key'].nunique(), 'actors have been matched by the most frequent surrounding activity')
 #
 # # matching control output
 # control_output_4 = matched_1[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
@@ -272,11 +272,11 @@ distances['dist'] = distances.apply(lambda x: x['wkt'].distance(x['WKT']), axis=
 # # and then select geographically closest one from the list
 # matched_2.reset_index(inplace=True)
 # matched_2 = matched_2.loc[matched_2.groupby(['Key'])['dist'].idxmin()]
-# print len(matched_2.index), 'actors have been matched by the closest actor (<{0}m)'.format(buffer_dist)
+# print(len(matched_2.index), 'actors have been matched by the closest actor (<{0}m)'.format(buffer_dist))
 
 distances.reset_index(inplace=True)
 matched_TEMP = distances.loc[distances.groupby(['Key'])['dist'].idxmin()]
-print len(matched_TEMP.index), 'actors have been matched by the closest actor (<{0}m)'.format(var.buffer_dist)
+print(len(matched_TEMP.index), 'actors have been matched by the closest actor (<{0}m)'.format(var.buffer_dist))
 
 # # matching control output
 # control_output_5 = matched_2[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
@@ -293,13 +293,13 @@ matched_by_proximity = matched_TEMP[['Key', 'activenq', 'Orig_name']].drop_dupli
 output_by_proximity = matched_by_proximity.copy()
 output_by_proximity['how'] = 'by proximity'
 
-print len(output_by_proximity.index), 'actors have been matched by proximity',
-print round(len(output_by_proximity.index) / float(total_inbound) * 100, 2), '%'
+print(len(output_by_proximity.index), 'actors have been matched by proximity',)
+print(round(len(output_by_proximity.index) / float(total_inbound) * 100, 2), '%')
 
 # take out those actors that had not been matched
 remaining = remaining[(remaining['Key'].isin(output_by_proximity['Key']) == False)]
 
-print remaining['Key'].nunique(), 'remaining unmatched'
+print(remaining['Key'].nunique(), 'remaining unmatched')
 
 control_output.to_excel('control_output.xlsx')
 
@@ -323,11 +323,11 @@ output_unmatched['how'] = 'unmatched'
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
-# print 'Loading LMA verwerkers.......'
+# print('Loading LMA verwerkers.......')
 # verwerkers = pd.read_excel(priv_folder + PART1 + 'Export_LMA_verwerker.xlsx')
 #
 # verwerkers = verwerkers.drop_duplicates(subset=['Key'])
-# print len(verwerkers), 'verwekers have been found'
+# print(len(verwerkers), 'verwekers have been found')
 #
 # verwerkers['activenq'] = verwerkers['Key'].apply(lambda x: x.split()[-1])
 #
@@ -364,12 +364,12 @@ var.map_roles.remove('Herkomst')
 
 for role in var.map_roles:
 
-    print 'Loading LMA {0}s.......'.format(role)
+    print('Loading LMA {0}s.......'.format(role))
     LMA_role = pd.read_excel(priv_folder + PART1 + 'Export_LMA_{0}.xlsx'.format(role))
 
     keys = LMA_role[['Key', 'Orig_name']].copy()
     keys.drop_duplicates(subset=['Key'], inplace=True)
-    print len(keys), '{0}s have been found'.format(role)
+    print(len(keys), '{0}s have been found'.format(role))
 
     keys['activenq'] = role_map[role]
 
@@ -377,8 +377,8 @@ for role in var.map_roles:
     output_role['how'] = role
     all_nace = all_nace.append(output_role)
 
-print len(all_nace)
-print all_nace['Key'].nunique()
+print(len(all_nace))
+print(all_nace['Key'].nunique())
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________

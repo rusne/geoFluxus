@@ -27,11 +27,11 @@ pd.options.mode.chained_assignment = None
 
 # choose scope: Food Waste, Construction&Demolition Waste OR Consumption Goods
 while True:
-    scope = raw_input('Choose scope: CDW / FW / CG\n')
+    scope = input('Choose scope: CDW / FW / CG\n')
     if scope == 'CDW' or scope == 'FW' or scope == 'CG':
         break
     else:
-        print 'Wrong choice.'
+        print('Wrong choice.')
 
 
 priv_folder = "Private_data/"
@@ -43,7 +43,7 @@ EXPORT = "Exports_{0}_part1/".format(scope)
 
 LMA_dataset = priv_folder + "LMA_data/{0}_data/LMA_{0}_all.xlsx".format(scope)
 
-print 'Loading LMA data.......'
+print('Loading LMA data.......')
 LMA = pd.read_excel(LMA_dataset)
 
 LMA.rename(columns={"Afzender_Huisnummer": "Afzender_Huisnr",
@@ -60,8 +60,8 @@ LMA.rename(columns={"Afzender_Huisnummer": "Afzender_Huisnr",
 
 # Remove those data entries that do not have year specified
 LMA_filt_year = LMA[LMA.MeldPeriodeJAAR.notnull()]
-print len(LMA.index) - len(LMA_filt_year.index),
-print 'lines do not have a year specified and have been removed'
+print(len(LMA.index) - len(LMA_filt_year.index),)
+print('lines do not have a year specified and have been removed')
 
 
 # Find the aggregated weight per year for each Afvalstroomnummer (as now the waste is reported per month)
@@ -79,13 +79,13 @@ LMA_agg = pd.merge(LMA_filt_year, ASN_massa, on=['Afvalstroomnummer', 'MeldPerio
 
 # check if afvalstroomnummer & year combination is unique per unique entry
 if len(ASN_massa.index) != len(LMA_agg.index):
-    print 'WARNING!'
-    print 'afvalstroomnummer & year combination is not unique per unique entry'
+    print('WARNING!')
+    print('afvalstroomnummer & year combination is not unique per unique entry')
     LMA_agg.to_excel("LMA_agg.xlsx")
 
 total_flow_chains = len(LMA_agg)
-print "Data has been aggregated per afvalstroomnummer,"
-print "the total number of flow chains is", total_flow_chains
+print("Data has been aggregated per afvalstroomnummer,")
+print("the total number of flow chains is", total_flow_chains)
 
 
 # there are four different 'Waste' locations
@@ -204,7 +204,7 @@ roles_summary.to_excel(pub_folder + EXPORT + 'actor_roles_summary.xlsx')
 # export all actors for matching with NACE code
 export_actors = actors.copy()
 export_actors.to_excel(priv_folder + EXPORT + 'Export_LMA_all_actors.xlsx')
-print export_actors['Key'].nunique(), 'unique actors in total'
+print(export_actors['Key'].nunique(), 'unique actors in total')
 
 # NACE assignment has a hierarchy:
 # first verwerker, then ontvanger, then ontdoener, then the rest
@@ -225,7 +225,7 @@ for role in roles:
     exp = export_actors[export_actors['Who'] == role]
     exp.to_excel(priv_folder + EXPORT + 'Export_LMA_{0}.xlsx'.format(role))
 
-    print exp['Key'].nunique(), '{0}s have been exported for NACE matching'.format(role)
+    print(exp['Key'].nunique(), '{0}s have been exported for NACE matching'.format(role))
 
     export_actors = export_actors[(export_actors['Key'].isin(exp['Key']) == False)]
 
@@ -236,9 +236,9 @@ actors_without_postcode = actors[actors['Postcode'] == '']
 
 if len(actors_without_postcode.index) > 0:
     actors_without_postcode.to_excel(priv_folder + EXPORT + 'Export_LMA_actors_without_postcode.xlsx')
-    print len(actors_without_postcode.index), 'actors do not have a postcode'
+    print(len(actors_without_postcode.index), 'actors do not have a postcode')
 else:
-    print 'All actors have a postcode'
+    print('All actors have a postcode')
 
 # export locations separately
 locations = actors[['Key', 'Postcode', 'Plaats', 'Adres']].copy()
@@ -246,19 +246,20 @@ locations.drop_duplicates(subset=['Key'], inplace=True)
 
 # check if all actors can be geolocated at once
 if len(locations.index) > 25000:
-    parts = int(math.floor(len(locations.index) / 25000))
+    parts = int(math.ceil(len(locations.index) / 25000))
+    range(int(math.ceil(58842 / 25000)))
     for i in range(parts):
         start = i * 25000
         end = (i + 1) * 25000
         if end > len(locations.index):
             end = len(locations.index)
-        print start, end
+        print(start, end)
         part = locations[start:end]
         part.to_excel(priv_folder + EXPORT + 'Export_LMA_locations_{0}.xlsx'.format(end), index=False)
 
 locations.to_excel(priv_folder + EXPORT + 'Export_LMA_locations.xlsx', index=False)
 
-print len(locations.index), 'locations have been exported'
+print(len(locations.index), 'locations have been exported')
 
 # _____________________________________________________________________________
 # _____________________________________________________________________________
@@ -270,7 +271,7 @@ print len(locations.index), 'locations have been exported'
 
 compositions = comprehensive[['EuralCode', 'BenamingAfval']]
 compositions.drop_duplicates(inplace=True)
-print len(compositions.index), 'unique waste compositions (ewc + BenamingAfval) have been found'
+print(len(compositions.index), 'unique waste compositions (ewc + BenamingAfval) have been found')
 compositions.to_excel(pub_folder + EXPORT + 'Export_LMA_compositions.xlsx')
 
 # _____________________________________________________________________________

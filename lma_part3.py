@@ -25,11 +25,11 @@ pd.options.mode.chained_assignment = None
 # choose scope: Food Waste, Construction & Demolition Waste, Consumption Goods
 
 while True:
-    scope = raw_input('Choose scope: CDW / FW / CG\n')
+    scope = input('Choose scope: CDW / FW / CG\n')
     if scope == 'CDW' or scope == 'FW' or scope == 'CG':
         break
     else:
-        print 'Wrong choice.'
+        print('Wrong choice.')
 
 priv_folder = "Private_data/"
 pub_folder = "Public_data/"
@@ -62,7 +62,7 @@ material_col = ['name', 'flowchain']
 product_col = ['name', 'flowchain']
 composite_col = ['name', 'flowchain']
 
-print 'Reading input files........'
+print('Reading input files........')
 
 flows = pd.read_excel(priv_folder + PART1 + 'Export_LMA_Analysis_part1.xlsx')
 
@@ -76,7 +76,7 @@ compositions = pd.read_excel(pub_folder + INPUT + 'Categorization.xlsx')
 # Activities & Activity groups
 # _____________________________________________________________________________
 
-print 'Exporting Activities & Activity Groups.......'
+print('Exporting Activities & Activity Groups.......')
 
 NACEtable = pd.read_excel(pub_folder + 'NACE_table.xlsx', sheet_name='NACE_nl')
 
@@ -89,8 +89,8 @@ NACEtable['Digits'] = NACEtable['Digits'].str.zfill(4)
 act_activ = pd.merge(actors, NACEtable, how='left', left_on='activenq', right_on='Digits', validate='m:1')
 
 # if len(e.index) > 0:
-#     print 'WARNING! not all activity codes have been found in the NACE table'
-#     print e['activenq'].drop_duplicates()
+#     print('WARNING! not all activity codes have been found in the NACE table')
+#     print(e['activenq'].drop_duplicates())
 
 activity_groups = act_activ[['AGcode', 'ActivityGroup_nl']]
 activity_groups.drop_duplicates(inplace=True)
@@ -111,10 +111,10 @@ activities.to_csv(priv_folder + EXPORT + '{0}_activities.csv'.format(scope), enc
 # _____________________________________________________________________________
 
 
-print 'Merging flows with Actors and their Locations.......'
+print('Merging flows with Actors and their Locations.......')
 
 for role in var.map_roles:
-    print role
+    print(role)
     role_key = role + '_Key'
     role_id = role + '_id'
 
@@ -174,7 +174,7 @@ for role in var.map_roles:
 
 flows.to_excel('overview.xlsx')
 
-print 'Exporting Actors and their Locations.......'
+print('Exporting Actors and their Locations.......')
 
 # Actor identifier = name + postcode + nace (only for ontvangers & verwerkers)
 #               stripped from extra symbols, "_" instead of spaces
@@ -233,11 +233,11 @@ locations_exp_add.to_csv(priv_folder + EXPORT + '{0}_locations.csv'.format(scope
 
 flows['id'] = flows['Afvalstroomnummer'] + '_' + flows['MeldPeriodeJAAR'].astype(str)
 
-print 'Connecting flows with the waste classification........'
+print('Connecting flows with the waste classification........')
 
 flows = pd.merge(flows, compositions, on=['EuralCode', 'BenamingAfval'], validate='m:1')
 
-print 'Exporting flow chains.......'
+print('Exporting flow chains.......')
 
 flow_chains = flows[['id', 'VerwerkingsmethodeCode',
                      'Gewicht_KG', 'Aantal_vrachten', 'MeldPeriodeJAAR',
@@ -270,7 +270,7 @@ flow_chains.to_excel(priv_folder + EXPORT + '{0}_flowchains.xlsx'.format(scope))
 flow_chains.to_csv(priv_folder + EXPORT + '{0}_flowchains.csv'.format(scope), encoding='utf-8')
 
 
-print 'Splitting chains into separate flows.......'
+print('Splitting chains into separate flows.......')
 
 
 def chain(seq, roles):
@@ -311,7 +311,7 @@ flowparts.to_csv(priv_folder + EXPORT + '{0}_flows.csv'.format(scope), encoding=
 # _____________________________________________________________________________
 
 
-print 'Exporting materials, products and compositions......'
+print('Exporting materials, products and compositions......')
 
 
 mat_1 = flows[['material', 'id']]
@@ -374,7 +374,7 @@ extra_descriptions.to_csv(priv_folder + EXPORT + '{0}_extra_descriptions.csv'.fo
 # _____________________________________________________________________________
 
 
-print 'Exporting analysis table......'
+print('Exporting analysis table......')
 
 
 flows.to_excel(priv_folder + EXPORT + '{0}_LMA_Analysis_part3.xlsx'.format(scope))
@@ -432,160 +432,3 @@ flows.to_excel(priv_folder + EXPORT + '{0}_LMA_Analysis_part3.xlsx'.format(scope
 # del LMA_w_BVDid['Count']
 # LMA_w_BVDid.loc[LMA_w_BVDid['Sensitive_Postcode']!='Yes', 'Sensitive_Postcode']='No'
 #
-#
-#
-# #######
-# # STEP 7
-# #######
-# #add our (english) categorization of the waste treatment process description
-# WT_descr=pd.read_excel('Preprocessing_description.xlsx')
-# WT_descr.drop_duplicates(inplace=True)
-# LMA_w_BVDid = pd.merge(LMA_w_BVDid, WT_descr, on='VerwerkingsOmschrijving', how='left')
-#
-# # _____________________________________________________________________________
-# # _____________________________________________________________________________
-# # P R E P A R I N G   F I L E S    F O R    G D S E
-# # _____________________________________________________________________________
-# # _____________________________________________________________________________
-#
-# LMA_toGDSE=LMA_w_BVDid.copy()
-# LMA_toGDSE.rename(columns={'MeldPeriodeJAAR': 'Year'}, inplace=True)
-#
-# #merge correspondance table
-# LMA_toGDSE['BenamingAfval'].fillna('', inplace=True)
-# LMA_toGDSE['Key'] = LMA_toGDSE['EuralCode'].map(str) + ' ' + LMA_toGDSE['BenamingAfval']
-# LMA_toGDSE['Key'] = LMA_toGDSE['Key'].str.lower()
-# LMA_toGDSE['Key'] = LMA_toGDSE['Key'].str.strip()
-# LMA_toGDSE['Key'] = LMA_toGDSE['Key'].str.replace(u'\xa0', u' ')
-#
-# #clean the description
-# corresp['Key'] = corresp['Key'].str.lower()
-# corresp['Key'] = corresp['Key'].str.strip()
-# corresp['Key'] = corresp['Key'].str.replace(u'\xa0', u' ')
-# corresp.drop_duplicates(subset=['Key', 'Material'], inplace=True)
-# LMA_toGDSE_corresp = pd.merge(LMA_toGDSE, corresp, on='Key', how='left')
-#
-# LMA_toGDSE_corresp.to_excel('Exports_{0}_part3/Export_LMA_Analysis_comprehensive_part3.xlsx'.format(scope))
-#
-# # _____________________________________________________________________________
-# # _____________________________________________________________________________
-# # C O M P O S I T I O N   T A B L E
-# # _____________________________________________________________________________
-# # _____________________________________________________________________________
-#
-# Composition_table = LMA_toGDSE_corresp[['NACE', 'Key', 'Material', 'Fraction', 'Avoidable', 'Haz', 'Processing description']]
-#
-#
-#
-#     Composition_table['Name'] = Composition_table['Key'] + " " + Composition_table['Processing description']
-#     Composition_table['Source'] = 'lma2018'
-#     Composition_table['Fraction'] = 1
-#     Composition_table['Avoidable'] = 'FALSE'
-#
-# Composition_table['Hazardous'] = np.where(Composition_table['Haz'] == 'Hazardous', True, False)
-#
-# Composition_table.drop_duplicates(subset=(['Name', 'Avoidable']), inplace=True)
-#
-# Composition_table_output = Composition_table[['NACE', 'Name', 'Material', 'Fraction', 'Avoidable', 'Source', 'Hazardous']]
-#
-#
-# Composition_table_output.to_excel('Exports_{0}_part3/Export_Composition_{0}.xlsx'.format(scope))
-#
-#
-# # _____________________________________________________________________________
-# # _____________________________________________________________________________
-# # F L O W   T A B L E
-# # _____________________________________________________________________________
-# # _____________________________________________________________________________
-#
-#
-# Flow_table = LMA_toGDSE.copy()
-# if scope == 'FW':
-#     Flow_table['Composition'] = Flow_table['Key'] + " " + Flow_table['Fraction'].astype(str) + " " + Flow_table['Processing description']
-# else:
-#     Flow_table['Composition'] = Flow_table['Key'] + " " + Flow_table['Processing description']
-# Flow_table['Waste'] = True
-# Flow_table['Source'] = 'lma2018'
-#
-#
-# #Ontdoener  - Inzamelaar - Ontvanger - Verwerker
-# Flow_table.replace(np.NaN, '',inplace=True)
-# Flow_table.loc[Flow_table['Inzamelaar']!='', 'Chain1']='0-1'
-# Flow_table.loc[Flow_table['Inzamelaar']=='', 'Chain1']='0-2'
-# Flow_table.loc[(Flow_table['Inzamelaar']=='')&(Flow_table['Ontvanger']==''), 'Chain1']='0-3'
-# Flow_table.loc[(Flow_table['Chain1']=='0-1')&(Flow_table['Ontvanger']!=''), 'Chain2']='1-2'
-# Flow_table.loc[(Flow_table['Chain1']=='0-1')&(Flow_table['Ontvanger']==''), 'Chain2']='1-3'
-# Flow_table.loc[(Flow_table['Chain1']=='0-2')|(Flow_table['Chain2']=='1-2')&(Flow_table['Verwerker']!=''), 'Chain3']='2-3'
-#
-# Flow_table_herkomst_inzamelaar=Flow_table[Flow_table['Chain1']=='0-1']
-# Flow_table_herkomst_ontvanger=Flow_table[Flow_table['Chain1']=='0-2']
-#
-# Flow_table_inzamelaar_ontvanger=Flow_table[Flow_table['Chain2']=='1-2']
-# Flow_table_inzamelaar_verwerker=Flow_table[Flow_table['Chain2']=='1-3'] #also empty
-#
-# Flow_table_ontvanger_verwerker=Flow_table[Flow_table['Chain3']=='2-3']
-#
-# def delete_columns(df):
-#     del df['Chain1']
-#     del df['Chain2']
-#     del df['Chain3']
-#     return df
-#
-# Flow_table_herkomst_inzamelaar=delete_columns(Flow_table_herkomst_inzamelaar)
-# Flow_table_herkomst_ontvanger=delete_columns(Flow_table_herkomst_ontvanger)
-# Flow_table_inzamelaar_ontvanger=delete_columns(Flow_table_inzamelaar_ontvanger)
-# Flow_table_inzamelaar_verwerker=delete_columns(Flow_table_inzamelaar_verwerker)
-# Flow_table_ontvanger_verwerker=delete_columns(Flow_table_ontvanger_verwerker)
-#
-# output_columns = ['Origin', 'Destination', 'Amount', 'Composition', 'Year', 'Waste', 'Source', 'Description', 'Process']
-#
-# Flow_table_herkomst_inzamelaar=Flow_table_herkomst_inzamelaar[['Ontdoener_BvDid', 'Inzamelaar_BvDid',
-#                                                                'Gewicht_KG', 'Composition',
-#                                                                'Year', 'Waste', 'Source',
-#                                                                'BenamingAfval', 'Processing description']]
-#
-# Flow_table_herkomst_inzamelaar.columns = output_columns
-#
-#
-# Flow_table_herkomst_ontvanger = Flow_table_herkomst_ontvanger[['Ontdoener_BvDid', 'Ontvanger_BvDid',
-#                                                                'Gewicht_KG', 'Composition',
-#                                                                'Year', 'Waste', 'Source',
-#                                                                'BenamingAfval', 'Processing description']]
-#
-# Flow_table_herkomst_ontvanger.columns = output_columns
-#
-# Flow_table_inzamelaar_ontvanger = Flow_table_inzamelaar_ontvanger[['Inzamelaar_BvDid', 'Ontvanger_BvDid',
-#                                                                    'Gewicht_KG', 'Composition',
-#                                                                    'Year', 'Waste', 'Source',
-#                                                                    'BenamingAfval', 'Processing description']]
-#
-# Flow_table_inzamelaar_ontvanger.columns = output_columns
-#
-# Flow_table_inzamelaar_verwerker = Flow_table_inzamelaar_verwerker[['Inzamelaar_BvDid', 'Verwerker_BvDid',
-#                                                                    'Gewicht_KG', 'Composition',
-#                                                                    'Year', 'Waste', 'Source',
-#                                                                    'BenamingAfval', 'Processing description']]
-#
-# Flow_table_inzamelaar_verwerker.columns = output_columns
-#
-# Flow_table_ontvanger_verwerker = Flow_table_ontvanger_verwerker[['Ontvanger_BvDid', 'Verwerker_BvDid',
-#                                                                  'Gewicht_KG', 'Composition',
-#                                                                  'Year', 'Waste', 'Source',
-#                                                                  'BenamingAfval', 'Processing description']]
-#
-# Flow_table_ontvanger_verwerker.columns = output_columns
-#
-# Flow_table_output = pd.concat([Flow_table_herkomst_inzamelaar,Flow_table_herkomst_ontvanger,Flow_table_inzamelaar_verwerker,Flow_table_inzamelaar_ontvanger,Flow_table_ontvanger_verwerker],ignore_index=True)
-#
-# Flow_table_output = Flow_table_output[Flow_table_output['Origin']!=Flow_table_output['Destination']]
-#
-# # Some of the actors participate in multiple flow chains
-# # That creates duplicate flows (same origin-destination-composition), in that case the flows must be aggregated
-# Flow_table_output['Amount'] = Flow_table_output.groupby(['Origin', 'Destination', 'Composition'])['Amount'].transform('sum')
-# Flow_table_output['Amount'] = (Flow_table_output['Amount']/1000).round(0)
-# Flow_table_output = Flow_table_output[Flow_table_output['Amount']>0]
-# Flow_table_output.drop_duplicates(inplace=True)
-#
-# print len(Flow_table_output.index), 'separate flows have been exported'
-#
-# Flow_table_output.to_excel('Exports_{0}_part3/Export_Flows_{0}.xlsx'.format(scope))

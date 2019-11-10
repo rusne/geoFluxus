@@ -9,7 +9,7 @@ def clean_company_name(name):
     # remove all non-ASCII characters
     orig_name = name
     printable = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ \t\n\r\x0b\x0c'
-    name = filter(lambda x: x in printable, name)
+    name = "".join(filter(lambda x: x in printable, name))
 
     name = name.upper()
 
@@ -66,5 +66,5 @@ def clean_description(desc):
 
 def clean_huisnr(nr):
     nr = nr.split('.')[0]
-    nr = filter(lambda x: x in '0123456789', nr)
+    nr = ''.join(filter(lambda x: x in '0123456789', nr))
     return nr
