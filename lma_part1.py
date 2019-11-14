@@ -160,14 +160,18 @@ for role in var.map_roles:
 
     if role == 'Herkomst':
         comprehensive[key] = comprehensive['Ontdoener'] + ' ' + comprehensive[postcode]
+        comprehensive[key] = comprehensive[key].apply(lambda x: x.strip())
         comprehensive['Activity'] = ''
         actorset = comprehensive[['Ontdoener', 'Ontdoener_Origname', postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key, 'Activity']]
     elif role == 'Verwerker':
         comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
+        # remove whitespace in case name or postcode are not present
+        comprehensive[key] = comprehensive[key].apply(lambda x: x.strip())
         comprehensive['Activity'] = comprehensive['VerwerkingsmethodeCode']
         actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key, 'Activity']]
     else:
         comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
+        comprehensive[key] = comprehensive[key].apply(lambda x: x.strip())
         comprehensive['Activity'] = ''
         actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key, 'Activity']]
     actorset['Who'] = role
@@ -178,7 +182,7 @@ for role in var.map_roles:
 
 actors = pd.concat(actorsets)
 
-actors = actors[actors['Name'] != '']
+# actors = actors[actors['Name'] != '']
 actors.drop_duplicates(subset=['Key', 'Who', 'Jaar', 'Activity'], inplace=True)
 
 actors['Adres'] = actors['Straat'] + ' ' + actors['Huisnr']
@@ -246,7 +250,7 @@ locations.drop_duplicates(subset=['Key'], inplace=True)
 
 # check if all actors can be geolocated at once
 if len(locations.index) > 25000:
-    parts = int(math.floor(len(locations.index) / 25000))
+    parts = int(math.ceil(len(locations.index) / 25000.0))
     for i in range(parts):
         start = i * 25000
         end = (i + 1) * 25000

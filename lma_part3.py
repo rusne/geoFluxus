@@ -69,6 +69,9 @@ flows = pd.read_excel(priv_folder + PART1 + 'Export_LMA_Analysis_part1.xlsx')
 actors = pd.read_excel(priv_folder + PART2 + 'Export_All_actors.xlsx')
 
 locations = pd.read_csv(priv_folder + INPUT_2 + '{0}_locations_WGS84.csv'.format(scope), encoding='utf-8')
+# !!!! temp fix - remove duplicates
+locations.drop_duplicates(subset=['Key'], inplace=True)
+# print locations.loc[locations['Key'] == 'A MANDELL GMBH']
 
 compositions = pd.read_excel(pub_folder + INPUT + 'Categorization.xlsx')
 
@@ -214,6 +217,9 @@ for role in var.map_roles:
 
 actors_export = pd.concat(act_list)
 actors_export.drop_duplicates(inplace=True)
+# !!!!!!!!! mock up actor with no name in LMA
+actors_export.loc[actors_export['name'].isna(), 'name'] = 'ONBEKEND'
+actors_export.loc[actors_export['activity'].isna(), 'activity'] = 'WU-0000'
 actors_export.to_excel(priv_folder + EXPORT + '{0}_actors.xlsx'.format(scope))
 actors_export.to_csv(priv_folder + EXPORT + '{0}_actors.csv'.format(scope), encoding='utf-8')
 
@@ -260,9 +266,20 @@ flow_chains.rename(columns={'id': 'identifier',
                             'EuralCode': 'waste',
                             'BenamingAfval': 'orig_description'}, inplace=True)
 
-flow_chains['clean'] = flow_chains['clean'].astype('bool')
-flow_chains['mixed'] = flow_chains['mixed'].astype('bool')
-flow_chains['direct_use'] = flow_chains['direct_use'].astype('bool')
+flow_chains['clean'] = flow_chains['clean'].astype('str')
+flow_chains['mixed'] = flow_chains['mixed'].astype('str')
+flow_chains['direct_use'] = flow_chains['direct_use'].astype('str')
+# pandas do not allow nullable boolean field, therefore this workaround
+flow_chains.loc[flow_chains['clean'] == '1.0', 'clean'] = 'TRUE'
+flow_chains.loc[flow_chains['clean'] == '0.0', 'clean'] = 'FALSE'
+flow_chains.loc[flow_chains['clean'] == 'nan', 'clean'] = ''
+flow_chains.loc[flow_chains['mixed'] == '1.0', 'mixed'] = 'TRUE'
+flow_chains.loc[flow_chains['mixed'] == '0.0', 'mixed'] = 'FALSE'
+flow_chains.loc[flow_chains['mixed'] == 'nan', 'mixed'] = ''
+flow_chains.loc[flow_chains['direct_use'] == '1.0', 'direct_use'] = 'TRUE'
+flow_chains.loc[flow_chains['direct_use'] == '0.0', 'direct_use'] = 'FALSE'
+flow_chains.loc[flow_chains['direct_use'] == 'nan', 'direct_use'] = ''
+
 
 flow_chains = flow_chains[flow_chains_col]
 

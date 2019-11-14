@@ -82,7 +82,9 @@ ontdoeners = pd.merge(LMA_ontdoeners, LMA_locations, on='Key', how='left')
 missing_locations = ontdoeners[ontdoeners['WKT'].isnull()]
 if len(missing_locations.index) > 0:
     print 'WARNING! some locations do not have geometry, they will be skipped'
+    missing_locations.drop_duplicates(subset=['Key'], inplace=True)
     print missing_locations
+    missing_locations.to_excel(priv_folder + EXPORT + 'missing_locations.xlsx')
     ontdoeners.dropna(subset=['WKT'], inplace=True)
 
 print ontdoeners['Key'].nunique(), 'ontdoeners in total'

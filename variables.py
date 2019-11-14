@@ -1,5 +1,11 @@
 # a set of variables as analysis input
 
+scopes = ['FW', 'CG', 'CDW']
+
+titles = {'FW': 'Organic Waste',
+          'CG': 'Consumption Goods',
+          'CDW': 'Construction & Demolition Waste'}
+
 all_roles = ['Ontdoener', 'Herkomst', 'Afzender', 'Inzamelaar', 'Bemiddelaar',
              'Handelaar', 'Ontvanger', 'Verwerker']
 
