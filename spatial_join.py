@@ -43,6 +43,8 @@ for scope in var.scopes:
     verwerkers_AMA = gpd.sjoin(verwerkers, AMA, how='left')
     verwerkers_AMS = gpd.sjoin(verwerkers, AMS, how='left')
 
+    analysis.loc[ontdoeners_AMA['index_right'].notna(), 'ontdoener_in_AMA'] = 'JA'
+    analysis.loc[ontdoeners_AMS['index_right'].notna(), 'ontdoener_in_AMS'] = 'JA'
     analysis.loc[herkomsts_AMA['index_right'].notna(), 'herkomst_in_AMA'] = 'JA'
     analysis.loc[herkomsts_AMS['index_right'].notna(), 'herkomst_in_AMS'] = 'JA'
     analysis.loc[verwerkers_AMA['index_right'].notna(), 'verwerker_in_AMA'] = 'JA'
