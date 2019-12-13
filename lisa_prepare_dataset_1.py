@@ -11,6 +11,7 @@ import time
 from clean import clean_company_name
 from clean import clean_address
 from clean import clean_postcode
+from clean import clean_nace
 import variables as var
 
 # TODO!!! update description
@@ -35,7 +36,7 @@ for year in var.map_years:
     LISA_columns = ['zaaknaam', 'straat', 'huisnr', 'postcode', 'plaats',
                     'activenq', 'xcoord', 'ycoord']
 
-    print "\nLoading LISA dataset for {0}........".format(year)
+    print("\nLoading LISA dataset for {0}........".format(year))
     start_time = time.time()
 
     # Reading in the LISA data
@@ -45,41 +46,47 @@ for year in var.map_years:
     # for testing
     # LISA = LISA.head(100)
 
-    print 'LISA dataset for {0} has been loaded, '.format(year),
-    print 'dataset length:', len(LISA.index), 'lines,',
+    print('LISA dataset for {0} has been loaded, '.format(year),)
+    print('dataset length:', len(LISA.index), 'lines,',)
     m, s = divmod(time.time() - start_time, 60)
-    print 'time elapsed:', m, 'min', s, 's'
+    print('time elapsed:', m, 'min', s, 's')
 
     # encoding as unicode (in case there are non-ascii characters)
-    LISA['zaaknaam'] = LISA['zaaknaam'].apply(lambda x: unicode(x))
-    LISA['straat'] = LISA['straat'].apply(lambda x: unicode(x))
-    LISA['plaats'] = LISA['plaats'].apply(lambda x: unicode(x))
+    # LISA['zaaknaam'] = LISA['zaaknaam'].apply(lambda x: unicode(x))
+    # LISA['straat'] = LISA['straat'].apply(lambda x: unicode(x))
+    # LISA['plaats'] = LISA['plaats'].apply(lambda x: unicode(x))
+    LISA['zaaknaam'] = LISA['zaaknaam'].astype(str)
+    LISA['straat'] = LISA['straat'].astype(str)
+    LISA['plaats'] = LISA['plaats'].astype(str)
+    LISA['postcode'] = LISA['postcode'].astype(str)
 
     # filter incorrect NACE codes
     pre = len(LISA.index)
-    LISA['activenq'] = pd.to_numeric(LISA['activenq'], downcast='integer', errors="coerce")
-    LISA = LISA[LISA.activenq.notnull()]
-
-    LISA['activenq'] = LISA['activenq'].astype(int)
-    LISA = LISA[LISA['activenq'].astype(int) != 0]
+    # LISA['activenq'] = pd.to_numeric(LISA['activenq'], downcast='integer', errors="coerce")
+    LISA['activenq'] = LISA['activenq'].astype(str)
+    LISA['activenq'] = LISA['activenq'].apply(clean_nace)
+    # LISA = LISA[LISA.activenq.notnull()]
+    # LISA['activenq'] = LISA['activenq'].astype(int)
 
     LISA['activenq'] = LISA['activenq'].astype(str)
     LISA = LISA[LISA['activenq'].str.len() < 6]
-    LISA = LISA[LISA['activenq'].str.len() > 2]
+    LISA = LISA[LISA['activenq'].str.len() > 3]
 
+    LISA = LISA[LISA['activenq'].astype(int) > 100]
+    LISA['activenq'] = LISA['activenq'].apply(lambda x: str(x)[:4])
     # unify NACE codes
-    LISA['activenq'] = LISA['activenq'].astype(str)
-    LISA['activenq'] = LISA['activenq'].str.zfill(4)
+    # LISA['activenq'] = LISA['activenq'].astype(str)
+    # LISA['activenq'] = LISA['activenq'].str.zfill(4)
 
     # match with the list of NACE activities, skip if not present
     NACEtable['Digits'] = NACEtable['Digits'].astype(str)
     NACEtable['Digits'] = NACEtable['Digits'].str.zfill(4)
-    LISA = pd.merge(LISA, NACEtable[['Digits']], left_on='activenq', right_on='Digits', validate='m:1')
+    LISA = pd.merge(LISA, NACEtable[['Digits']], left_on='activenq', right_on='Digits', validate='m:1', how='left')
 
-    # e = LISA[LISA['Digits'].isna()]
-    # print e['activenq'].drop_duplicates()
+    e = LISA[LISA['Digits'].isna()]
+    print(e['activenq'].drop_duplicates())
 
-    print pre - len(LISA.index), 'lines have been filtered due to an invalid NACE'
+    print(pre - len(LISA.index), 'lines have been filtered due to an invalid NACE')
 
     # filter invalid company names
     LISA['orig_zaaknaam'] = LISA['zaaknaam']  # copy of the orig name
@@ -87,7 +94,7 @@ for year in var.map_years:
     LISA['zaaknaam'] = LISA['zaaknaam'].apply(clean_company_name)
     LISA = LISA[LISA['zaaknaam'].str.len() > 1]
 
-    print pre - len(LISA.index), 'lines have been filtered due to an invalid name'
+    print(pre - len(LISA.index), 'lines have been filtered due to an invalid name')
 
     # clean addresses
     LISA['postcode'] = LISA['postcode'].apply(clean_postcode)
@@ -98,7 +105,7 @@ for year in var.map_years:
     pre = len(LISA.index)
     LISA = LISA[LISA['postcode'].str.len() == 6]
 
-    print pre - len(LISA.index), 'lines have been filtered due to an invalid postcode'
+    print(pre - len(LISA.index), 'lines have been filtered due to an invalid postcode')
 
     # clean coordinates
     LISA['xcoord'] = pd.to_numeric(LISA['xcoord'], downcast='integer', errors="coerce")
@@ -115,7 +122,7 @@ for year in var.map_years:
     # remove duplicate values that might have appeared due to cleaning and filtering
     LISA.drop_duplicates(subset=['zaaknaam', 'postcode', 'activenq'], inplace=True)
 
-    print pre - len(LISA.index), 'duplicates have been found and removed'
+    print(pre - len(LISA.index), 'duplicates have been found and removed')
 
     # join address into a single column for easier geolocation
     LISA['adres'] = LISA['straat'] + ' ' + LISA['huisnr']
@@ -140,8 +147,8 @@ for year in var.map_years:
 all_LISA = pd.concat(all_years)
 all_LISA.drop_duplicates(subset=['key', 'activenq'], inplace=True)
 
-print '\nAfter removing duplicates',
-print len(all_LISA.index), 'actors remain in total'
+print('\nAfter removing duplicates',)
+print(len(all_LISA.index), 'actors remain in total')
 
 pre = len(all_LISA.index)
 # find out how many companies with the same postcode have different NACE
@@ -152,8 +159,8 @@ duplicates.to_excel(priv_folder + 'LISA_data/auxiliary/duplicates.xlsx')
 # for companies that have more than one NACE code, choose randomly which one to use
 all_LISA.drop_duplicates(subset=['zaaknaam', 'postcode'], inplace=True)
 
-print pre - len(all_LISA.index), 'companies have been assigned to more than one NACE code'
-print len(all_LISA.index), 'unique company name and postcode combinations remain'
+print(pre - len(all_LISA.index), 'companies have been assigned to more than one NACE code')
+print(len(all_LISA.index), 'unique company name and postcode combinations remain')
 
 
 for year in var.all_years:
@@ -181,9 +188,9 @@ located['wkt'] = 'POINT(' + located['xcoord'] + ' ' + located['ycoord'] + ')'
 located = located[['key', 'wkt']]
 located.drop_duplicates(inplace=True)
 located.to_csv(priv_folder + 'LISA_data/LISA_located.csv'.format(year), encoding='utf8')
-print len(located.index), 'companies are already located'
+print(len(located.index), 'companies are already located')
 
 unlocated = unlocated[['key', 'adres', 'postcode', 'plaats']]
 unlocated.drop_duplicates(inplace=True)
 unlocated.to_csv(priv_folder + 'LISA_data/LISA_unlocated.csv'.format(year), index=False, encoding='utf8')
-print len(unlocated.index), 'companies still need to be located'
+print(len(unlocated.index), 'companies still need to be located')

@@ -10,6 +10,7 @@ Created on Fri Nov 22 2019
 import pandas as pd
 import matplotlib.pyplot as plt
 import variables as var
+import sankey
 
 priv_folder = "Private_data/"
 pub_folder = "Public_data/"
@@ -30,8 +31,8 @@ colors = 'viridis'
 # colors = 'winter'
 
 analysis = []
-# for scope in ['FW']:
-for scope in var.scopes:
+for scope in ['CG']:
+# for scope in var.scopes:
     EXPORT = "Exports_{0}_part3/".format(scope)
     anl_scope = pd.read_excel(priv_folder + EXPORT + '{0}_LMA_Analysis_part4.xlsx'.format(scope))
     anl_scope['scope'] = scope
@@ -122,15 +123,21 @@ def cutoff(aggset, factor, transpose=True):
     return aggset
 
 
-def get_materials(dataset):
+def get_materials(dataset, combined=False):
     # extracts materials and their corresponding amounts (with overlap)
     # outputs a barchart
-    materials = []
-    for col in ['mat 4', 'mat 3', 'mat 2', 'material']:
-        submat = dataset[['amount', col]].copy()
-        submat.rename(columns={col: 'material'}, inplace=True)
-        materials.append(submat)
-    materials = pd.concat(materials)
+    if combined:
+        dataset['comb'] = dataset[['material', 'mat 2', 'mat 3', 'mat 4']].apply(lambda x: , axis=1)
+        print(dataset['comb'])
+        materials = dataset[['comb', 'amount']]
+        materials.rename(columns={'comb': 'material'}, inplace=True)
+    else:
+        materials = []
+        for col in ['mat 4', 'mat 3', 'mat 2', 'material']:
+            submat = dataset[['amount', col]].copy()
+            submat.rename(columns={col: 'material'}, inplace=True)
+            materials.append(submat)
+        materials = pd.concat(materials)
     material_plot = materials[['amount', 'material']].groupby(['material']).sum()
     material_plot = cutoff(material_plot, 0.2, transpose=False)
     material_plot.sort_values(by='amount', inplace=True)
@@ -162,18 +169,18 @@ def get_ewc(dataset):
     return ewc_plot
 
 
-# # _________________________________________________
-# # AA1 position in context
-# # _________________________________________________
-#
+# # # _________________________________________________
+# # # AA1 position in context
+# # # _________________________________________________
+# #
 # analysis18 = analysis[analysis['MeldPeriodeJAAR'] == 2018]
 # totals = analysis18.groupby(['scope'])['amount'].sum()
 #
 #
-# # overige18 = pd.DataFrame({'amount': [3000000]}, index=['overige'])  # RANDOM NUMBER AS A PLACE KEEPER
-# totals.loc['overige'] = 3000000
+# # overige18 = pd.DataFrame({'amount': [3000000]}, index=['overige'])
+# totals.loc['overige'] = 2328670  # NOT VALIDATED NUMBER
 #
-# title = 'All industrial waste produced and/or treated in AMA, 2018'
+# title = 'All industrial waste produced in AMA, 2018'
 # print(totals)
 # totals.plot.pie(y='amount', colormap=colors, legend=True, title=title, figsize=(5, 5))
 # plt.savefig(RES + 'images/AA1.png', dpi=300, bbox_inches='tight')
@@ -245,36 +252,36 @@ def get_ewc(dataset):
 # _________________________________________________
 
 # all waste produced in AMA
-producedinAMA = analysis[analysis['herkomst_in_AMA'] == 'JA'].copy()
-prod_matrix = make_matrix(producedinAMA, 'MeldPeriodeJAAR', 'scope')
-prod_matrix.rename(columns={'FW': 'FW produced in AMA',
-                            'CG': 'CG produced in AMA',
-                            'CDW': 'CDW produced in AMA'}, inplace=True)
-
-# all waste treated in AMA
-treatedinAMA = analysis[analysis['verwerker_in_AMA'] == 'JA'].copy()
-treat_matrix = make_matrix(treatedinAMA, 'MeldPeriodeJAAR', 'scope')
-treat_matrix.rename(columns={'FW': 'FW treated in AMA',
-                             'CG': 'CG treated in AMA',
-                             'CDW': 'CDW treated in AMA'}, inplace=True)
-
-historical = pd.merge(prod_matrix, treat_matrix, left_index=True, right_index=True)
-
-title = 'Historical trends, all waste scopes, 2013-2018'
-historical.plot.line(colormap=colors, legend=True, title=title, figsize=(5, 5))
-
-print(historical)
-plt.savefig(RES + 'images/AA4.png', dpi=300, bbox_inches='tight')
-plt.show()
-historical.to_excel(RES + 'data/AA4.xlsx')
-
-producedinAMA_18 = producedinAMA[producedinAMA['MeldPeriodeJAAR'] == 2018]
-unknown_ewc = get_ewc(producedinAMA_18)
-print(unknown_ewc)
-unknown_ewc.plot.bar(colormap=colors, legend=True, figsize=(5, 5))
-# plt.savefig(RES + 'images/{0}3.6.png'.format(scope), dpi=300, bbox_inches='tight')
-plt.show()
-unknown_ewc.to_excel(RES + 'ewc.xlsx'.format(scope))
+# producedinAMA = analysis[analysis['herkomst_in_AMA'] == 'JA'].copy()
+# prod_matrix = make_matrix(producedinAMA, 'MeldPeriodeJAAR', 'scope')
+# prod_matrix.rename(columns={'FW': 'FW produced in AMA',
+#                             'CG': 'CG produced in AMA',
+#                             'CDW': 'CDW produced in AMA'}, inplace=True)
+#
+# # all waste treated in AMA
+# treatedinAMA = analysis[analysis['verwerker_in_AMA'] == 'JA'].copy()
+# treat_matrix = make_matrix(treatedinAMA, 'MeldPeriodeJAAR', 'scope')
+# treat_matrix.rename(columns={'FW': 'FW treated in AMA',
+#                              'CG': 'CG treated in AMA',
+#                              'CDW': 'CDW treated in AMA'}, inplace=True)
+#
+# historical = pd.merge(prod_matrix, treat_matrix, left_index=True, right_index=True)
+#
+# title = 'Historical trends, all waste scopes, 2013-2018'
+# historical.plot.line(colormap=colors, legend=True, title=title, figsize=(5, 5))
+#
+# print(historical)
+# plt.savefig(RES + 'images/AA4.png', dpi=300, bbox_inches='tight')
+# plt.show()
+# historical.to_excel(RES + 'data/AA4.xlsx')
+#
+# producedinAMA_18 = producedinAMA[producedinAMA['MeldPeriodeJAAR'] == 2018]
+# unknown_ewc = get_ewc(producedinAMA_18)
+# print(unknown_ewc)
+# unknown_ewc.plot.bar(colormap=colors, legend=True, figsize=(5, 5))
+# # plt.savefig(RES + 'images/{0}3.6.png'.format(scope), dpi=300, bbox_inches='tight')
+# plt.show()
+# unknown_ewc.to_excel(RES + 'ewc.xlsx'.format(scope))
 
 # # _________________________________________________
 # # spatial trends
@@ -326,8 +333,8 @@ unknown_ewc.to_excel(RES + 'ewc.xlsx'.format(scope))
 # organic_materials.to_excel('organic_materials.xlsx')
 
 # for scope in var.scopes:
-# for scope in ['FW']:
-if False:
+for scope in ['CG']:
+# if False:
     # RESULTS = "results/{0}_results".format(scope)
     # analysis = pd.read_excel(priv_folder + EXPORT + '{0}_LMA_Analysis_part4.xlsx'.format(scope))
     analysis_sc = analysis[analysis['scope'] == scope].copy()
@@ -472,18 +479,20 @@ if False:
     analysis18.loc[(analysis18['clean'] != 'polluted') & (clean['mixed'] != 'pure') & (mixed['is_product'] == 'product') & (product['direct_use'] == 'direct'), 'status'] = 'direct product'
     analysis18.loc[(analysis18['clean'] != 'polluted') & (clean['mixed'] != 'pure') & (mixed['is_product'] == 'product') & (product['direct_use'] == 'indirect'), 'status'] = 'indirect product'
 
-    master_pie = analysis18[['amount', 'status']].groupby(['status']).sum()
-    print(master_pie)
-    master_pie.plot.pie(y='amount', colormap=colors, legend=True, figsize=(5, 5))
-    plt.savefig(RES + 'images/{0}_masterpie.png'.format(scope), dpi=300, bbox_inches='tight')
-    plt.show()
-    master_pie.to_excel(RES + 'data/{0}_masterpie.xlsx'.format(scope))
-
-    master_sankey = analysis18[['activity_group_name', 'status', 'VerwerkingsMethode', 'amount']].copy()
-    draw_sankey(master_sankey)
-    # master_sankey.to_excel(RES + 'testsankey.xlsx'.format(scope))
-    master_sankey = master_sankey.groupby(['activity_group_name', 'status', 'VerwerkingsMethode'])['amount'].sum()
-    master_sankey.to_excel(RES + 'data/{0}_mastersankey.xlsx'.format(scope))
+    # master_pie = analysis18[['amount', 'status']].groupby(['status']).sum()
+    # print(master_pie)
+    # master_pie.plot.pie(y='amount', colormap=colors, legend=True, figsize=(5, 5))
+    # plt.savefig(RES + 'images/{0}_masterpie.png'.format(scope), dpi=300, bbox_inches='tight')
+    # plt.show()
+    # master_pie.to_excel(RES + 'data/{0}_masterpie.xlsx'.format(scope))
+    #
+    # analysis18['Processing'] = analysis18['VerwerkingsmethodeCode'] + ' ' + analysis18['VerwerkingsOmschrijving']
+    #
+    # master_sankey = analysis18[['activity_group_name', 'status', 'Processing', 'amount']].copy()
+    # # master_sankey.to_excel(RES + 'testsankey.xlsx'.format(scope))
+    # master_sankey = master_sankey.groupby(['activity_group_name', 'status', 'Processing'], as_index=False)['amount'].sum()
+    # sankey.draw_sankey(master_sankey)
+    # master_sankey.to_excel(RES + 'data/{0}_mastersankey.xlsx'.format(scope))
 
     #
     # # _________________________________________________
@@ -515,19 +524,19 @@ if False:
     # pure_sankey = pure_sankey.groupby(['activity_group_name', 'VerwerkingsMethode'])['amount'].sum()
     # pure_sankey.to_excel(RES + 'data/{0}4.2.xlsx'.format(scope))
     #
-    # # _________________________________________________
-    # # SC3.3 Composite
-    #
-    # comp_materials = get_materials(composite)
-    # print(comp_materials)
-    # comp_materials.plot.bar(colormap=colors, legend=True, figsize=(5, 5))
-    # plt.savefig(RES + 'images/{0}3.3.png'.format(scope), dpi=300, bbox_inches='tight')
-    # plt.show()
-    # comp_materials.to_excel(RES + 'data/{0}3.3.xlsx'.format(scope))
-    #
-    # comp_sankey = composite[['activity_group_name', 'VerwerkingsMethode', 'amount']].copy()
-    # comp_sankey = comp_sankey.groupby(['activity_group_name', 'VerwerkingsMethode'])['amount'].sum()
-    # comp_sankey.to_excel(RES + 'data/{0}4.3.xlsx'.format(scope))
+    # _________________________________________________
+    # SC3.3 Composite
+
+    comp_materials = get_materials(composite, combined=True)
+    print(comp_materials)
+    comp_materials.plot.bar(colormap=colors, legend=True, figsize=(5, 5))
+    plt.savefig(RES + 'images/{0}3.3.png'.format(scope), dpi=300, bbox_inches='tight')
+    plt.show()
+    comp_materials.to_excel(RES + 'data/{0}3.3.xlsx'.format(scope))
+
+    comp_sankey = composite[['activity_group_name', 'VerwerkingsMethode', 'amount']].copy()
+    comp_sankey = comp_sankey.groupby(['activity_group_name', 'VerwerkingsMethode'])['amount'].sum()
+    comp_sankey.to_excel(RES + 'data/{0}4.3.xlsx'.format(scope))
     #
     # # _________________________________________________
     # # SC3.4 Direct product

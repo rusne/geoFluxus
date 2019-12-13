@@ -8,61 +8,70 @@ Created on Thu Oct 17 2019
 
 import pandas as pd
 
-# reads separate LISA files (located & unlocated)
+# reads separate LISA and KvK files (located & unlocated)
 # combines them into a single one
 # and merges with the NACE activity groups
 
 priv_folder = "Private_data/"
 pub_folder = "Public_data/"
 
-print 'Loading LISA dataset....'
-
-
+print('Loading LISA dataset....')
 all_LISA = pd.read_excel(priv_folder + 'LISA_data/all_LISA_part1.xlsx')
-LISA_unlocated = pd.read_csv(priv_folder + 'LISA_data/LISA_kml_RDnew.csv', sep=',')
-LISA_located = pd.read_csv(priv_folder + 'LISA_data/LISA_located.csv')
+# LISA_unlocated = pd.read_csv(priv_folder + 'LISA_data/LISA_kml_RDnew.csv', sep=',')
+# LISA_located = pd.read_csv(priv_folder + 'LISA_data/LISA_located.csv')
+LISA_loc = pd.read_csv(priv_folder + 'LISA_data/LISA_RDnew_MRA.csv', sep=',')
 
-print 'LISA dataset has been loaded'
+print('LISA dataset has been loaded')
 
-activity_groups = pd.read_excel(pub_folder + 'NACE_activity_groups.xlsx')
-activity_groups['digits'] = activity_groups['digits'].astype(str)
-activity_groups['digits'] = activity_groups['digits'].str.zfill(2)
-
-LISA_unlocated = LISA_unlocated[['WKT', 'key']]
-LISA_unlocated.rename(columns={'WKT': 'wkt'}, inplace=True)
-
-LISA_located = LISA_located[['wkt', 'key']]
-
-LISA_loc = pd.concat([LISA_unlocated, LISA_located])
+# LISA_unlocated = LISA_unlocated[['WKT', 'key']]
+# LISA_unlocated.rename(columns={'WKT': 'wkt'}, inplace=True)
+#
+# LISA_located = LISA_located[['wkt', 'key']]
+#
+# LISA_loc = pd.concat([LISA_unlocated, LISA_located])
 # LISA_loc.drop_duplicates(subset=['key'], inplace=True)
 
-LISA = pd.merge(all_LISA, LISA_loc, how='left', on='key')
-print len(LISA.index), len(LISA_loc.index)
+LISA = pd.merge(all_LISA, LISA_loc, on='key')
+print(len(LISA.index), len(all_LISA.index))
+
+print('Loading KvK dataset....')
+all_KvK = pd.read_excel(priv_folder + 'KvK_data/all_KvK_part1.xlsx')
+KvK_loc = pd.read_csv(priv_folder + 'KvK_data/KvK_RDnew_MRA.csv', sep=',')
+
+# KvK dataset needs to be connected back with the addresses
+KvK_key_add = all_KvK[['key', 'adres', 'postcode', 'plaats']].drop_duplicates()
+KvK_loc = pd.merge(KvK_loc, KvK_key_add, on='key')
+KvK_loc.drop(columns=['key'], inplace=True)
+
+KvK = pd.merge(all_KvK, KvK_loc, on=['adres', 'postcode', 'plaats'])
+print(len(KvK.index), len(all_KvK.index))
+
+#
+NACE_table = pd.read_excel(pub_folder + 'NACE_table.xlsx', sheet_name='NACE_nl')
+# activity_groups['Digits'] = activity_groups['Digits'].astype(str)
+# activity_groups['Digits'] = activity_groups['Digits'].str.zfill(2)
+
+
+# merge LISA with KvK and remove duplicates
+all = pd.concat([LISA, KvK])
+both = len(all.index)
+all.drop_duplicates(subset=['key'], inplace=True)
+print(both - len(all.index), 'overlaps have been found between KvK and LISA')
 
 # merge with the activity groups
-LISA['digits'] = LISA['activenq'].astype(str)
-LISA['digits'] = LISA['digits'].str.zfill(4)
-LISA['digits'] = LISA['digits'].str.slice(stop=2)
-LISA_ag = pd.merge(LISA, activity_groups, how='left', on='digits')
+all['activenq'] = all['activenq'].astype(str)
+all['activenq'] = all['activenq'].str.zfill(4)
+NACE_table['Digits'] = NACE_table['Digits'].astype(str)
+NACE_table['Digits'] = NACE_table['Digits'].str.zfill(4)
+# all['digits'] = all['digits'].str.slice(stop=2)
+all_ag = pd.merge(all, NACE_table[['Digits', 'AGcode']], how='left', left_on='activenq', right_on='Digits')
 
 # check if all codes were present
-errors = LISA[LISA_ag['AG'].isna()]
+errors = all[all_ag['AGcode'].isna()]
 if len(errors.index) > 0:
-    print 'WARNING! Errors in NACE codes have been found:'
-    print errors[['activenq', 'digits']]
+    print('WARNING! Errors in NACE codes have been found:')
+    print(errors['activenq'])
 
-LISA_ag.drop(columns=['digits'])
+all_ag.drop(columns=['Digits'])
 
-
-if len(all_LISA.index) == len(LISA_ag.index):
-    print 'Geolocating successful.\nWriting combined file.....'
-    LISA_ag.to_excel(priv_folder + 'LISA_data/all_LISA_part2.xlsx')
-    print 'Combined file has been written'
-elif len(all_LISA.index) > len(LISA_ag.index):
-    print 'WARNING! Not all actors could be located.'
-    print 'Writing combined file.....'
-    LISA_ag.to_excel(priv_folder + 'LISA_data/all_LISA_part2.xlsx')
-    print 'Combined file has been written'
-else:
-    print 'ERROR! There are some duplicate entries, fix input files'
-    print 'No combined file could be written'
+all_ag.to_excel(priv_folder + 'all_LISA_KvK_part2.xlsx')
