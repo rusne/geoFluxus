@@ -12,6 +12,10 @@ import pandas as pd
 # combines them into a single one
 # and merges with the NACE activity groups
 
+import warnings  # ignore unnecessary warnings
+warnings.simplefilter(action="ignore", category=FutureWarning)
+pd.options.mode.chained_assignment = None
+
 priv_folder = "Private_data/"
 pub_folder = "Public_data/"
 
@@ -67,11 +71,13 @@ NACE_table['Digits'] = NACE_table['Digits'].str.zfill(4)
 all_ag = pd.merge(all, NACE_table[['Digits', 'AGcode']], how='left', left_on='activenq', right_on='Digits')
 
 # check if all codes were present
-errors = all[all_ag['AGcode'].isna()]
+errors = all_ag[all_ag['AGcode'].isna()]
 if len(errors.index) > 0:
     print('WARNING! Errors in NACE codes have been found:')
-    print(errors['activenq'])
+    print(errors['activenq'].drop_duplicates())
 
 all_ag.drop(columns=['Digits'])
+# skip the ones that did not match with any NACE code (all should be coming from LISA)
+all_ag = all_ag[all_ag['AGcode'].isna() == False]
 
 all_ag.to_excel(priv_folder + 'all_LISA_KvK_part2.xlsx')

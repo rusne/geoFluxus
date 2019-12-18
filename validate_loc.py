@@ -124,7 +124,6 @@ for scope in var.scopes:
     no_geom = no_geom[['Key', 'Adres', 'Plaats', 'Postcode', 'location', 'WKT']]
     wrong_polygon = pd.concat([wrong_polygon, no_geom])
     wrong_polygon = pd.merge(wrong_polygon, admin_areas, left_on='location', right_on='Name', how='left')
-    print wrong_polygon[wrong_polygon['centroid'].isna()]
     wrong_polygon['WKT'] = wrong_polygon['centroid']
 
     # concatenate all together
@@ -142,6 +141,11 @@ for scope in var.scopes:
         print (len(geolocations.index) + len(unlocated.index)) - len(validated.index), 'geolocations have not been validated:'
         non_validated = geolocations[(geolocations['Key'].isin(validated['Key']) == False)]
         print non_validated
+
+    print validated[validated['WKT'].isna()]
+
+    # old geolocations do not have white space stripped from the keys
+    validated['Key'] = validated['Key'].apply(lambda x: str(x).strip())
 
     # export validated geolocations
     loc_wgs84 = validated[['Key', 'WKT']]

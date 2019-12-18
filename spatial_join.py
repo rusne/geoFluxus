@@ -22,7 +22,8 @@ AMA = gpd.read_file(pub_folder + 'Administrative_units/Metropoolregio_WGS84.shp'
 AMS = gpd.read_file(pub_folder + 'Administrative_units/Gemeente2017_WGS84.shp')
 AMS = AMS[AMS['GM_NAAM'] == 'Amsterdam']
 
-for scope in var.scopes:
+# for scope in var.scopes:
+for scope in ['FW']:
     print var.titles[scope]
     EXPORT = "Exports_{0}_part3/".format(scope)
     analysis = pd.read_excel(priv_folder + EXPORT + '{0}_LMA_Analysis_part3.xlsx'.format(scope))
@@ -43,8 +44,6 @@ for scope in var.scopes:
     verwerkers_AMA = gpd.sjoin(verwerkers, AMA, how='left')
     verwerkers_AMS = gpd.sjoin(verwerkers, AMS, how='left')
 
-    analysis.loc[ontdoeners_AMA['index_right'].notna(), 'ontdoener_in_AMA'] = 'JA'
-    analysis.loc[ontdoeners_AMS['index_right'].notna(), 'ontdoener_in_AMS'] = 'JA'
     analysis.loc[herkomsts_AMA['index_right'].notna(), 'herkomst_in_AMA'] = 'JA'
     analysis.loc[herkomsts_AMS['index_right'].notna(), 'herkomst_in_AMS'] = 'JA'
     analysis.loc[verwerkers_AMA['index_right'].notna(), 'verwerker_in_AMA'] = 'JA'

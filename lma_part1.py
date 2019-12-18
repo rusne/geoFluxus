@@ -87,6 +87,13 @@ total_flow_chains = len(LMA_agg)
 print "Data has been aggregated per afvalstroomnummer,"
 print "the total number of flow chains is", total_flow_chains
 
+# correct the anomaly in the specific afvalstroomnummer as agreed with LMA
+LMA_agg.loc[LMA_agg['Afvalstroomnummer'] == '070080100223', 'Gewicht_KG'] = LMA_agg['Gewicht_KG'] / 10000
+LMA_agg.loc[LMA_agg['Afvalstroomnummer'] == '070080100404', 'Gewicht_KG'] = LMA_agg['Gewicht_KG'] / 10000
+LMA_agg.loc[LMA_agg['Afvalstroomnummer'] == '070080100444', 'Gewicht_KG'] = LMA_agg['Gewicht_KG'] / 10000
+LMA_agg.loc[LMA_agg['Afvalstroomnummer'] == '070080100548', 'Gewicht_KG'] = LMA_agg['Gewicht_KG'] / 10000
+
+
 
 # there are four different 'Waste' locations
 #   Ontdoener  -  the company that generated the waste
@@ -173,6 +180,8 @@ for role in var.map_roles:
         comprehensive[key] = comprehensive[role] + ' ' + comprehensive[postcode]
         comprehensive[key] = comprehensive[key].apply(lambda x: x.strip())
         comprehensive['Activity'] = ''
+        if role == 'Ontdoener':
+            comprehensive.loc[comprehensive['RouteInzameling'] == 'J', key] = comprehensive[key] + ' route'
         actorset = comprehensive[[role, orig_name, postcode, plaats, straat, huisnr, 'MeldPeriodeJAAR', key, 'Activity']]
     actorset['Who'] = role
     actorset.columns = actor_data_cols
@@ -234,7 +243,6 @@ for role in roles:
     export_actors = export_actors[(export_actors['Key'].isin(exp['Key']) == False)]
 
 
-
 # find out if there are any actors without postcode
 actors_without_postcode = actors[actors['Postcode'] == '']
 
@@ -246,6 +254,7 @@ else:
 
 # export locations separately
 locations = actors[['Key', 'Postcode', 'Plaats', 'Adres']].copy()
+locations['Key'] = locations['Key'].apply(lambda x: str(x).strip(' route'))
 locations.drop_duplicates(subset=['Key'], inplace=True)
 
 # check if all actors can be geolocated at once

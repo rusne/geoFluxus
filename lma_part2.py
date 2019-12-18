@@ -12,6 +12,7 @@ import pandas as pd
 import geopandas as gpd
 from shapely import wkt
 import variables as var
+from fuzzywuzzy import fuzz
 
 import warnings  # ignore unnecessary warnings
 warnings.simplefilter(action="ignore", category=FutureWarning)
@@ -52,32 +53,40 @@ print 'Loading LMA ontdoeners.......'
 LMA_ontdoeners = pd.read_excel(priv_folder + PART1 + 'Export_LMA_ontdoener.xlsx'.format(scope))
 
 print 'Loading LMA locations.......'
-LMA_locations = pd.read_csv(priv_folder + INPUT + '{0}_locations.csv'.format(scope))
+LMA_locations = pd.read_csv(priv_folder + INPUT + '{0}_locations_validated.csv'.format(scope))
+# LMA_locations = pd.read_csv(priv_folder + INPUT + '{0}_locations.csv'.format(scope))
 
 # ______________________________________________________________________________
 # reading all LISA actors
 # ______________________________________________________________________________
 
-print 'Loading LISA actors & locations.......'
-LISA_actors = pd.read_excel(priv_folder + 'LISA_data/all_LISA_part2.xlsx') # ,
+print 'Loading LISA & KvK actors & locations.......'
+LISA_actors = pd.read_excel(priv_folder + 'all_LISA_KvK_part2.xlsx', encoding='utf8')  # ,
+                            # nrows=50000)
+
+# LISA_actors = pd.read_excel(priv_folder + 'all_LISA_KvK_part2_small.xlsx')  # ,
                             # nrows=50000)
 
 # ______________________________________________________________________________
-# reading Noord Holland area covered by LISA dataset
+# reading MRA area
 # ______________________________________________________________________________
 
-print 'Loading LISA boundary.......'
-LISA_boundary = gpd.read_file(pub_folder + 'LISA_boundary.shp')
+print 'Loading MRA boundary.......'
+MRA_boundary = gpd.read_file(pub_folder + 'Administrative_units/Metropoolregio_RDnew.shp')
 
 
-# ______________________________________________________________________________
-# ______________________________________________________________________________
-
-# C O N N E C T I N G   O N T D O E N E R S   W I T H   L I S A
 # ______________________________________________________________________________
 # ______________________________________________________________________________
 
-# first ontdoeners need to be matched with their locations
+# C O N N E C T I N G   O N T D O E N E R S   W I T H   L I S A   &   K v K
+# ______________________________________________________________________________
+# ______________________________________________________________________________
+
+# first ontdoeners need to be matched with their own locations
+# taking out route actors first
+LMA_ontdoeners.loc[LMA_ontdoeners['Key'].str.contains('route'), 'route'] = 'J'
+LMA_ontdoeners.loc[LMA_ontdoeners['route'] == 'J', 'Key'] = LMA_ontdoeners['Key'].apply(lambda x: str(x).strip(' route'))
+
 ontdoeners = pd.merge(LMA_ontdoeners, LMA_locations, on='Key', how='left')
 missing_locations = ontdoeners[ontdoeners['WKT'].isnull()]
 if len(missing_locations.index) > 0:
@@ -87,24 +96,35 @@ if len(missing_locations.index) > 0:
     missing_locations.to_excel(priv_folder + EXPORT + 'missing_locations.xlsx')
     ontdoeners.dropna(subset=['WKT'], inplace=True)
 
+ontdoeners.loc[ontdoeners['route'] == 'J', 'Key'] = ontdoeners['Key'] + ' route'
+
 print ontdoeners['Key'].nunique(), 'ontdoeners in total'
 
-# then all actors that fall out of the LISA boundary need to be filtered out
+# then all actors that fall out of the MRA boundary need to be filtered out
 ontdoeners['WKT'] = ontdoeners['WKT'].apply(wkt.loads)
 LMAgdf = gpd.GeoDataFrame(ontdoeners, geometry='WKT', crs={'init': 'epsg:28992'})
 
-joined = gpd.sjoin(LMAgdf, LISA_boundary, how='left')
-in_boundary = joined[joined['bound'] == 'boundary']
-out_boundary = joined[joined['bound'] != 'boundary']
+joined = gpd.sjoin(LMAgdf, MRA_boundary, how='left')
+in_boundary = joined[joined['OBJECTID'].isna() == False]
+out_boundary = joined[joined['OBJECTID'].isna()]
 
-print in_boundary['Key'].nunique(), 'ontdoeners are inside the LISA boundary'
-print out_boundary['Key'].nunique(), 'ontdoeners are outside the LISA boundary'
+print in_boundary['Key'].nunique(), 'ontdoeners are inside the MRA boundary'
+print out_boundary['Key'].nunique(), 'ontdoeners are outside the MRA boundary'
 
 # further matching only happens for the actors inside the boundary
 
-LMA_inbound = in_boundary[['Key', 'Name', 'Orig_name', 'Jaar', 'Adres', 'Postcode', 'WKT']]
+LMA_inbound = in_boundary[['Key', 'Name', 'Orig_name', 'Jaar', 'Adres', 'Postcode', 'WKT', 'route']]
+
+# route inzameling gets a separate nace code as well
+
+route = LMA_inbound[LMA_inbound['route'] == 'J']
+print route['Key'].nunique(), 'ontdoeners belong to route inzameling'
+
+LMA_inbound = LMA_inbound[LMA_inbound['route'] != 'J']
+LMA_inbound.drop(columns=['route'])
 
 total_inbound = LMA_inbound['Key'].nunique()
+print total_inbound
 
 # ______________________________________________________________________________
 # 1. BY NAME AND ADDRESS
@@ -117,7 +137,7 @@ LMA_inbound1.drop_duplicates(subset=['Key'], inplace=True)
 by_name_and_address = pd.merge(LMA_inbound1, LISA_actors, left_on='Key', right_on='key')
 
 # matching control output
-control_output = by_name_and_address[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
+control_output = by_name_and_address[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AGcode']]
 control_output['match'] = 1
 
 # OUTPUT BY NAME AND ADDRESS
@@ -150,7 +170,7 @@ by_name['dist'] = by_name.apply(lambda x: x['wkt'].distance(x['WKT']), axis=1)
 closest = by_name.loc[by_name.groupby(['Key'])['dist'].idxmin()]
 
 # matching control output
-control_output_2 = closest[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
+control_output_2 = closest[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AGcode']]
 control_output_2['match'] = 2
 control_output = control_output.append(control_output_2)
 
@@ -176,8 +196,8 @@ LMA_inbound3.drop_duplicates(subset=['Key'], inplace=True)
 
 by_address = pd.merge(LMA_inbound3, LISA_actors, left_on=['Adres', 'Postcode'], right_on=['adres', 'postcode'])
 
-# find those that got matched to only one NACE code
-by_address['count'] = by_address.groupby(['Key'])['activenq'].transform('count')
+# find those that got matched to only one NACE group
+by_address['count'] = by_address.groupby(['Key'])['AGcode'].transform('count')
 matched_by_address = by_address[by_address['count'] == 1]
 
 print matched_by_address['Key'].nunique(), 'actors have been matched only by address',
@@ -191,7 +211,7 @@ for year in var.map_years:
     m = ambiguous[(ambiguous['Jaar'] == year) & (ambiguous[col].astype(str) == 'JA')]
     temp.append(m)
 
-ambiguous['count'] = ambiguous.groupby(['Key'])['activenq'].transform('count')
+ambiguous['count'] = ambiguous.groupby(['Key'])['AGcode'].transform('count')
 matched_ambiguous = ambiguous[ambiguous['count'] == 1]
 
 print matched_ambiguous['Key'].nunique(), 'additional actors have been matched by address and year'
@@ -202,12 +222,12 @@ print discard['Key'].nunique(), 'matches have been discarded due to multiple NAC
 by_address = pd.concat([matched_by_address, matched_ambiguous])
 
 # matching control output
-control_output_3 = by_address[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
+control_output_3 = by_address[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AGcode']]
 control_output_3['match'] = 3
 control_output = control_output.append(control_output_3)
 
 by_address = by_address[['Key', 'activenq', 'Orig_name']]
-by_address.drop_duplicates(inplace=True)
+by_address.drop_duplicates(subset=['Key'], inplace=True)
 
 # OUTPUT BY ADDRESS
 output_by_address = by_address[['Key', 'activenq', 'Orig_name']]
@@ -224,9 +244,8 @@ print remaining['Key'].nunique(), 'remaining'
 # remaining.to_excel('remaining.xlsx')
 
 # ______________________________________________________________________________
-# 4. BY PROXIMITY
-#    matching on activity group only
-#    in case of doubt, assign the closer one
+# 4. BY  GEO AND TEXT PROXIMITY
+#    closest name within a certain radius
 # ______________________________________________________________________________
 
 # remaining = pd.read_excel('remaining.xlsx')
@@ -236,8 +255,8 @@ remaining_geo = gpd.GeoDataFrame(remaining, geometry='WKT', crs={'init': 'epsg:2
 #                             nrows=50000)
 #
 LISA_actors['wkt'] = LISA_actors['wkt'].apply(wkt.loads)
-LISA_actors_geo = gpd.GeoDataFrame(LISA_actors[['key', 'orig_zaaknaam', 'adres', 'activenq', 'AG', 'wkt']], geometry='wkt', crs={'init': 'epsg:28992'})
-#
+LISA_actors_geo = gpd.GeoDataFrame(LISA_actors[['key', 'orig_zaaknaam', 'adres', 'activenq', 'AGcode', 'wkt']], geometry='wkt', crs={'init': 'epsg:28992'})
+
 LMA_inbound4 = remaining_geo[['Key', 'Orig_name', 'Adres', 'WKT']]
 LMA_inbound4.drop_duplicates(subset=['Key'], inplace=True)
 LMA_inbound4['buffer'] = LMA_inbound4['WKT'].buffer(var.buffer_dist)
@@ -253,57 +272,65 @@ contains = gpd.sjoin(buffers, LISA_actors_geo, how='inner', op='intersects')
 
 distances = pd.merge(contains, LISA_actors_geo[['wkt']], left_on='index_right', right_index=True)
 distances = pd.merge(distances, LMA_inbound4[['Orig_name', 'Adres', 'WKT']], left_index=True, right_index=True)
+distances['orig_zaaknaam'] = distances['orig_zaaknaam'].apply(lambda x: unicode(x))
+distances['Orig_name'] = distances['Orig_name'].apply(lambda x: unicode(x))
+distances['orig_zaaknaam'] = distances['orig_zaaknaam'].apply(lambda x: x.encode('ascii', 'ignore'))
+distances['Orig_name'] = distances['Orig_name'].apply(lambda x: x.encode('ascii', 'ignore'))
+
 distances['dist'] = distances.apply(lambda x: x['wkt'].distance(x['WKT']), axis=1)
-
-
-# distances['freq'] = distances.groupby(['Key', 'AG'])['AG'].transform('count')
-# distances['max_freq'] = distances.groupby(['Key'])['freq'].transform('max')
-# matched_AG = distances[distances['freq'] == distances['max_freq']]
-#
-# # select those that match with only one most frequent activity group
-# matched_1 = matched_AG[matched_AG.groupby('Key')['AG'].transform('nunique') == 1]
-# print matched_1['Key'].nunique(), 'actors have been matched by the most frequent surrounding activity'
-#
-# # matching control output
-# control_output_4 = matched_1[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
-# control_output_4['match'] = 4
-# control_output = control_output.append(control_output_4)
-#
-# # select those that match with multiple most frequent activity groups
-# matched_2 = matched_AG[matched_AG.groupby('Key')['AG'].transform('nunique') > 1]
-# # and then select geographically closest one from the list
-# matched_2.reset_index(inplace=True)
-# matched_2 = matched_2.loc[matched_2.groupby(['Key'])['dist'].idxmin()]
-# print len(matched_2.index), 'actors have been matched by the closest actor (<{0}m)'.format(buffer_dist)
+distances['text_dist'] = distances.apply(lambda x: fuzz.ratio(str(x['orig_zaaknaam']), str(x['Orig_name'])), axis=1)
 
 distances.reset_index(inplace=True)
-matched_TEMP = distances.loc[distances.groupby(['Key'])['dist'].idxmin()]
-print len(matched_TEMP.index), 'actors have been matched by the closest actor (<{0}m)'.format(var.buffer_dist)
+text_distances = distances[distances['text_dist'] >= 50]
+matched_text = text_distances.loc[text_distances.groupby(['Key'])['text_dist'].idxmax()]
 
-# # matching control output
-# control_output_5 = matched_2[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AG']]
-# control_output_5['match'] = 5
-# control_output = control_output.append(control_output_5)
+# matching control output
+control_output_4 = matched_text[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AGcode']]
+control_output_4['match'] = 4
+control_output = control_output.append(control_output_4)
 
-# matched_by_proximity = pd.concat([matched_1, matched_2])
-# matched_by_proximity = matched_by_proximity[['Key', 'AG']]
-# matched_by_proximity.drop_duplicates(inplace=True)
+matched_by_text_proximity = matched_text[['Key', 'activenq', 'Orig_name']].drop_duplicates(subset=['Key'])
 
-matched_by_proximity = matched_TEMP[['Key', 'activenq', 'Orig_name']].drop_duplicates()
+# OUTPUT BY TEXT PROXIMITY
+output_by_text_proximity = matched_by_text_proximity.copy()
+output_by_text_proximity['how'] = 'by text proximity'
 
-# OUTPUT BY PROXIMITY
-output_by_proximity = matched_by_proximity.copy()
-output_by_proximity['how'] = 'by proximity'
-
-print len(output_by_proximity.index), 'actors have been matched by proximity',
-print round(len(output_by_proximity.index) / float(total_inbound) * 100, 2), '%'
+print len(output_by_text_proximity.index), 'actors have been matched by the closest name match in the area (<{0}m)'.format(var.buffer_dist),
+print round(len(output_by_text_proximity.index) / float(total_inbound) * 100, 2), '%'
 
 # take out those actors that had not been matched
-remaining = remaining[(remaining['Key'].isin(output_by_proximity['Key']) == False)]
+remaining = remaining[(remaining['Key'].isin(output_by_text_proximity['Key']) == False)]
 
 print remaining['Key'].nunique(), 'remaining unmatched'
 
-control_output.to_excel('control_output.xlsx')
+# ______________________________________________________________________________
+# 5. BY GEO PROXIMITY
+# ______________________________________________________________________________
+
+remaining_dist = pd.merge(remaining[['Key']], distances, on='Key')
+
+matched_by_geo_proximity = remaining_dist.loc[remaining_dist.groupby(['Key'])['dist'].idxmin()]
+
+# matching control output
+control_output_5 = matched_by_geo_proximity[['Key', 'Orig_name', 'Adres', 'orig_zaaknaam', 'adres', 'activenq', 'AGcode']]
+control_output_5['match'] = 5
+control_output = control_output.append(control_output_5)
+
+matched_by_geo_proximity = matched_by_geo_proximity[['Key', 'activenq', 'Orig_name']].drop_duplicates(subset=['Key'])
+
+# OUTPUT BY PROXIMITY
+output_by_geo_proximity = matched_by_geo_proximity.copy()
+output_by_geo_proximity['how'] = 'by geo proximity'
+
+print len(output_by_geo_proximity.index), 'actors have been matched by proximity',
+print round(len(output_by_geo_proximity.index) / float(total_inbound) * 100, 2), '%'
+
+# take out those actors that had not been matched
+remaining = remaining[(remaining['Key'].isin(output_by_geo_proximity['Key']) == False)]
+
+print remaining['Key'].nunique(), 'remaining unmatched'
+
+control_output.to_excel(priv_folder + EXPORT + 'control_output.xlsx')
 
 # ______________________________________________________________________________
 # 5. UNMATCHED
@@ -312,9 +339,10 @@ control_output.to_excel('control_output.xlsx')
 # ______________________________________________________________________________
 
 remaining['activenq'] = '0000'
-out_boundary['activenq'] = '0000'
+out_boundary['activenq'] = '0001'
+route['activenq'] = '0002'
 
-output_unmatched = pd.concat([remaining[['Key', 'activenq', 'Orig_name']], out_boundary[['Key', 'activenq', 'Orig_name']]])
+output_unmatched = pd.concat([remaining[['Key', 'activenq', 'Orig_name']], out_boundary[['Key', 'activenq', 'Orig_name']], route[['Key', 'activenq', 'Orig_name']]])
 output_unmatched.drop_duplicates(subset=['Key'], inplace=True)
 output_unmatched['how'] = 'unmatched'
 
@@ -344,7 +372,7 @@ output_unmatched['how'] = 'unmatched'
 # ______________________________________________________________________________
 
 all_nace = pd.concat([output_by_name_address, output_by_name, output_by_address,
-                     output_by_proximity, output_unmatched])  # , output_verwerker])
+                     output_by_text_proximity, output_by_geo_proximity, output_unmatched])  # , output_verwerker])
 
 # ______________________________________________________________________________
 # ______________________________________________________________________________
