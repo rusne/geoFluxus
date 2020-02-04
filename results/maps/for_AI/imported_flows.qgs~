@@ -1,0 +1,4352 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis version="3.8.3-Zanzibar" projectname="">
+  <homePath path=""/>
+  <title></title>
+  <autotransaction active="0"/>
+  <evaluateDefaultValues active="0"/>
+  <trust active="0"/>
+  <projectCrs>
+    <spatialrefsys>
+      <proj4>+proj=ortho +lat_0=54 +lon_0=3 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs</proj4>
+      <srsid>100028</srsid>
+      <srid>0</srid>
+      <authid>USER:100028</authid>
+      <description>globe NL</description>
+      <projectionacronym>ortho</projectionacronym>
+      <ellipsoidacronym></ellipsoidacronym>
+      <geographicflag>false</geographicflag>
+    </spatialrefsys>
+  </projectCrs>
+  <layer-tree-group>
+    <customproperties/>
+    <layer-tree-layer source="memory?geometry=Point&amp;crs=EPSG:4326&amp;field=OBJECTID:double(20,0)&amp;uid={4dee7016-6007-49f9-98af-2281e9217e0a}" name="metropoolregio" providerKey="memory" checked="Qt::Checked" expanded="1" id="Centroids_c283354f_ea1c_4e64_a095_5ca10af732d1">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../data/FW_5.2_imported.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no" name="FW_5.2_imported" providerKey="delimitedtext" checked="Qt::Checked" expanded="1" id="FW_5_2_imported_60598f15_f001_4743_92fa_fc90238bec60">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../data/FW_5.2_imported_5years.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no" name="FW_5.2_imported_5years" providerKey="delimitedtext" checked="Qt::Checked" expanded="1" id="FW_5_2_imported_5years_1b1cf019_7620_45ab_a895_5c92a531b8aa">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../data/CG_5.2_imported.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no" name="CG_5.2_imported" providerKey="delimitedtext" checked="Qt::Checked" expanded="1" id="CG_5_2_imported_049187be_e75c_47d1_a6f1_22f779084137">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../data/CG_5.2_imported_5years.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no" name="CG_5.2_imported_5years" providerKey="delimitedtext" checked="Qt::Checked" expanded="1" id="CG_5_2_imported_5years_3cd236d7_dc7c_4e43_9fab_535f185c50f0">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../data/CDW_5.2_imported.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no" name="CDW_5.2_imported" providerKey="delimitedtext" checked="Qt::Checked" expanded="1" id="CDW_5_2_imported_7b6b78cd_ebb7_404f_8909_3f8731055369">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./FW_to_AMA_2018.shp" name="FW_to_AMA_2018" providerKey="ogr" checked="Qt::Unchecked" expanded="1" id="FW_to_AMA_2018_79fed497_6e32_44c2_b567_8e7679e4b692">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./FW_to_AMA_5years.shp" name="FW_to_AMA_5years" providerKey="ogr" checked="Qt::Unchecked" expanded="1" id="FW_to_AMA_5years_f2050bb4_4f17_49e8_9e1d_ddb29f290eaf">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./CG_to_AMA_2018.shp" name="CG_to_AMA_2018" providerKey="ogr" checked="Qt::Checked" expanded="1" id="CG_to_AMA_2018_dc773063_0318_4914_8840_f846556d2473">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./CG_to_AMA_5years.shp" name="CG_to_AMA_5years" providerKey="ogr" checked="Qt::Unchecked" expanded="1" id="CG_to_AMA_5years_3f4d62fb_f353_4f8a_8354_a4c257e9b315">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./CDW_to_AMA_2018.shp" name="CDW_to_AMA_2018" providerKey="ogr" checked="Qt::Unchecked" expanded="1" id="CDW_to_AMA_2018_a5541d5d_7210_4f21_a90b_91b99b159db8">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./CDW_to_AMA_5years.shp" name="CDW_to_AMA_5years" providerKey="ogr" checked="Qt::Unchecked" expanded="1" id="CDW_to_AMA_5years_ec994beb_b40b_4f40_9d3c_716ffea1e1e2">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../data/CDW_5.2_imported_5years.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no" name="CDW_5.2_imported_5years" providerKey="delimitedtext" checked="Qt::Checked" expanded="1" id="CDW_5_2_imported_5years_0248c5e7_67fa_448f_b54c_e0eef5282ff2">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./centroids_per_keyflow.shp" name="centroids_per_keyflow" providerKey="ogr" checked="Qt::Unchecked" expanded="1" id="centroids_per_keyflow_fd8417cd_4a7c_4b0a_b224_20bbb1e30642">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../../Public_data/Administrative_units/Metropoolregio_WGS84.shp" name="Metropoolregio_WGS84" providerKey="ogr" checked="Qt::Unchecked" expanded="1" id="Metropoolregio_WGS84_84755eea_59c9_4190_970c_7e59291e2a23">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="./import_per_keyflow.shp|layername=import_per_keyflow" name="import_per_keyflow" providerKey="ogr" checked="Qt::Checked" expanded="1" id="import_per_keyflow_94bbec7c_e84c_4a79_a175_e9cd13ac7c53">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer source="../../../Public_data/Administrative_units/combinded_admin_areas_WGS84.shp" name="combinded_admin_areas_WGS84" providerKey="ogr" checked="Qt::Checked" expanded="1" id="combinded_admin_areas_WGS84_c829497b_0054_41bb_8c61_dd0ec538d128">
+      <customproperties/>
+    </layer-tree-layer>
+    <custom-order enabled="0">
+      <item>combinded_admin_areas_WGS84_c829497b_0054_41bb_8c61_dd0ec538d128</item>
+      <item>Metropoolregio_WGS84_84755eea_59c9_4190_970c_7e59291e2a23</item>
+      <item>import_per_keyflow_94bbec7c_e84c_4a79_a175_e9cd13ac7c53</item>
+      <item>Centroids_c283354f_ea1c_4e64_a095_5ca10af732d1</item>
+      <item>centroids_per_keyflow_fd8417cd_4a7c_4b0a_b224_20bbb1e30642</item>
+      <item>CDW_to_AMA_5years_ec994beb_b40b_4f40_9d3c_716ffea1e1e2</item>
+      <item>CDW_to_AMA_2018_a5541d5d_7210_4f21_a90b_91b99b159db8</item>
+      <item>CG_to_AMA_5years_3f4d62fb_f353_4f8a_8354_a4c257e9b315</item>
+      <item>CG_to_AMA_2018_dc773063_0318_4914_8840_f846556d2473</item>
+      <item>FW_to_AMA_5years_f2050bb4_4f17_49e8_9e1d_ddb29f290eaf</item>
+      <item>FW_to_AMA_2018_79fed497_6e32_44c2_b567_8e7679e4b692</item>
+    </custom-order>
+  </layer-tree-group>
+  <snapping-settings tolerance="12" type="1" intersection-snapping="0" mode="2" unit="1" enabled="0">
+    <individual-layer-settings>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="FW_to_AMA_2018_79fed497_6e32_44c2_b567_8e7679e4b692"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="CDW_to_AMA_5years_ec994beb_b40b_4f40_9d3c_716ffea1e1e2"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="CG_to_AMA_2018_dc773063_0318_4914_8840_f846556d2473"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="Metropoolregio_WGS84_84755eea_59c9_4190_970c_7e59291e2a23"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="import_per_keyflow_94bbec7c_e84c_4a79_a175_e9cd13ac7c53"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="combinded_admin_areas_WGS84_c829497b_0054_41bb_8c61_dd0ec538d128"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="FW_to_AMA_5years_f2050bb4_4f17_49e8_9e1d_ddb29f290eaf"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="centroids_per_keyflow_fd8417cd_4a7c_4b0a_b224_20bbb1e30642"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="CDW_to_AMA_2018_a5541d5d_7210_4f21_a90b_91b99b159db8"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="CG_to_AMA_5years_3f4d62fb_f353_4f8a_8354_a4c257e9b315"/>
+      <layer-setting tolerance="12" type="1" units="1" enabled="0" id="Centroids_c283354f_ea1c_4e64_a095_5ca10af732d1"/>
+    </individual-layer-settings>
+  </snapping-settings>
+  <relations/>
+  <mapcanvas name="theMapCanvas" annotationsVisible="1">
+    <units>meters</units>
+    <extent>
+      <xmin>4109.9975610917317681</xmin>
+      <ymin>-474399.60851181653561071</ymin>
+      <xmax>616294.66737963678315282</xmax>
+      <ymax>139917.3430655068368651</ymax>
+    </extent>
+    <rotation>0</rotation>
+    <destinationsrs>
+      <spatialrefsys>
+        <proj4>+proj=ortho +lat_0=54 +lon_0=3 +x_0=0 +y_0=0 +a=6371000 +b=6371000 +units=m +no_defs</proj4>
+        <srsid>100028</srsid>
+        <srid>0</srid>
+        <authid>USER:100028</authid>
+        <description>globe NL</description>
+        <projectionacronym>ortho</projectionacronym>
+        <ellipsoidacronym></ellipsoidacronym>
+        <geographicflag>false</geographicflag>
+      </spatialrefsys>
+    </destinationsrs>
+    <rendermaptile>0</rendermaptile>
+    <expressionContextScope/>
+  </mapcanvas>
+  <DataPlotly>
+    <Option type="Map">
+      <Option type="Map" name="dynamic_properties">
+        <Option type="QString" name="name" value=""/>
+        <Option name="properties"/>
+        <Option type="QString" name="type" value="collection"/>
+      </Option>
+      <Option type="Map" name="plot_layout">
+        <Option type="QString" name="additional_info_expression" value=""/>
+        <Option type="QString" name="bar_mode" value="group"/>
+        <Option type="double" name="bargaps" value="0"/>
+        <Option type="bool" name="bins_check" value="false"/>
+        <Option type="bool" name="legend" value="true"/>
+        <Option type="QString" name="legend_orientation" value="v"/>
+        <Option type="invalid" name="legend_title"/>
+        <Option type="Map" name="polar">
+          <Option type="Map" name="angularaxis">
+            <Option type="QString" name="direction" value="clockwise"/>
+          </Option>
+        </Option>
+        <Option type="Map" name="range_slider">
+          <Option type="int" name="borderwidth" value="1"/>
+          <Option type="bool" name="visible" value="false"/>
+        </Option>
+        <Option type="QString" name="title" value=""/>
+        <Option type="invalid" name="x_inv"/>
+        <Option type="QString" name="x_title" value=""/>
+        <Option type="QString" name="x_type" value="linear"/>
+        <Option type="invalid" name="xaxis"/>
+        <Option type="invalid" name="y_inv"/>
+        <Option type="QString" name="y_title" value=""/>
+        <Option type="QString" name="y_type" value="linear"/>
+        <Option type="QString" name="z_title" value=""/>
+      </Option>
+      <Option type="Map" name="plot_properties">
+        <Option type="invalid" name="additional_hover_text"/>
+        <Option type="int" name="bins" value="10"/>
+        <Option type="QString" name="box_orientation" value="v"/>
+        <Option type="bool" name="box_outliers" value="false"/>
+        <Option type="bool" name="box_stat" value="false"/>
+        <Option type="invalid" name="color_scale"/>
+        <Option type="bool" name="color_scale_data_defined_in_check" value="false"/>
+        <Option type="bool" name="color_scale_data_defined_in_invert_check" value="false"/>
+        <Option type="QString" name="cont_type" value="fill"/>
+        <Option type="QString" name="contour_type_combo" value="Fill"/>
+        <Option type="bool" name="cumulative" value="false"/>
+        <Option type="List" name="custom">
+          <Option type="QString" value=""/>
+        </Option>
+        <Option type="QString" name="hover_text" value="all"/>
+        <Option type="QString" name="in_color" value="#8ebad9"/>
+        <Option type="bool" name="invert_color_scale" value="false"/>
+        <Option type="QString" name="invert_hist" value="increasing"/>
+        <Option type="QString" name="line_combo" value="Solid Line"/>
+        <Option type="QString" name="line_dash" value="solid"/>
+        <Option type="QString" name="marker" value="markers"/>
+        <Option type="double" name="marker_size" value="10"/>
+        <Option type="int" name="marker_symbol" value="0"/>
+        <Option type="QString" name="marker_type_combo" value="Points"/>
+        <Option type="double" name="marker_width" value="1"/>
+        <Option type="QString" name="name" value=""/>
+        <Option type="QString" name="normalization" value=""/>
+        <Option type="double" name="opacity" value="1"/>
+        <Option type="QString" name="out_color" value="#1f77b4"/>
+        <Option type="QString" name="point_combo" value=""/>
+        <Option type="bool" name="selected_features_only" value="false"/>
+        <Option type="bool" name="show_colorscale_legend" value="false"/>
+        <Option type="bool" name="show_lines" value="true"/>
+        <Option type="bool" name="show_lines_check" value="true"/>
+        <Option type="bool" name="show_mean_line" value="true"/>
+        <Option type="QString" name="violin_side" value="both"/>
+        <Option type="bool" name="visible_features_only" value="false"/>
+        <Option type="QString" name="x_name" value=""/>
+        <Option type="QString" name="y_name" value=""/>
+        <Option type="QString" name="z_name" value=""/>
+      </Option>
+      <Option type="QString" name="plot_type" value="scatter"/>
+      <Option type="QString" name="source_layer_id" value="CDW_5_2_imported_7b6b78cd_ebb7_404f_8909_3f8731055369"/>
+    </Option>
+  </DataPlotly>
+  <projectModels/>
+  <legend updateDrawingOrder="true">
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="metropoolregio" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="Centroids_c283354f_ea1c_4e64_a095_5ca10af732d1" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="FW_5.2_imported" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="FW_5_2_imported_60598f15_f001_4743_92fa_fc90238bec60" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="FW_5.2_imported_5years" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="FW_5_2_imported_5years_1b1cf019_7620_45ab_a895_5c92a531b8aa" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CG_5.2_imported" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CG_5_2_imported_049187be_e75c_47d1_a6f1_22f779084137" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CG_5.2_imported_5years" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CG_5_2_imported_5years_3cd236d7_dc7c_4e43_9fab_535f185c50f0" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CDW_5.2_imported" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CDW_5_2_imported_7b6b78cd_ebb7_404f_8909_3f8731055369" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="FW_to_AMA_2018" checked="Qt::Unchecked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="FW_to_AMA_2018_79fed497_6e32_44c2_b567_8e7679e4b692" visible="0" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="FW_to_AMA_5years" checked="Qt::Unchecked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="FW_to_AMA_5years_f2050bb4_4f17_49e8_9e1d_ddb29f290eaf" visible="0" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CG_to_AMA_2018" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CG_to_AMA_2018_dc773063_0318_4914_8840_f846556d2473" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CG_to_AMA_5years" checked="Qt::Unchecked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CG_to_AMA_5years_3f4d62fb_f353_4f8a_8354_a4c257e9b315" visible="0" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CDW_to_AMA_2018" checked="Qt::Unchecked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CDW_to_AMA_2018_a5541d5d_7210_4f21_a90b_91b99b159db8" visible="0" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CDW_to_AMA_5years" checked="Qt::Unchecked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CDW_to_AMA_5years_ec994beb_b40b_4f40_9d3c_716ffea1e1e2" visible="0" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="CDW_5.2_imported_5years" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="CDW_5_2_imported_5years_0248c5e7_67fa_448f_b54c_e0eef5282ff2" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="centroids_per_keyflow" checked="Qt::Unchecked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="centroids_per_keyflow_fd8417cd_4a7c_4b0a_b224_20bbb1e30642" visible="0" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="Metropoolregio_WGS84" checked="Qt::Unchecked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="Metropoolregio_WGS84_84755eea_59c9_4190_970c_7e59291e2a23" visible="0" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="import_per_keyflow" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="import_per_keyflow_94bbec7c_e84c_4a79_a175_e9cd13ac7c53" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer open="true" drawingOrder="-1" showFeatureCount="0" name="combinded_admin_areas_WGS84" checked="Qt::Checked">
+      <filegroup open="true" hidden="false">
+        <legendlayerfile layerid="combinded_admin_areas_WGS84_c829497b_0054_41bb_8c61_dd0ec538d128" visible="1" isInOverview="0"/>
+      </filegroup>
+    </legendlayer>
+  </legend>
+  <mapViewDocks/>
+  <mapViewDocks3D/>
+  <projectlayers>
+    <maplayer geometry="No geometry" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" wkbType="NoGeometry" refreshOnNotifyEnabled="0" minScale="1e+08" type="vector" styleCategories="AllStyleCategories" readOnly="0" maxScale="0" autoRefreshTime="0" autoRefreshEnabled="0">
+      <id>CDW_5_2_imported_5years_0248c5e7_67fa_448f_b54c_e0eef5282ff2</id>
+      <datasource>file:../../data/CDW_5.2_imported_5years.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CDW_5.2_imported_5years</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4></proj4>
+          <srsid>0</srsid>
+          <srid>0</srid>
+          <authid></authid>
+          <description></description>
+          <projectionacronym></projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <customproperties/>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="orig_country">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="VerwerkingsMethode">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="amount">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="orig_country" index="0" name=""/>
+        <alias field="VerwerkingsMethode" index="1" name=""/>
+        <alias field="amount" index="2" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="orig_country"/>
+        <default expression="" applyOnUpdate="0" field="VerwerkingsMethode"/>
+        <default expression="" applyOnUpdate="0" field="amount"/>
+      </defaults>
+      <constraints>
+        <constraint field="orig_country" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="VerwerkingsMethode" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="amount" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="orig_country" exp="" desc=""/>
+        <constraint field="VerwerkingsMethode" exp="" desc=""/>
+        <constraint field="amount" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns/>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression></previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer geometry="No geometry" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" wkbType="NoGeometry" refreshOnNotifyEnabled="0" minScale="1e+08" type="vector" styleCategories="AllStyleCategories" readOnly="0" maxScale="0" autoRefreshTime="0" autoRefreshEnabled="0">
+      <id>CDW_5_2_imported_7b6b78cd_ebb7_404f_8909_3f8731055369</id>
+      <datasource>file:../../data/CDW_5.2_imported.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CDW_5.2_imported</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4></proj4>
+          <srsid>0</srsid>
+          <srid>0</srid>
+          <authid></authid>
+          <description></description>
+          <projectionacronym></projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <customproperties/>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="orig_country">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="VerwerkingsMethode">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="amount">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="orig_country" index="0" name=""/>
+        <alias field="VerwerkingsMethode" index="1" name=""/>
+        <alias field="amount" index="2" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="orig_country"/>
+        <default expression="" applyOnUpdate="0" field="VerwerkingsMethode"/>
+        <default expression="" applyOnUpdate="0" field="amount"/>
+      </defaults>
+      <constraints>
+        <constraint field="orig_country" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="VerwerkingsMethode" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="amount" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="orig_country" exp="" desc=""/>
+        <constraint field="VerwerkingsMethode" exp="" desc=""/>
+        <constraint field="amount" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns/>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression></previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Line" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiLineString" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>-112.41440717608875843</xmin>
+        <ymin>31.92055111243291421</ymin>
+        <xmax>16.75789908680707185</xmax>
+        <ymax>62.77535324104515269</ymax>
+      </extent>
+      <id>CDW_to_AMA_2018_a5541d5d_7210_4f21_a90b_91b99b159db8</id>
+      <datasource>./CDW_to_AMA_2018.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CDW_to_AMA_2018</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="line" name="0" alpha="1">
+            <layer locked="0" class="SimpleLine" pass="0" enabled="1">
+              <prop v="square" k="capstyle"/>
+              <prop v="5;2" k="customdash"/>
+              <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+              <prop v="MM" k="customdash_unit"/>
+              <prop v="0" k="draw_inside_polygon"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="196,60,57,255" k="line_color"/>
+              <prop v="solid" k="line_style"/>
+              <prop v="0.66" k="line_width"/>
+              <prop v="MM" k="line_width_unit"/>
+              <prop v="0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0" k="ring_filter"/>
+              <prop v="0" k="use_custom_dash"/>
+              <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="2" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="OBJECTID">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+        <alias field="OBJECTID" index="7" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+          <column type="field" hidden="0" name="OBJECTID" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+        <field editable="1" name="OBJECTID"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+        <field labelOnTop="0" name="OBJECTID"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Line" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiLineString" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>-112.41440717608875843</xmin>
+        <ymin>12.52592533333333336</ymin>
+        <xmax>54.3839884324012246</xmax>
+        <ymax>62.77535324104515269</ymax>
+      </extent>
+      <id>CDW_to_AMA_5years_ec994beb_b40b_4f40_9d3c_716ffea1e1e2</id>
+      <datasource>./CDW_to_AMA_5years.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CDW_to_AMA_5years</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="line" name="0" alpha="1">
+            <layer locked="0" class="SimpleLine" pass="0" enabled="1">
+              <prop v="square" k="capstyle"/>
+              <prop v="5;2" k="customdash"/>
+              <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+              <prop v="MM" k="customdash_unit"/>
+              <prop v="0" k="draw_inside_polygon"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="0,115,210,255" k="line_color"/>
+              <prop v="solid" k="line_style"/>
+              <prop v="0.66" k="line_width"/>
+              <prop v="MM" k="line_width_unit"/>
+              <prop v="0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0" k="ring_filter"/>
+              <prop v="0" k="use_custom_dash"/>
+              <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="2" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="OBJECTID">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+        <alias field="OBJECTID" index="7" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+          <column type="field" hidden="0" name="OBJECTID" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+        <field editable="1" name="OBJECTID"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+        <field labelOnTop="0" name="OBJECTID"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer geometry="No geometry" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" wkbType="NoGeometry" refreshOnNotifyEnabled="0" minScale="1e+08" type="vector" styleCategories="AllStyleCategories" readOnly="0" maxScale="0" autoRefreshTime="0" autoRefreshEnabled="0">
+      <id>CG_5_2_imported_049187be_e75c_47d1_a6f1_22f779084137</id>
+      <datasource>file:../../data/CG_5.2_imported.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CG_5.2_imported</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4></proj4>
+          <srsid>0</srsid>
+          <srid>0</srid>
+          <authid></authid>
+          <description></description>
+          <projectionacronym></projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <customproperties/>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="orig_country">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="VerwerkingsMethode">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="amount">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="orig_country" index="0" name=""/>
+        <alias field="VerwerkingsMethode" index="1" name=""/>
+        <alias field="amount" index="2" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="orig_country"/>
+        <default expression="" applyOnUpdate="0" field="VerwerkingsMethode"/>
+        <default expression="" applyOnUpdate="0" field="amount"/>
+      </defaults>
+      <constraints>
+        <constraint field="orig_country" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="VerwerkingsMethode" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="amount" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="orig_country" exp="" desc=""/>
+        <constraint field="VerwerkingsMethode" exp="" desc=""/>
+        <constraint field="amount" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns/>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression></previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer geometry="No geometry" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" wkbType="NoGeometry" refreshOnNotifyEnabled="0" minScale="1e+08" type="vector" styleCategories="AllStyleCategories" readOnly="0" maxScale="0" autoRefreshTime="0" autoRefreshEnabled="0">
+      <id>CG_5_2_imported_5years_3cd236d7_dc7c_4e43_9fab_535f185c50f0</id>
+      <datasource>file:../../data/CG_5.2_imported_5years.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CG_5.2_imported_5years</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4></proj4>
+          <srsid>0</srsid>
+          <srid>0</srid>
+          <authid></authid>
+          <description></description>
+          <projectionacronym></projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <customproperties/>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="orig_country">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="VerwerkingsMethode">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="amount">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="orig_country" index="0" name=""/>
+        <alias field="VerwerkingsMethode" index="1" name=""/>
+        <alias field="amount" index="2" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="orig_country"/>
+        <default expression="" applyOnUpdate="0" field="VerwerkingsMethode"/>
+        <default expression="" applyOnUpdate="0" field="amount"/>
+      </defaults>
+      <constraints>
+        <constraint field="orig_country" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="VerwerkingsMethode" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="amount" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="orig_country" exp="" desc=""/>
+        <constraint field="VerwerkingsMethode" exp="" desc=""/>
+        <constraint field="amount" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns/>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression></previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Line" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiLineString" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>-98.45003985905763955</xmin>
+        <ymin>40.22782065325986167</ymin>
+        <xmax>16.75789908680707185</xmax>
+        <ymax>62.77535324104515269</ymax>
+      </extent>
+      <id>CG_to_AMA_2018_dc773063_0318_4914_8840_f846556d2473</id>
+      <datasource>./CG_to_AMA_2018.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CG_to_AMA_2018</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="line" name="0" alpha="1">
+            <layer locked="0" class="SimpleLine" pass="0" enabled="1">
+              <prop v="square" k="capstyle"/>
+              <prop v="5;2" k="customdash"/>
+              <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+              <prop v="MM" k="customdash_unit"/>
+              <prop v="0" k="draw_inside_polygon"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="145,82,45,255" k="line_color"/>
+              <prop v="solid" k="line_style"/>
+              <prop v="0.66" k="line_width"/>
+              <prop v="MM" k="line_width_unit"/>
+              <prop v="0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0" k="ring_filter"/>
+              <prop v="0" k="use_custom_dash"/>
+              <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="2" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="OBJECTID">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+        <alias field="OBJECTID" index="7" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+          <column type="field" hidden="0" name="OBJECTID" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+        <field editable="1" name="OBJECTID"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+        <field labelOnTop="0" name="OBJECTID"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Line" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiLineString" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>-98.45003985905763955</xmin>
+        <ymin>40.22782065325986167</ymin>
+        <xmax>25.2356371660444907</xmax>
+        <ymax>62.77535324104515269</ymax>
+      </extent>
+      <id>CG_to_AMA_5years_3f4d62fb_f353_4f8a_8354_a4c257e9b315</id>
+      <datasource>./CG_to_AMA_5years.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>CG_to_AMA_5years</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="line" name="0" alpha="1">
+            <layer locked="0" class="SimpleLine" pass="0" enabled="1">
+              <prop v="square" k="capstyle"/>
+              <prop v="5;2" k="customdash"/>
+              <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+              <prop v="MM" k="customdash_unit"/>
+              <prop v="0" k="draw_inside_polygon"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="190,140,30,255" k="line_color"/>
+              <prop v="solid" k="line_style"/>
+              <prop v="0.66" k="line_width"/>
+              <prop v="MM" k="line_width_unit"/>
+              <prop v="0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0" k="ring_filter"/>
+              <prop v="0" k="use_custom_dash"/>
+              <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="2" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="OBJECTID">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+        <alias field="OBJECTID" index="7" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+          <column type="field" hidden="0" name="OBJECTID" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+        <field editable="1" name="OBJECTID"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+        <field labelOnTop="0" name="OBJECTID"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Point" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="Point" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <id>Centroids_c283354f_ea1c_4e64_a095_5ca10af732d1</id>
+      <datasource>memory?geometry=Point&amp;crs=EPSG:4326&amp;field=OBJECTID:double(20,0)</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>metropoolregio</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">memory</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="marker" name="0" alpha="1">
+            <layer locked="0" class="SimpleMarker" pass="0" enabled="1">
+              <prop v="0" k="angle"/>
+              <prop v="114,155,111,255" k="color"/>
+              <prop v="1" k="horizontal_anchor_point"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="circle" k="name"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="35,35,35,255" k="outline_color"/>
+              <prop v="solid" k="outline_style"/>
+              <prop v="0" k="outline_width"/>
+              <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="diameter" k="scale_method"/>
+              <prop v="2" k="size"/>
+              <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
+              <prop v="MM" k="size_unit"/>
+              <prop v="1" k="vertical_anchor_point"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="OBJECTID">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="OBJECTID" index="0" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns/>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression></previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer geometry="No geometry" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" wkbType="NoGeometry" refreshOnNotifyEnabled="0" minScale="1e+08" type="vector" styleCategories="AllStyleCategories" readOnly="0" maxScale="0" autoRefreshTime="0" autoRefreshEnabled="0">
+      <id>FW_5_2_imported_5years_1b1cf019_7620_45ab_a895_5c92a531b8aa</id>
+      <datasource>file:../../data/FW_5.2_imported_5years.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>FW_5.2_imported_5years</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4></proj4>
+          <srsid>0</srsid>
+          <srid>0</srid>
+          <authid></authid>
+          <description></description>
+          <projectionacronym></projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <customproperties/>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="orig_country">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="VerwerkingsMethode">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="amount">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="orig_country" index="0" name=""/>
+        <alias field="VerwerkingsMethode" index="1" name=""/>
+        <alias field="amount" index="2" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="orig_country"/>
+        <default expression="" applyOnUpdate="0" field="VerwerkingsMethode"/>
+        <default expression="" applyOnUpdate="0" field="amount"/>
+      </defaults>
+      <constraints>
+        <constraint field="orig_country" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="VerwerkingsMethode" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="amount" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="orig_country" exp="" desc=""/>
+        <constraint field="VerwerkingsMethode" exp="" desc=""/>
+        <constraint field="amount" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns/>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression></previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer geometry="No geometry" hasScaleBasedVisibilityFlag="0" refreshOnNotifyMessage="" wkbType="NoGeometry" refreshOnNotifyEnabled="0" minScale="1e+08" type="vector" styleCategories="AllStyleCategories" readOnly="0" maxScale="0" autoRefreshTime="0" autoRefreshEnabled="0">
+      <id>FW_5_2_imported_60598f15_f001_4743_92fa_fc90238bec60</id>
+      <datasource>file:../../data/FW_5.2_imported.csv?type=csv&amp;detectTypes=yes&amp;geomType=none&amp;subsetIndex=no&amp;watchFile=no</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>FW_5.2_imported</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4></proj4>
+          <srsid>0</srsid>
+          <srid>0</srid>
+          <authid></authid>
+          <description></description>
+          <projectionacronym></projectionacronym>
+          <ellipsoidacronym></ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type></type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">delimitedtext</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <customproperties>
+        <property key="dualview/previewExpressions" value="&quot;orig_country&quot;"/>
+      </customproperties>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="orig_country">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="VerwerkingsMethode">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="amount">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="orig_country" index="0" name=""/>
+        <alias field="VerwerkingsMethode" index="1" name=""/>
+        <alias field="amount" index="2" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="orig_country"/>
+        <default expression="" applyOnUpdate="0" field="VerwerkingsMethode"/>
+        <default expression="" applyOnUpdate="0" field="amount"/>
+      </defaults>
+      <constraints>
+        <constraint field="orig_country" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="VerwerkingsMethode" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="amount" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="orig_country" exp="" desc=""/>
+        <constraint field="VerwerkingsMethode" exp="" desc=""/>
+        <constraint field="amount" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="&quot;orig_country&quot;" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="orig_country" width="-1"/>
+          <column type="field" hidden="0" name="VerwerkingsMethode" width="-1"/>
+          <column type="field" hidden="0" name="amount" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression>"orig_country"</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Line" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiLineString" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>3.82432648608259917</xmin>
+        <ymin>51.21023466361686616</ymin>
+        <xmax>6.74678150139890231</xmax>
+        <ymax>53.21658201416617828</ymax>
+      </extent>
+      <id>FW_to_AMA_2018_79fed497_6e32_44c2_b567_8e7679e4b692</id>
+      <datasource>./FW_to_AMA_2018.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>FW_to_AMA_2018</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="line" name="0" alpha="1">
+            <layer locked="0" class="SimpleLine" pass="0" enabled="1">
+              <prop v="square" k="capstyle"/>
+              <prop v="5;2" k="customdash"/>
+              <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+              <prop v="MM" k="customdash_unit"/>
+              <prop v="0" k="draw_inside_polygon"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="133,182,111,255" k="line_color"/>
+              <prop v="solid" k="line_style"/>
+              <prop v="0.66" k="line_width"/>
+              <prop v="MM" k="line_width_unit"/>
+              <prop v="0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0" k="ring_filter"/>
+              <prop v="0" k="use_custom_dash"/>
+              <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="2" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="OBJECTID">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+        <alias field="OBJECTID" index="7" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+          <column type="field" hidden="0" name="OBJECTID" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+        <field editable="1" name="OBJECTID"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+        <field labelOnTop="0" name="OBJECTID"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Line" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiLineString" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>3.82432648608259917</xmin>
+        <ymin>51.10877796743645973</ymin>
+        <xmax>10.3910595255613476</xmax>
+        <ymax>53.21658201416617828</ymax>
+      </extent>
+      <id>FW_to_AMA_5years_f2050bb4_4f17_49e8_9e1d_ddb29f290eaf</id>
+      <datasource>./FW_to_AMA_5years.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>FW_to_AMA_5years</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="line" name="0" alpha="1">
+            <layer locked="0" class="SimpleLine" pass="0" enabled="1">
+              <prop v="square" k="capstyle"/>
+              <prop v="5;2" k="customdash"/>
+              <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+              <prop v="MM" k="customdash_unit"/>
+              <prop v="0" k="draw_inside_polygon"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="125,139,143,255" k="line_color"/>
+              <prop v="solid" k="line_style"/>
+              <prop v="0.66" k="line_width"/>
+              <prop v="MM" k="line_width_unit"/>
+              <prop v="0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="0" k="ring_filter"/>
+              <prop v="0" k="use_custom_dash"/>
+              <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="2" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="OBJECTID">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+        <alias field="OBJECTID" index="7" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+          <column type="field" hidden="0" name="OBJECTID" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+        <field editable="1" name="OBJECTID"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+        <field labelOnTop="0" name="OBJECTID"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Polygon" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiPolygon" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>4.49384469193651181</xmin>
+        <ymin>52.16592898954650082</ymin>
+        <xmax>5.60587063460071988</xmax>
+        <ymax>52.69222419129814483</ymax>
+      </extent>
+      <id>Metropoolregio_WGS84_84755eea_59c9_4190_970c_7e59291e2a23</id>
+      <datasource>../../../Public_data/Administrative_units/Metropoolregio_WGS84.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>Metropoolregio_WGS84</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="fill" name="0" alpha="1">
+            <layer locked="0" class="SimpleFill" pass="0" enabled="1">
+              <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
+              <prop v="150,150,150,255" k="color"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="247,247,247,255" k="outline_color"/>
+              <prop v="solid" k="outline_style"/>
+              <prop v="0.16" k="outline_width"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="solid" k="style"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="1" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="OBJECTID">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="OBJECTID" index="0" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="OBJECTID"/>
+      </defaults>
+      <constraints>
+        <constraint field="OBJECTID" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="OBJECTID" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="OBJECTID" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="OBJECTID"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="OBJECTID"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>OBJECTID</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Point" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="Point" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>-112.41440717608875843</xmin>
+        <ymin>12.52592533333333336</ymin>
+        <xmax>54.3839884324012246</xmax>
+        <ymax>62.77535324104515269</ymax>
+      </extent>
+      <id>centroids_per_keyflow_fd8417cd_4a7c_4b0a_b224_20bbb1e30642</id>
+      <datasource>./centroids_per_keyflow.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>centroids_per_keyflow</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent/>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="marker" name="0" alpha="1">
+            <layer locked="0" class="SimpleMarker" pass="0" enabled="1">
+              <prop v="0" k="angle"/>
+              <prop v="141,90,153,255" k="color"/>
+              <prop v="1" k="horizontal_anchor_point"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="circle" k="name"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="35,35,35,255" k="outline_color"/>
+              <prop v="solid" k="outline_style"/>
+              <prop v="0" k="outline_width"/>
+              <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="diameter" k="scale_method"/>
+              <prop v="2" k="size"/>
+              <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
+              <prop v="MM" k="size_unit"/>
+              <prop v="1" k="vertical_anchor_point"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties/>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks type="StringList">
+          <Option type="QString" value=""/>
+        </activeChecks>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns/>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable/>
+      <labelOnTop/>
+      <widgets/>
+      <previewExpression></previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Polygon" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiPolygon" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>-180</xmin>
+        <ymin>-90</ymin>
+        <xmax>180.00000190734863281</xmax>
+        <ymax>83.57026863098144531</ymax>
+      </extent>
+      <id>combinded_admin_areas_WGS84_c829497b_0054_41bb_8c61_dd0ec538d128</id>
+      <datasource>../../../Public_data/Administrative_units/combinded_admin_areas_WGS84.shp</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>combinded_admin_areas_WGS84</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="fill" name="0" alpha="1">
+            <layer locked="0" class="SimpleFill" pass="0" enabled="1">
+              <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
+              <prop v="247,247,247,255" k="color"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="82,82,82,255" k="outline_color"/>
+              <prop v="solid" k="outline_style"/>
+              <prop v="0.16" k="outline_width"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="solid" k="style"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="dualview/previewExpressions" value="Name"/>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+          <attribute field="" color="#000000" label=""/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="1" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="&quot;CDW_5years&quot;" sortOrder="1" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="0" name="CDW_5.2_imported_5years_VerwerkingsMethode"/>
+        <field editable="0" name="CDW_5.2_imported_5years_amount"/>
+        <field editable="0" name="CDW_5.2_imported_VerwerkingsMethode"/>
+        <field editable="0" name="CDW_5.2_imported_amount"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="0" name="FW_5.2_imported_5years_VerwerkingsMethode"/>
+        <field editable="0" name="FW_5.2_imported_5years_amount"/>
+        <field editable="0" name="FW_5.2_imported_VerwerkingsMethode"/>
+        <field editable="0" name="FW_5.2_imported_amount"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5.2_imported_5years_VerwerkingsMethode"/>
+        <field labelOnTop="0" name="CDW_5.2_imported_5years_amount"/>
+        <field labelOnTop="0" name="CDW_5.2_imported_VerwerkingsMethode"/>
+        <field labelOnTop="0" name="CDW_5.2_imported_amount"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5.2_imported_5years_VerwerkingsMethode"/>
+        <field labelOnTop="0" name="FW_5.2_imported_5years_amount"/>
+        <field labelOnTop="0" name="FW_5.2_imported_VerwerkingsMethode"/>
+        <field labelOnTop="0" name="FW_5.2_imported_amount"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+    <maplayer refreshOnNotifyMessage="" geometry="Polygon" simplifyMaxScale="1" type="vector" simplifyAlgorithm="0" simplifyDrawingTol="1" readOnly="0" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" wkbType="MultiPolygon" labelsEnabled="0" maxScale="0" autoRefreshEnabled="0" autoRefreshTime="0" simplifyLocal="1" minScale="1e+08" refreshOnNotifyEnabled="0">
+      <extent>
+        <xmin>-179.141998291015625</xmin>
+        <ymin>-21.38885000000000147</ymin>
+        <xmax>179.73745918273925781</xmax>
+        <ymax>83.10942268371582031</ymax>
+      </extent>
+      <id>import_per_keyflow_94bbec7c_e84c_4a79_a175_e9cd13ac7c53</id>
+      <datasource>./import_per_keyflow.shp|layername=import_per_keyflow</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>import_per_keyflow</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+          <srsid>3452</srsid>
+          <srid>4326</srid>
+          <authid>EPSG:4326</authid>
+          <description>WGS 84</description>
+          <projectionacronym>longlat</projectionacronym>
+          <ellipsoidacronym>WGS84</ellipsoidacronym>
+          <geographicflag>true</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <resourceMetadata>
+        <identifier></identifier>
+        <parentidentifier></parentidentifier>
+        <language></language>
+        <type>dataset</type>
+        <title></title>
+        <abstract></abstract>
+        <contact>
+          <name></name>
+          <organization></organization>
+          <position></position>
+          <voice></voice>
+          <fax></fax>
+          <email></email>
+          <role></role>
+        </contact>
+        <links/>
+        <fees></fees>
+        <encoding></encoding>
+        <crs>
+          <spatialrefsys>
+            <proj4></proj4>
+            <srsid>0</srsid>
+            <srid>0</srid>
+            <authid></authid>
+            <description></description>
+            <projectionacronym></projectionacronym>
+            <ellipsoidacronym></ellipsoidacronym>
+            <geographicflag>true</geographicflag>
+          </spatialrefsys>
+        </crs>
+        <extent>
+          <spatial miny="0" maxy="0" crs="" minx="0" minz="0" maxx="0" dimensions="2" maxz="0"/>
+          <temporal>
+            <period>
+              <start></start>
+              <end></end>
+            </period>
+          </temporal>
+        </extent>
+      </resourceMetadata>
+      <provider encoding="UTF-8">ogr</provider>
+      <vectorjoins/>
+      <layerDependencies/>
+      <dataDependencies/>
+      <legend type="default-vector"/>
+      <expressionfields/>
+      <map-layer-style-manager current="default">
+        <map-layer-style name="default"/>
+      </map-layer-style-manager>
+      <auxiliaryLayer/>
+      <flags>
+        <Identifiable>1</Identifiable>
+        <Removable>1</Removable>
+        <Searchable>1</Searchable>
+      </flags>
+      <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
+        <symbols>
+          <symbol clip_to_extent="1" force_rhr="0" type="fill" name="0" alpha="1">
+            <layer locked="0" class="SimpleFill" pass="0" enabled="1">
+              <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
+              <prop v="204,204,204,255" k="color"/>
+              <prop v="bevel" k="joinstyle"/>
+              <prop v="0,0" k="offset"/>
+              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+              <prop v="MM" k="offset_unit"/>
+              <prop v="82,82,82,255" k="outline_color"/>
+              <prop v="solid" k="outline_style"/>
+              <prop v="0.16" k="outline_width"/>
+              <prop v="MM" k="outline_width_unit"/>
+              <prop v="solid" k="style"/>
+              <data_defined_properties>
+                <Option type="Map">
+                  <Option type="QString" name="name" value=""/>
+                  <Option name="properties"/>
+                  <Option type="QString" name="type" value="collection"/>
+                </Option>
+              </data_defined_properties>
+            </layer>
+          </symbol>
+        </symbols>
+        <rotation/>
+        <sizescale/>
+      </renderer-v2>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
+      <blendMode>0</blendMode>
+      <featureBlendMode>0</featureBlendMode>
+      <layerOpacity>1</layerOpacity>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+        <DiagramCategory enabled="0" maxScaleDenominator="1e+08" scaleDependency="Area" penColor="#000000" opacity="1" barWidth="5" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" sizeType="MM" diagramOrientation="Up" backgroundAlpha="255" labelPlacementMethod="XHeight" minScaleDenominator="0" scaleBasedVisibility="0" sizeScale="3x:0,0,0,0,0,0" minimumSize="0" penAlpha="255" penWidth="0" lineSizeType="MM" width="15" height="15">
+          <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
+        </DiagramCategory>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings placement="1" dist="0" zIndex="0" showAll="1" priority="0" obstacle="0" linePlacementFlags="18">
+        <properties>
+          <Option type="Map">
+            <Option type="QString" name="name" value=""/>
+            <Option name="properties"/>
+            <Option type="QString" name="type" value="collection"/>
+          </Option>
+        </properties>
+      </DiagramLayerSettings>
+      <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+        <activeChecks/>
+        <checkConfiguration/>
+      </geometryOptions>
+      <fieldConfiguration>
+        <field name="Name">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CG_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="FW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_2018">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+        <field name="CDW_5years">
+          <editWidget type="TextEdit">
+            <config>
+              <Option/>
+            </config>
+          </editWidget>
+        </field>
+      </fieldConfiguration>
+      <aliases>
+        <alias field="Name" index="0" name=""/>
+        <alias field="CG_2018" index="1" name=""/>
+        <alias field="CG_5years" index="2" name=""/>
+        <alias field="FW_5years" index="3" name=""/>
+        <alias field="FW_2018" index="4" name=""/>
+        <alias field="CDW_2018" index="5" name=""/>
+        <alias field="CDW_5years" index="6" name=""/>
+      </aliases>
+      <excludeAttributesWMS/>
+      <excludeAttributesWFS/>
+      <defaults>
+        <default expression="" applyOnUpdate="0" field="Name"/>
+        <default expression="" applyOnUpdate="0" field="CG_2018"/>
+        <default expression="" applyOnUpdate="0" field="CG_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_5years"/>
+        <default expression="" applyOnUpdate="0" field="FW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_2018"/>
+        <default expression="" applyOnUpdate="0" field="CDW_5years"/>
+      </defaults>
+      <constraints>
+        <constraint field="Name" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CG_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="FW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_2018" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+        <constraint field="CDW_5years" constraints="0" unique_strength="0" notnull_strength="0" exp_strength="0"/>
+      </constraints>
+      <constraintExpressions>
+        <constraint field="Name" exp="" desc=""/>
+        <constraint field="CG_2018" exp="" desc=""/>
+        <constraint field="CG_5years" exp="" desc=""/>
+        <constraint field="FW_5years" exp="" desc=""/>
+        <constraint field="FW_2018" exp="" desc=""/>
+        <constraint field="CDW_2018" exp="" desc=""/>
+        <constraint field="CDW_5years" exp="" desc=""/>
+      </constraintExpressions>
+      <expressionfields/>
+      <attributeactions>
+        <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+      </attributeactions>
+      <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+        <columns>
+          <column type="field" hidden="0" name="Name" width="-1"/>
+          <column type="field" hidden="0" name="CG_2018" width="-1"/>
+          <column type="field" hidden="0" name="CG_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_5years" width="-1"/>
+          <column type="field" hidden="0" name="FW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_2018" width="-1"/>
+          <column type="field" hidden="0" name="CDW_5years" width="-1"/>
+          <column type="actions" hidden="1" width="-1"/>
+        </columns>
+      </attributetableconfig>
+      <conditionalstyles>
+        <rowstyles/>
+        <fieldstyles/>
+      </conditionalstyles>
+      <editform tolerant="1"></editform>
+      <editforminit/>
+      <editforminitcodesource>0</editforminitcodesource>
+      <editforminitfilepath></editforminitfilepath>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
+      <featformsuppress>0</featformsuppress>
+      <editorlayout>generatedlayout</editorlayout>
+      <editable>
+        <field editable="1" name="CDW_2018"/>
+        <field editable="1" name="CDW_5years"/>
+        <field editable="1" name="CG_2018"/>
+        <field editable="1" name="CG_5years"/>
+        <field editable="1" name="FW_2018"/>
+        <field editable="1" name="FW_5years"/>
+        <field editable="1" name="Name"/>
+      </editable>
+      <labelOnTop>
+        <field labelOnTop="0" name="CDW_2018"/>
+        <field labelOnTop="0" name="CDW_5years"/>
+        <field labelOnTop="0" name="CG_2018"/>
+        <field labelOnTop="0" name="CG_5years"/>
+        <field labelOnTop="0" name="FW_2018"/>
+        <field labelOnTop="0" name="FW_5years"/>
+        <field labelOnTop="0" name="Name"/>
+      </labelOnTop>
+      <widgets/>
+      <previewExpression>Name</previewExpression>
+      <mapTip></mapTip>
+    </maplayer>
+  </projectlayers>
+  <layerorder>
+    <layer id="combinded_admin_areas_WGS84_c829497b_0054_41bb_8c61_dd0ec538d128"/>
+    <layer id="Metropoolregio_WGS84_84755eea_59c9_4190_970c_7e59291e2a23"/>
+    <layer id="import_per_keyflow_94bbec7c_e84c_4a79_a175_e9cd13ac7c53"/>
+    <layer id="Centroids_c283354f_ea1c_4e64_a095_5ca10af732d1"/>
+    <layer id="centroids_per_keyflow_fd8417cd_4a7c_4b0a_b224_20bbb1e30642"/>
+    <layer id="CDW_to_AMA_5years_ec994beb_b40b_4f40_9d3c_716ffea1e1e2"/>
+    <layer id="CDW_to_AMA_2018_a5541d5d_7210_4f21_a90b_91b99b159db8"/>
+    <layer id="CG_to_AMA_5years_3f4d62fb_f353_4f8a_8354_a4c257e9b315"/>
+    <layer id="CG_to_AMA_2018_dc773063_0318_4914_8840_f846556d2473"/>
+    <layer id="FW_to_AMA_5years_f2050bb4_4f17_49e8_9e1d_ddb29f290eaf"/>
+    <layer id="FW_to_AMA_2018_79fed497_6e32_44c2_b567_8e7679e4b692"/>
+  </layerorder>
+  <properties>
+    <DefaultStyles>
+      <ColorRamp type="QString"></ColorRamp>
+      <Fill type="QString"></Fill>
+      <Line type="QString"></Line>
+      <Marker type="QString"></Marker>
+      <Opacity type="double">1</Opacity>
+      <RandomColors type="bool">true</RandomColors>
+    </DefaultStyles>
+    <Gui>
+      <CanvasColorBluePart type="int">255</CanvasColorBluePart>
+      <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
+      <CanvasColorRedPart type="int">255</CanvasColorRedPart>
+      <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
+      <SelectionColorBluePart type="int">0</SelectionColorBluePart>
+      <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
+      <SelectionColorRedPart type="int">255</SelectionColorRedPart>
+    </Gui>
+    <Layouts>
+      <lastLayoutExportDir type="QString">/Users/rusnesileryte/Documents/GitHub/geoFluxus/results/maps/for_AI/CG_to_AMA_2018.pdf</lastLayoutExportDir>
+    </Layouts>
+    <Legend>
+      <filterByMap type="bool">false</filterByMap>
+    </Legend>
+    <Macros>
+      <pythonCode type="QString"></pythonCode>
+    </Macros>
+    <Measure>
+      <Ellipsoid type="QString">NONE</Ellipsoid>
+    </Measure>
+    <Measurement>
+      <AreaUnits type="QString">m2</AreaUnits>
+      <DistanceUnits type="QString">meters</DistanceUnits>
+    </Measurement>
+    <PAL>
+      <CandidatesLine type="int">50</CandidatesLine>
+      <CandidatesPoint type="int">16</CandidatesPoint>
+      <CandidatesPolygon type="int">30</CandidatesPolygon>
+      <DrawRectOnly type="bool">false</DrawRectOnly>
+      <SearchMethod type="int">0</SearchMethod>
+      <ShowingAllLabels type="bool">false</ShowingAllLabels>
+      <ShowingCandidates type="bool">false</ShowingCandidates>
+      <ShowingPartialsLabels type="bool">true</ShowingPartialsLabels>
+      <TextFormat type="int">0</TextFormat>
+    </PAL>
+    <Paths>
+      <Absolute type="bool">false</Absolute>
+    </Paths>
+    <PositionPrecision>
+      <Automatic type="bool">true</Automatic>
+      <DecimalPlaces type="int">2</DecimalPlaces>
+      <DegreeFormat type="QString">MU</DegreeFormat>
+    </PositionPrecision>
+    <SpatialRefSys>
+      <ProjectionsEnabled type="int">1</ProjectionsEnabled>
+    </SpatialRefSys>
+    <WCSLayers type="QStringList"/>
+    <WCSUrl type="QString"></WCSUrl>
+    <WFSLayers type="QStringList"/>
+    <WFSTLayers>
+      <Delete type="QStringList"/>
+      <Insert type="QStringList"/>
+      <Update type="QStringList"/>
+    </WFSTLayers>
+    <WFSUrl type="QString"></WFSUrl>
+    <WMSAccessConstraints type="QString">None</WMSAccessConstraints>
+    <WMSAddWktGeometry type="bool">false</WMSAddWktGeometry>
+    <WMSContactMail type="QString"></WMSContactMail>
+    <WMSContactOrganization type="QString"></WMSContactOrganization>
+    <WMSContactPerson type="QString"></WMSContactPerson>
+    <WMSContactPhone type="QString"></WMSContactPhone>
+    <WMSContactPosition type="QString"></WMSContactPosition>
+    <WMSDefaultMapUnitsPerMm type="double">-2147483.648</WMSDefaultMapUnitsPerMm>
+    <WMSFees type="QString">conditions unknown</WMSFees>
+    <WMSImageQuality type="int">90</WMSImageQuality>
+    <WMSKeywordList type="QStringList">
+      <value></value>
+    </WMSKeywordList>
+    <WMSMaxAtlasFeatures type="int">1</WMSMaxAtlasFeatures>
+    <WMSOnlineResource type="QString"></WMSOnlineResource>
+    <WMSPrecision type="QString">8</WMSPrecision>
+    <WMSRootName type="QString"></WMSRootName>
+    <WMSSegmentizeFeatureInfoGeometry type="bool">false</WMSSegmentizeFeatureInfoGeometry>
+    <WMSServiceAbstract type="QString"></WMSServiceAbstract>
+    <WMSServiceCapabilities type="bool">false</WMSServiceCapabilities>
+    <WMSServiceTitle type="QString"></WMSServiceTitle>
+    <WMSTileBuffer type="int">0</WMSTileBuffer>
+    <WMSUrl type="QString"></WMSUrl>
+    <WMSUseLayerIDs type="bool">false</WMSUseLayerIDs>
+    <WMTSGrids>
+      <CRS type="QStringList"/>
+      <Config type="QStringList"/>
+    </WMTSGrids>
+    <WMTSJpegLayers>
+      <Group type="QStringList"/>
+      <Layer type="QStringList"/>
+      <Project type="bool">false</Project>
+    </WMTSJpegLayers>
+    <WMTSLayers>
+      <Group type="QStringList"/>
+      <Layer type="QStringList"/>
+      <Project type="bool">false</Project>
+    </WMTSLayers>
+    <WMTSMinScale type="int">5000</WMTSMinScale>
+    <WMTSPngLayers>
+      <Group type="QStringList"/>
+      <Layer type="QStringList"/>
+      <Project type="bool">false</Project>
+    </WMTSPngLayers>
+    <WMTSUrl type="QString"></WMTSUrl>
+  </properties>
+  <visibility-presets/>
+  <transformContext>
+    <srcDest dest="EPSG:28992" source="EPSG:4326" sourceTransform="" destTransform="+towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812"/>
+    <srcDest dest="EPSG:7415" source="EPSG:4326" sourceTransform="" destTransform="+towgs84=565.237,50.0087,465.658,-0.406857,0.350733,-1.87035,4.0812"/>
+  </transformContext>
+  <projectMetadata>
+    <identifier></identifier>
+    <parentidentifier></parentidentifier>
+    <language></language>
+    <type></type>
+    <title></title>
+    <abstract></abstract>
+    <contact>
+      <name></name>
+      <organization></organization>
+      <position></position>
+      <voice></voice>
+      <fax></fax>
+      <email></email>
+      <role></role>
+    </contact>
+    <links/>
+    <author>rusnesileryte</author>
+    <creation>2020-01-08T11:21:20</creation>
+  </projectMetadata>
+  <Annotations/>
+  <Layouts>
+    <Layout worldFileMap="{6f3e8006-5adc-4f58-9f0e-2843bb9b53e5}" units="mm" name="globe" printResolution="300">
+      <Snapper tolerance="5" snapToItems="1" snapToGrid="0" snapToGuides="1"/>
+      <Grid offsetY="0" resUnits="mm" offsetUnits="mm" offsetX="0" resolution="10"/>
+      <PageCollection>
+        <symbol clip_to_extent="1" force_rhr="0" type="fill" name="" alpha="1">
+          <layer locked="0" class="SimpleFill" pass="0" enabled="1">
+            <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
+            <prop v="255,255,255,255" k="color"/>
+            <prop v="miter" k="joinstyle"/>
+            <prop v="0,0" k="offset"/>
+            <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+            <prop v="MM" k="offset_unit"/>
+            <prop v="35,35,35,255" k="outline_color"/>
+            <prop v="no" k="outline_style"/>
+            <prop v="0.26" k="outline_width"/>
+            <prop v="MM" k="outline_width_unit"/>
+            <prop v="solid" k="style"/>
+            <data_defined_properties>
+              <Option type="Map">
+                <Option type="QString" name="name" value=""/>
+                <Option name="properties"/>
+                <Option type="QString" name="type" value="collection"/>
+              </Option>
+            </data_defined_properties>
+          </layer>
+        </symbol>
+        <LayoutItem zValue="0" size="297,210,mm" groupUuid="" itemRotation="0" positionOnPage="0,0,mm" blendMode="0" templateUuid="{3c36b31e-d1d3-435c-9209-1c474143bfbd}" type="65638" frame="false" opacity="1" frameJoinStyle="miter" background="true" position="0,0,mm" visibility="1" referencePoint="0" uuid="{3c36b31e-d1d3-435c-9209-1c474143bfbd}" positionLock="false" outlineWidthM="0.3,mm" id="" excludeFromExports="0">
+          <FrameColor blue="0" red="0" green="0" alpha="255"/>
+          <BackgroundColor blue="255" red="255" green="255" alpha="255"/>
+          <LayoutObject>
+            <dataDefinedProperties>
+              <Option type="Map">
+                <Option type="QString" name="name" value=""/>
+                <Option name="properties"/>
+                <Option type="QString" name="type" value="collection"/>
+              </Option>
+            </dataDefinedProperties>
+            <customproperties/>
+          </LayoutObject>
+        </LayoutItem>
+        <GuideCollection visible="1"/>
+      </PageCollection>
+      <LayoutItem zValue="1" size="297,212.272,mm" followPreset="false" groupUuid="" itemRotation="0" positionOnPage="0,0,mm" blendMode="0" followPresetName="" templateUuid="{6f3e8006-5adc-4f58-9f0e-2843bb9b53e5}" type="65639" frame="false" opacity="1" frameJoinStyle="miter" background="true" labelMargin="0,mm" position="0,0,mm" mapRotation="0" mapFlags="0" visibility="1" drawCanvasItems="true" referencePoint="0" keepLayerSet="false" uuid="{6f3e8006-5adc-4f58-9f0e-2843bb9b53e5}" positionLock="false" outlineWidthM="0.3,mm" id="" excludeFromExports="0">
+        <FrameColor blue="0" red="0" green="0" alpha="255"/>
+        <BackgroundColor blue="255" red="255" green="255" alpha="255"/>
+        <LayoutObject>
+          <dataDefinedProperties>
+            <Option type="Map">
+              <Option type="QString" name="name" value=""/>
+              <Option name="properties"/>
+              <Option type="QString" name="type" value="collection"/>
+            </Option>
+          </dataDefinedProperties>
+          <customproperties/>
+        </LayoutObject>
+        <Extent ymax="7065586.89468356315046549" xmax="10367800.04852420277893543" xmin="-9347289.78639073856174946" ymin="-7025198.12438254896551371"/>
+        <LayerSet/>
+        <AtlasMap margin="0.10000000000000001" atlasDriven="0" scalingMode="2"/>
+        <labelBlockingItems/>
+      </LayoutItem>
+      <customproperties>
+        <property key="atlasRasterFormat" value="png"/>
+        <property key="forceVector" value="0"/>
+        <property key="pdfDisableRasterTiles" value="0"/>
+        <property key="pdfIncludeMetadata" value="1"/>
+        <property key="pdfTextFormat" value="0"/>
+      </customproperties>
+      <Atlas filenamePattern="'output_'||@atlas_featurenumber" filterFeatures="0" coverageLayer="" hideCoverage="0" pageNameExpression="" enabled="0" sortFeatures="0"/>
+    </Layout>
+  </Layouts>
+</qgis>

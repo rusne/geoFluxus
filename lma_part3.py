@@ -25,8 +25,8 @@ pd.options.mode.chained_assignment = None
 # choose scope: Food Waste, Construction & Demolition Waste, Consumption Goods
 
 while True:
-    scope = raw_input('Choose scope: CDW / FW / CG\n')
-    if scope == 'CDW' or scope == 'FW' or scope == 'CG':
+    scope = raw_input('Choose scope: CDW / FW / CG / TT\n')
+    if scope == 'CDW' or scope == 'FW' or scope == 'CG' or scope == 'TT':
         break
     else:
         print 'Wrong choice.'
@@ -100,14 +100,12 @@ activity_groups.drop_duplicates(inplace=True)
 
 activity_groups.columns = activity_groups_col
 activity_groups.to_excel(priv_folder + EXPORT + '{0}_activity_groups.xlsx'.format(scope))
-activity_groups.to_csv(priv_folder + EXPORT + '{0}_activity_groups.csv'.format(scope), encoding='utf-8')
 
 activities = act_activ[['Code', 'Name_nl', 'AGcode']]
 activities.drop_duplicates(inplace=True)
 
 activities.columns = activities_col
 activities.to_excel(priv_folder + EXPORT + '{0}_activities.xlsx'.format(scope))
-activities.to_csv(priv_folder + EXPORT + '{0}_activities.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 # Actors & Locations
@@ -208,8 +206,8 @@ for role in var.map_roles:
     else:
         geom_col = '{0}_wkt'.format(role)
         loc_key = key
-    locs_export = flows[[geom_col, key, loc_key, id]]
-    locs_export.columns = ['geom', 'actor_key', 'loc_key', 'actor']
+    locs_export = flows[[geom_col, loc_key, id]]
+    locs_export.columns = ['geom', 'loc_key', 'actor']
     # locs_export['actor'] = locs_export['actor_key'].apply(lambda x: '_'.join(x.split()))
 
     act_list.append(actors_export)
@@ -217,12 +215,13 @@ for role in var.map_roles:
 
 
 actors_export = pd.concat(act_list)
-actors_export.drop_duplicates(inplace=True)
+actors_export['name'] = actors_export['name'].apply(lambda x: unicode(x).replace('\'', ''))
+actors_export['name'] = actors_export['name'].apply(lambda x: unicode(x).replace('\"', ''))
+actors_export.drop_duplicates(subset=['identifier'], inplace=True)
 # !!!!!!!!! mock up actor with no name in LMA
-actors_export.loc[actors_export['name'].isna(), 'name'] = 'ONBEKEND'
-actors_export.loc[actors_export['activity'].isna(), 'activity'] = 'V-0000'
+# actors_export.loc[actors_export['name'].isna(), 'name'] = 'ONBEKEND'
+# actors_export.loc[actors_export['activity'].isna(), 'activity'] = 'V-0000'
 actors_export.to_excel(priv_folder + EXPORT + '{0}_actors.xlsx'.format(scope))
-actors_export.to_csv(priv_folder + EXPORT + '{0}_actors.csv'.format(scope), encoding='utf-8')
 
 addresses = pd.read_excel(priv_folder + PART1 + 'Export_LMA_locations.xlsx')
 locations_export = pd.concat(loc_list)
@@ -231,8 +230,11 @@ locations_exp_add = pd.merge(locations_export, addresses, left_on='loc_key', rig
 
 locations_exp_add = locations_exp_add[['geom', 'Postcode', 'Adres', 'Plaats', 'actor']]
 locations_exp_add.columns = locations_col
+locations_exp_add['city'] = locations_exp_add['city'].apply(lambda x: x.replace('\'', ''))
+locations_exp_add['city'] = locations_exp_add['city'].apply(lambda x: x.replace('\"', ''))
+locations_exp_add['address'] = locations_exp_add['address'].apply(lambda x: x.replace('\'', ''))
+locations_exp_add['address'] = locations_exp_add['address'].apply(lambda x: x.replace('\"', ''))
 locations_exp_add.to_excel(priv_folder + EXPORT + '{0}_locations.xlsx'.format(scope))
-locations_exp_add.to_csv(priv_folder + EXPORT + '{0}_locations.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 # Flows & Flow chains
@@ -302,8 +304,8 @@ flow_chains.loc[flow_chains['direct_use'] == 'nan', 'direct_use'] = ''
 
 flow_chains = flow_chains[flow_chains_col]
 
+flow_chains['amount'] = flow_chains['amount'].apply(lambda x: str(x).replace(',', '.'))
 flow_chains.to_excel(priv_folder + EXPORT + '{0}_flowchains.xlsx'.format(scope))
-flow_chains.to_csv(priv_folder + EXPORT + '{0}_flowchains.csv'.format(scope), encoding='utf-8')
 
 
 print 'Splitting chains into separate flows.......'
@@ -340,7 +342,6 @@ for index, row in flows.iterrows():
 
 flowparts = pd.DataFrame.from_dict(fp)
 flowparts.to_excel(priv_folder + EXPORT + '{0}_flows.xlsx'.format(scope))
-flowparts.to_csv(priv_folder + EXPORT + '{0}_flows.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 # Materials, products and compositions
@@ -364,7 +365,6 @@ materials.dropna(inplace=True)
 materials.drop_duplicates(inplace=True)
 
 materials.to_excel(priv_folder + EXPORT + '{0}_materials.xlsx'.format(scope))
-materials.to_csv(priv_folder + EXPORT + '{0}_materials.csv'.format(scope), encoding='utf-8')
 
 comp_1 = flows[['composite', 'id']]
 comp_1.columns = material_col
@@ -376,7 +376,6 @@ composites.dropna(inplace=True)
 composites.drop_duplicates(inplace=True)
 
 composites.to_excel(priv_folder + EXPORT + '{0}_composites.xlsx'.format(scope))
-composites.to_csv(priv_folder + EXPORT + '{0}_composites.csv'.format(scope), encoding='utf-8')
 
 products = flows[['product', 'id']]
 products.columns = material_col
@@ -384,7 +383,6 @@ products.dropna(inplace=True)
 products.drop_duplicates(inplace=True)
 
 products.to_excel(priv_folder + EXPORT + '{0}_products.xlsx'.format(scope))
-products.to_csv(priv_folder + EXPORT + '{0}_products.csv'.format(scope), encoding='utf-8')
 
 
 descriptions = ['reason', 'origin', 'colour', 'state', 'size', 'consistency',
@@ -403,7 +401,6 @@ extra_descriptions.dropna(inplace=True)
 extra_descriptions.drop_duplicates(inplace=True)
 
 extra_descriptions.to_excel(priv_folder + EXPORT + '{0}_extra_descriptions.xlsx'.format(scope))
-extra_descriptions.to_csv(priv_folder + EXPORT + '{0}_extra_descriptions.csv'.format(scope), encoding='utf-8')
 
 # _____________________________________________________________________________
 #   Final analysis table

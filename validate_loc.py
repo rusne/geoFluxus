@@ -43,8 +43,8 @@ continents = continents[continents['Name'] != 'Europe']
 
 admin_areas = pd.concat([municip, countries, continents])
 
-for scope in var.scopes:
-# for scope in ['FW']:
+# for scope in var.scopes:
+for scope in ['CG']:
 # if False:
 
     INPUT_2 = "Input_{0}_part2/".format(scope)
@@ -65,6 +65,7 @@ for scope in var.scopes:
 
     # merge addresses with found geolocations
     geolocations = pd.merge(locations, geolocations, on='Key', how='left')
+    geolocations.to_excel('geolocations.xlsx')
     unlocated = geolocations[geolocations['WKT'].isna()].copy()
     geolocations.dropna(subset=['WKT'], inplace=True)
 
@@ -82,9 +83,9 @@ for scope in var.scopes:
     spatial.loc[spatial['Postcode4'] != spatial['PC4'], 'valid'] = False
 
     correct = spatial[spatial['valid'] == True]
-    correct = correct[['Key', 'Adres', 'Plaats', 'Postcode', 'Postcode4', 'WKT']]
+    correct = correct[['Key', 'Adres', 'Plaats', 'Postcode', 'Postcode4', 'WKT']].copy()
     incorrect = spatial[spatial['valid'] == False]
-    incorrect = incorrect[['Key', 'Adres', 'Plaats', 'Postcode', 'Postcode4', 'WKT']]
+    incorrect = incorrect[['Key', 'Adres', 'Plaats', 'Postcode', 'Postcode4', 'WKT']].copy()
 
     unlocated = unlocated[['Key', 'Adres', 'Plaats', 'Postcode', 'WKT']]
     unlocated['Postcode4'] = unlocated['Postcode'].apply(lambda x: str(x)[:4])
@@ -127,6 +128,11 @@ for scope in var.scopes:
     wrong_polygon['WKT'] = wrong_polygon['centroid']
 
     # concatenate all together
+    correct['status'] = 'correct'
+    within_pc['status'] = 'within_pc'
+    within_polygon['status'] = 'within_polygon'
+    wrong_polygon['status'] = 'wrong_polygon'
+
     validated = pd.concat([correct, within_pc, within_polygon, wrong_polygon])
     validated.drop_duplicates(subset=['Key'], inplace=True)
 
@@ -138,7 +144,7 @@ for scope in var.scopes:
         print '\t', len(within_pc.index), 'actors have been relocated to their postcode centroid in the Netherlands'
         print '\t', len(wrong_polygon.index), 'actors have been relocated to their administrative area centroid'
     else:
-        print (len(geolocations.index) + len(unlocated.index)) - len(validated.index), 'geolocations have not been validated:'
+        print(len(geolocations.index) + len(unlocated.index)) - len(validated.index), 'geolocations have not been validated:'
         non_validated = geolocations[(geolocations['Key'].isin(validated['Key']) == False)]
         print non_validated
 
@@ -148,7 +154,7 @@ for scope in var.scopes:
     validated['Key'] = validated['Key'].apply(lambda x: str(x).strip())
 
     # export validated geolocations
-    loc_wgs84 = validated[['Key', 'WKT']]
+    loc_wgs84 = validated[['Key', 'WKT', 'status']]
     loc_wgs84.to_csv(priv_folder + INPUT_2 + '{}_locations_WGS84_validated.csv'.format(scope), index=False)
 
     # loc_wgs84['WKT'] = loc_wgs84['WKT'].apply(wkt.loads)
