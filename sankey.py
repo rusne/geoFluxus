@@ -1,8 +1,8 @@
 # a function that converts pandas dataframe into a sankey
 
-import plotly.graph_objs as go
+import plotly.graph_objects as go
 import pandas as pd
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 def draw_sankey(df, scattered=False):
 
@@ -25,26 +25,26 @@ def draw_sankey(df, scattered=False):
         nodes[node] = c
         c += 1
 
-    # cmap = plt.cm.get_cmap('viridis')
-    # color_map = dict()
-    # start_nodes = list(flat['start_node'].drop_duplicates())
-    # step = 1 / len(start_nodes)
-    # node_colors = []
-    # for i in range(len(start_nodes)):
-    #     rgba = cmap(i * step)
-    #     rgba = tuple(int((255 * x)) for x in rgba[0:3]) + (0.3,)
-    #     rgba = 'rgba' + str(rgba)
-    #     color_map[start_nodes[i]] = rgba
-    #     node_colors.append(rgba)
+    cmap = plt.cm.get_cmap('viridis')
+    color_map = dict()
+    start_nodes = list(flat['start_node'].drop_duplicates())
+    step = 1 / len(start_nodes)
+    node_colors = []
+    for i in range(len(start_nodes)):
+        rgba = cmap(i * step)
+        rgba = tuple(int((255 * x)) for x in rgba[0:3]) + (0.3,)
+        rgba = 'rgba' + str(rgba)
+        color_map[start_nodes[i]] = rgba
+        node_colors.append(rgba)
 
-    color_map = {'Afvalbeheer / secundair afval': 'rgba(255, 230, 0, 0.3)',
-                 'Buiten MRA': 'rgba(255, 145, 0, 0.3)',
-                 'Industrie, opslag en handel': 'rgba(229, 0, 130, 0.3)',
-                 'Overige': 'rgba(160, 0, 120, 0.3)',
-                 'Route Inzameling': 'rgba(0, 70, 153, 0.3)',
-                 'Dienstensector, overheid en zorg': 'rgba(41, 120, 142, 0.3)',
-                 'Bouwnijverheid': 'rgba(0, 157, 230, 0.3)',
-                 }
+    # color_map = {'Afvalbeheer / secundair afval': 'rgba(255, 230, 0, 0.3)',
+    #              'Buiten MRA': 'rgba(255, 145, 0, 0.3)',
+    #              'Industrie, opslag en handel': 'rgba(229, 0, 130, 0.3)',
+    #              'Overige': 'rgba(160, 0, 120, 0.3)',
+    #              'Route Inzameling': 'rgba(0, 70, 153, 0.3)',
+    #              'Dienstensector, overheid en zorg': 'rgba(41, 120, 142, 0.3)',
+    #              'Bouwnijverheid': 'rgba(0, 157, 230, 0.3)',
+    #              }
 
     start_nodes = list(flat['start_node'].drop_duplicates())
     node_colors = []
@@ -70,7 +70,7 @@ def draw_sankey(df, scattered=False):
                           node=dict(pad=15,
                                     thickness=15,
                                     line=dict(color="black", width=0.01),
-                                    # label=list(nodes.keys()),
+                                    label=list(nodes.keys()),
                                     color=node_colors
                                     ),
                           # Add links
@@ -90,5 +90,5 @@ def draw_sankey(df, scattered=False):
 # draw_sankey(test_sankey)
 
 test_sankey = pd.read_excel('results/sankeys/hout_sankey.xlsx')
-test_sankey = test_sankey.groupby(['activity_group_name', 'VerwerkingsMethode'], as_index=False)['amount'].sum()
+test_sankey = test_sankey.groupby(['activity', 'product', 'process'], as_index=False)['amount'].sum()
 draw_sankey(test_sankey)
