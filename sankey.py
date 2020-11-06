@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def draw_sankey(df, scattered=False):
+def draw_sankey(df, scattered=False, title_text="Sankey Diagram"):
 
     # flatten sankey
     if scattered:
@@ -25,14 +25,14 @@ def draw_sankey(df, scattered=False):
         nodes[node] = c
         c += 1
 
-    cmap = plt.cm.get_cmap('viridis')
+    cmap = plt.cm.get_cmap('Spectral')
     color_map = dict()
     start_nodes = list(flat['start_node'].drop_duplicates())
-    step = 1 / len(start_nodes)
+    step = 1.0 / len(start_nodes)
     node_colors = []
     for i in range(len(start_nodes)):
         rgba = cmap(i * step)
-        rgba = tuple(int((255 * x)) for x in rgba[0:3]) + (0.3,)
+        rgba = tuple(int((255 * x)) for x in rgba[0:3]) + (0.5,)
         rgba = 'rgba' + str(rgba)
         color_map[start_nodes[i]] = rgba
         node_colors.append(rgba)
@@ -81,7 +81,11 @@ def draw_sankey(df, scattered=False):
                                     # label=[]
                                     ))])
 
-    fig.update_layout(title_text="Sankey Diagram", font_size=10)
+    fig.update_layout(title_text=title_text,
+                      font=dict(size = 10, color = 'black', family = 'Courier New'),
+                      plot_bgcolor='#F2F2F3',
+                      paper_bgcolor='#F2F2F3',
+                      )
     fig.show()
 
 
@@ -89,6 +93,8 @@ def draw_sankey(df, scattered=False):
 # test_sankey = test_sankey.groupby(['activity_group_name', 'status', 'VerwerkingsMethode'], as_index=False)['amount'].sum()
 # draw_sankey(test_sankey)
 
-test_sankey = pd.read_excel('results/sankeys/hout_sankey.xlsx')
-test_sankey = test_sankey.groupby(['activity', 'product', 'process'], as_index=False)['amount'].sum()
-draw_sankey(test_sankey)
+test_sankey = pd.read_excel('results/sankeys/combined_sankey.xlsx')
+test_sankey = test_sankey.groupby(['activity', 'status', 'process'], as_index=False)['amount'].sum()
+#title = 'All commercial waste produced in Amsterdam Metropolitan Area in 2018, t/year'
+title = ''
+draw_sankey(test_sankey, title_text=title)
